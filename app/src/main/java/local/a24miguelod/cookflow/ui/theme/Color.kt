@@ -1,4 +1,4 @@
-package local.motero.cookflow.ui.theme
+package local.a24miguelod.cookflow.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

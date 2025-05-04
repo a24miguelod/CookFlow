@@ -2,14 +2,17 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    alias(libs.plugins.googleServices)
+    alias(libs.plugins.crashlytics)
 }
 
 android {
-    namespace = "local.motero.cookflow"
+    namespace = "local.a24miguelod.cookflow"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "local.motero.cookflow"
+        applicationId = "local.a24miguelod.cookflow"
         minSdk = 25
         targetSdk = 34
         versionCode = 1
@@ -52,6 +55,10 @@ dependencies {
 
     // para SplashScreen
     implementation(libs.androidx.core.splashscreen)
+
+    // firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

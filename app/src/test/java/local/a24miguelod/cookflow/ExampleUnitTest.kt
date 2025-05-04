@@ -1,4 +1,4 @@
-package local.motero.cookflow
+package local.a24miguelod.cookflow
 
 import org.junit.Test
 
