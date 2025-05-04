@@ -11,10 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import local.motero.cookflow.ui.theme.CookFlowTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val screenSplash = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -27,6 +30,8 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        installSplashScreen()
     }
 }
 
