@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.jetbrainsKotlinSerialization)
 
     alias(libs.plugins.googleServices)
     alias(libs.plugins.crashlytics)
@@ -60,6 +61,16 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
 
+    // compose
+    // Para Compose ViewModel:
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-viewmodel-compose
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    // Para Compose LiveData:
+    // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-livedata
+
+    implementation(libs.androidx.lifecycle.livedata)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
