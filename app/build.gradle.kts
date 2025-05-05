@@ -60,6 +60,7 @@ dependencies {
     // firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.firestore)
 
     // compose
     // Para Compose ViewModel:
@@ -67,6 +68,13 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Para Compose LiveData:
     // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-livedata
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+
+
 
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.navigation.compose)

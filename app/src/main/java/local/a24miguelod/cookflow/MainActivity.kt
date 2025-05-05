@@ -13,11 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.firebase.FirebaseApp
 import local.a24miguelod.cookflow.core.navigation.NavigationWrapper
 import local.a24miguelod.cookflow.ui.theme.CookFlowTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        // TODO: hacer en app
+
+        FirebaseApp.initializeApp(this)
 
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
