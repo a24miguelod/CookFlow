@@ -8,20 +8,24 @@ import androidx.navigation.toRoute
 import local.a24miguelod.cookflow.ui.DetalleRecetaScreen
 import local.a24miguelod.cookflow.ui.DietarioScreen
 import local.a24miguelod.cookflow.ui.ListaRecetasScreen
+import local.a24miguelod.cookflow.ui.RecetasViewModel
 
 
 @Composable
-fun NavigationWrapper() {
+fun NavigationWrapper(viewModel: RecetasViewModel) {
     val navController = rememberNavController()
+
     NavHost(
         navController = navController,
         startDestination = ListaRecetas
     ) {
         composable<ListaRecetas> {
-            ListaRecetasScreen {
-                idReceta -> navController.navigate(DetalleReceta(
-                idReceta = 1
-            ))}
+            ListaRecetasScreen(
+                navegarAlDetalle = { idReceta ->
+                    navController.navigate(DetalleReceta(idReceta))
+                },
+                viewModel = viewModel
+            )
         }
 
         composable<DetalleReceta> { backStackEntry ->
@@ -33,5 +37,6 @@ fun NavigationWrapper() {
         composable<Dietario> {
             DietarioScreen()
         }
+
     }
 }
