@@ -1,5 +1,6 @@
 package local.a24miguelod.cookflow
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,7 +18,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.google.firebase.FirebaseApp
 import local.a24miguelod.cookflow.core.navigation.NavigationWrapper
 import local.a24miguelod.cookflow.ui.RecetasViewModel
-import local.a24miguelod.cookflow.ui.theme.CookFlowTheme
+import local.a24miguelod.cookflow.ui.theme.MaterialCookFlowTheme
+import local.a24miguelod.cookflow.utils.cargarIngredientes
+import local.a24miguelod.cookflow.utils.cargarRecetas
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,13 +29,26 @@ class MainActivity : ComponentActivity() {
         val viewModel: RecetasViewModel by viewModels()
         FirebaseApp.initializeApp(this)
 
+        // TODO: poner estas cosas en un panel de admin
+        // cargarIngredientes()
+        //cargarRecetas(10)
+
+        val splashScreen = installSplashScreen()
+        splashScreen.setKeepOnScreenCondition {
+            viewModel.recetas.value.isEmpty()
+        }
+
+
+        setTheme(R.style.Theme_CookFlow) // si no, se mantiene el icon del splash
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+
         setContent {
-            CookFlowTheme {
+            MaterialCookFlowTheme {
                 NavigationWrapper(viewModel)
             }
         }
-        installSplashScreen()
+
     }
 }

@@ -73,7 +73,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
-
+    // coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 
 
     implementation(libs.androidx.lifecycle.livedata)

@@ -3,9 +3,11 @@ package local.a24miguelod.cookflow.ui
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -24,6 +26,7 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 
 
 import com.google.firebase.firestore.ktx.firestore
@@ -41,34 +44,30 @@ fun ListaRecetasScreen(
     Column(
         Modifier
             .fillMaxSize()
-            .background(Black)
     ) {
         Text(
             "A ver que pasa",
-            color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 30.sp,
             modifier = Modifier.padding(16.dp)
         )
-
-
-        LazyRow {
+        LazyColumn (modifier = Modifier.fillMaxSize()){
             items(recetas.value) { receta ->
-                Text(
-                    text = receta.nombre.orEmpty(), // Asumiendo que `Receta` tiene una propiedad `nombre`
-                    color = Color.White,
-                    modifier = Modifier.padding(8.dp)
-                )
+                RecetaItem(receta)
             }
         }
-
     }
 }
 
 @Composable
 fun RecetaItem(receta: Receta) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = receta.nombre.orEmpty(), color = Color.White)
+        Text(text = receta.nombre.orEmpty())
+        Text(text = receta.descripcion.orEmpty())
+        AsyncImage(
+            model = receta.urlimagen,
+            contentDescription = "Imagen de ${receta.nombre}",
+        )
     }
 }
 //fun creaReceta() {

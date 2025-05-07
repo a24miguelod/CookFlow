@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.CookFlow" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.CookFlow" parent="android:Theme.Material.Light.NoActionBar" >
+        <item name="android:windowBackground">@color/primary</item>
+    </style>
 
     <style name="Theme.CookFlow.Splash" parent="Theme.CookFlow">
-        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+
+        <!--item name="windowSplashScreenBackground">@color/splash_background</item-->
+        <item name="windowSplashScreenIconBackgroundColor">@color/white</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_chef</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>
     </style>

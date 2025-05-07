@@ -14,6 +14,7 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import local.a24miguelod.cookflow.model.Receta
 import local.a24miguelod.cookflow.model.retrofit.gson.Recetas
+import local.a24miguelod.cookflow.utils.cargarIngredientes
 
 private const val TAG = "RecetasViewModel"
 
@@ -54,4 +55,5 @@ class RecetasViewModel: ViewModel() {
         }
 
     }
+
 }
