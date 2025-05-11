@@ -1,18 +1,20 @@
-package local.a24miguelod.cookflow.core.navigation
+package local.a24miguelod.cookflow
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import local.a24miguelod.cookflow.ui.DetalleRecetaScreen
-import local.a24miguelod.cookflow.ui.DietarioScreen
-import local.a24miguelod.cookflow.ui.ListaRecetasScreen
-import local.a24miguelod.cookflow.ui.RecetasViewModel
+import local.a24miguelod.cookflow.core.navigation.DetalleReceta
+import local.a24miguelod.cookflow.core.navigation.Dietario
+import local.a24miguelod.cookflow.core.navigation.ListaRecetas
+import local.a24miguelod.cookflow.ui.screens.detalle.DetalleRecetaScreen
+import local.a24miguelod.cookflow.ui.screens.dietario.DietarioScreen
+import local.a24miguelod.cookflow.ui.screens.lista.ListaRecetasScreen
 
 
 @Composable
-fun NavigationWrapper(viewModel: RecetasViewModel) {
+fun CookFlowNavGraph() {
     val navController = rememberNavController()
 
     NavHost(
@@ -24,7 +26,7 @@ fun NavigationWrapper(viewModel: RecetasViewModel) {
                 navegarAlDetalle = { idReceta ->
                     navController.navigate(DetalleReceta(idReceta))
                 },
-                viewModel = viewModel
+                // TODO: viewModel = viewModel
             )
         }
 

@@ -1,4 +1,4 @@
-package local.a24miguelod.cookflow.ui
+package local.a24miguelod.cookflow.ui.screens.detalle
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,10 +9,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun DietarioScreen() {
+fun DetalleRecetaScreen(idReceta: Int) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(modifier = Modifier.weight(2f))
-        Text(text = "Dietario")
+        Text(text = "Detappe")
         Spacer(modifier = Modifier.weight(2f))
         Button(onClick ={}) {
             Text(text = "Ir al lista")
