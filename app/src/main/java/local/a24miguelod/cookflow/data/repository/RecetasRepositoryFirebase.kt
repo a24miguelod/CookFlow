@@ -5,6 +5,9 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import local.a24miguelod.cookflow.model.Receta
 
@@ -46,7 +49,7 @@ class RecetasRepositoryFirebase : RecetasRepository {
 
             val receta = snapshot.toObject(Receta::class.java)
             // Cojo los nombres de los ingredientes
-            // TODO: Podria hacerlo por batch... pero solo llega hasta 30, ojo
+            // TODO: Podria hacerlo por batch y en corutina
             receta?.apply {
                 ingredientes.forEach { ingrediente ->
                     val ingredienteSnapshot = db.collection("ingredientes")
@@ -88,6 +91,20 @@ class RecetasRepositoryFirebase : RecetasRepository {
             Log.d(TAG, e.toString())
             Log.d(TAG, e.stackTraceToString())
             emptyList()
+        }
+    }
+
+    override fun getRecetasConFlow(): Flow<List<Receta>> = flow {
+        val resultadoParcial = mutableListOf<Receta>()
+
+        val documentos = db.collection("recetas").get().await().documents
+        for (doc in documentos) {
+            val receta = doc.toObject(Receta::class.java)
+            delay(1000)
+            if (receta != null) {
+                resultadoParcial.add(receta)
+                emit(resultadoParcial.toList()) // Emitimos una copia
+            }
         }
     }
 
