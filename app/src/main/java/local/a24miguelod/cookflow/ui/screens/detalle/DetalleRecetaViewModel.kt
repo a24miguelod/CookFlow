@@ -1,69 +1,72 @@
-package local.a24miguelod.cookflow.ui.screens.lista
+package local.a24miguelod.cookflow.ui.screens.detalle
 
 import android.util.Log
+import androidx.compose.material3.Text
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import local.a24miguelod.cookflow.CockFlowDestinationsArgs
 import local.a24miguelod.cookflow.CookFlowApp
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.model.Receta
-import androidx.lifecycle.createSavedStateHandle
 
 private const val TAG = "ListaRecestasScreen"
 
-sealed class ListaRecetasUIState {
-    data object Loading : ListaRecetasUIState()
+sealed class DetalleRecetaUIState {
+    data object Loading : DetalleRecetaUIState()
     data class Success(
-        val recetas: List<Receta>,
+        val receta: Receta,
         val isLoading: Boolean = false
-    ) : ListaRecetasUIState()
-    data class Error(val message: String) : ListaRecetasUIState()
+    ) : DetalleRecetaUIState()
+    data class Error(val message: String) : DetalleRecetaUIState()
 }
 
-class ListaRecetasViewModel(
+class DetalleRecetaViewModel(
     private val repository:RecetasRepository,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _estado = MutableStateFlow<ListaRecetasUIState>(ListaRecetasUIState.Loading)
-    val estado: StateFlow<ListaRecetasUIState> = _estado
+    val recetaUuid:String = savedStateHandle[CockFlowDestinationsArgs.RECETA_ID]!!
+
+    private val _estado = MutableStateFlow<DetalleRecetaUIState>(DetalleRecetaUIState.Loading)
+    val estado: StateFlow<DetalleRecetaUIState> = _estado
 
     init {
-        getRecetas()
+        val receta = getReceta(recetaUuid)
     }
-
-    private fun getRecetas() {
-        _estado.value = ListaRecetasUIState.Loading
+    private fun getReceta(uuidReceta: String) {
+        _estado.value = DetalleRecetaUIState.Loading
 
         viewModelScope.launch {
             try {
-                val recetas = repository.getRecetas()
-                _estado.value = ListaRecetasUIState.Success(recetas, false)
+                val receta = repository.getReceta(uuidReceta)?.let { receta ->
+                    _estado.value = DetalleRecetaUIState.Success(receta, false)
+                } ?: run {
+                    _estado.value = DetalleRecetaUIState.Error("La receta ${uuidReceta} no existe")
+                }
             } catch (e:Exception) {
-                _estado.value = ListaRecetasUIState.Error("No se pudieron cargar las recetas")
+                _estado.value = DetalleRecetaUIState.Error("No se pudo cargar la receta")
                 Log.d(TAG,e.stackTraceToString())
             }
         }
 
     }
-
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[APPLICATION_KEY] as CookFlowApp)
                 val repository = application.contenedor.recetasRepository
                 val savedStateHandle = createSavedStateHandle()
-                ListaRecetasViewModel(
-                    repository = repository,
-                    savedStateHandle = savedStateHandle
-                )
+                DetalleRecetaViewModel(repository = repository,
+                    savedStateHandle = savedStateHandle)
             }
         }
     }

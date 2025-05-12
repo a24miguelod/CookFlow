@@ -22,7 +22,11 @@ class RecetasRepositoryFirebase : RecetasRepository {
                 .await()
                 .documents
                 .mapNotNull { snapshot ->
-                    snapshot.toObject(Receta::class.java)
+                    val receta = snapshot.toObject(Receta::class.java)
+                    // Ponemos en receta el identificador de documento de firebase
+                    receta?.apply {
+                        uuidReceta = snapshot.id // Aquí asignamos el id
+                    }
                 }
         } catch (e: Exception) {
             Log.d(TAG, "Excepcion en getAllRecetas")
@@ -33,8 +37,19 @@ class RecetasRepositoryFirebase : RecetasRepository {
 
     }
 
+    override suspend fun getReceta(uuidReceta: String): Receta? {
+        return try {
+            val snapshot = db.collection("recetas")
+                .document(uuidReceta)
+                .get()
+                .await()
 
-    override suspend fun getIngredientes(): List<Ingrediente> {
-        TODO("Not yet implemented")
+            snapshot.toObject(Receta::class.java)
+        } catch (e: Exception) {
+            Log.d(TAG, "Excepción en getReceta")
+            Log.d(TAG, e.toString())
+            null
+        }
     }
+
 }

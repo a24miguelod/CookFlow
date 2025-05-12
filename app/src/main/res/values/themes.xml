@@ -9,8 +9,9 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
 
         <!--item name="windowSplashScreenBackground">@color/splash_background</item-->
-        <item name="windowSplashScreenIconBackgroundColor">@color/white</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/primary</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_chef</item>
         <item name="windowSplashScreenAnimationDuration">1000</item>
+        <item name="postSplashScreenTheme">@style/Theme.CookFlow</item>
     </style>
 </resources>

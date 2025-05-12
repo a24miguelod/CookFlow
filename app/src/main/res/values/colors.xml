@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -10,5 +11,13 @@
     <color name="primary">#FF606219</color>
     <color name="onPrimary">#FFFFFFFF</color>
     <color name="splash_background">#FF606219</color>
+    -->
+    <color name="white">#FF606219</color>
+
+    <color name="splash_background">#FF121212</color>
+    <color name="primary">#FFFFFFFF</color>
+    <color name="secondary">#FFFFFFFF</color>
+    <color name="tertiary">#FFFFFFFF</color>
+
 
 </resources>

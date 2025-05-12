@@ -1,10 +1,10 @@
 package local.a24miguelod.cookflow.model
 
 data class Receta(
-    var idReceta: Int? = null,
-    var nombre: String? = null,
-    var descripcion: String? = null,
-    //var ingredientes: List<Ingrediente>?,
-    //var pasos: List<RecetaPaso>?,
-    var urlimagen: String? = null
+    var uuidReceta: String = "uuid",
+    var nombre: String = "",
+    var descripcion: String = "",
+    var ingredientes: List<IngredienteReceta> = emptyList(),
+    var pasos: List<RecetaPaso> = emptyList(),
+    var urlimagen: String = "",
 )
