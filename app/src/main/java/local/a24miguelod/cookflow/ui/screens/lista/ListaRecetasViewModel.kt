@@ -46,6 +46,7 @@ class ListaRecetasViewModel(
             try {
                 val recetas = repository.getRecetas()
                 _estado.value = ListaRecetasUIState.Success(recetas, false)
+                Log.d(TAG, recetas[0].toString())
             } catch (e:Exception) {
                 _estado.value = ListaRecetasUIState.Error("No se pudieron cargar las recetas")
                 Log.d(TAG,e.stackTraceToString())

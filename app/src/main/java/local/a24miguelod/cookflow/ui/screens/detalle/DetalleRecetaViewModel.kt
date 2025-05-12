@@ -34,7 +34,7 @@ class DetalleRecetaViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val recetaUuid:String = savedStateHandle[CockFlowDestinationsArgs.RECETA_ID]!!
+    private val recetaUuid:String = savedStateHandle[CockFlowDestinationsArgs.RECETA_ID]!!
 
     private val _estado = MutableStateFlow<DetalleRecetaUIState>(DetalleRecetaUIState.Loading)
     val estado: StateFlow<DetalleRecetaUIState> = _estado
