@@ -1,11 +1,14 @@
 package local.a24miguelod.cookflow
 
+import android.util.Log
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import local.a24miguelod.cookflow.CockFlowDestinationsArgs.RECETA_ID
 import local.a24miguelod.cookflow.CookFlowRoutes.RECETAS_ROUTE
 import local.a24miguelod.cookflow.CookFlowScreens.RECETAS_SCREEN
 import local.a24miguelod.cookflow.CookFlowScreens.RECETA_SCREEN
+
+private const val TAG="CookFlowNavigation"
 
 /**
  * Screens usados en [ CookFlowDestinations]
@@ -51,6 +54,7 @@ class CookFlowNavigationActions(private val navController: NavHostController) {
     }
 
     fun navigateToDetalleReceta(uuidReceta: String) {
+        Log.d(TAG, "Navegar a receta ${uuidReceta}")
         navController.navigate("$RECETA_SCREEN/$uuidReceta")
     }
 

@@ -36,12 +36,7 @@ class MainActivity : ComponentActivity() {
             CookFlowTheme (
                 dynamicColor = false
             ){
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    CookFlowNavGraph()
-                }
+                CookFlowNavGraph()
             }
         }
 

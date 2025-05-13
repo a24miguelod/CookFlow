@@ -99,7 +99,9 @@ class RecetasRepositoryFirebase : RecetasRepository {
 
         val documentos = db.collection("recetas").get().await().documents
         for (doc in documentos) {
-            val receta = doc.toObject(Receta::class.java)
+            val receta = doc.toObject(Receta::class.java)?.apply {
+                uuidReceta = doc.id
+            }
             delay(1000)
             if (receta != null) {
                 resultadoParcial.add(receta)

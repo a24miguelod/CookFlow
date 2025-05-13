@@ -96,15 +96,15 @@ fun ListaRecetasContent(
     Log.d(TAG, "ListaRecetasContent")
     Column(
         modifier = Modifier.fillMaxSize()
-            .safeContentPadding()
     ) {
         Text(
             "Lista recetas",
+            modifier = Modifier.safeContentPadding(),
             fontWeight = FontWeight.ExtraBold,
             fontSize = 18.sp,
-            color = Color.White // White text on black background
         )
-        LazyColumn() {
+        LazyColumn(
+        ) {
             items(recetas) {receta ->
                 RecetaItem(
                     receta =receta,
@@ -126,20 +126,21 @@ fun RecetaItem(
             .fillMaxWidth()
             .padding(8.dp)
             .clickable  {onRecetaClick(receta)},
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
+        Log.d(TAG, "En onclick va a receta ${receta.uuidReceta}")
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(6.dp)
         ) {
             AsyncImage(
                 model = receta.urlimagen,
                 contentDescription = receta.descripcion,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
+                    //.clip(RoundedCornerShape(8.dp))
                     .height(120.dp)
                     .width(90.dp)
             )
@@ -174,62 +175,7 @@ fun RecetaItem(
     }
 }
 
-@Preview
-@Composable
-fun RecetaItemPreview(
-    modifier: Modifier = Modifier,
-) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            AsyncImage(
-                model = "https//picsum.photos/200/200",
-                contentDescription = "Imagen de tal",
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .height(120.dp)
-                    .width(90.dp)
-            )
 
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterVertically)
-            ) {
-                Text(
-                    text = "Tortilla de patatas",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Text(
-                    text = "La tortilla de toda la vida, por supuesto con cebolla. O quizá no",
-                    fontSize = 14.sp,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis
-                )
-
-                RecetaBadge(true, {  }, listOf("Prueba","Otra"))
-            }
-        }
-    }
-}
 //
 //@OptIn(ExperimentalMaterial3Api::class)
 //@Composable
