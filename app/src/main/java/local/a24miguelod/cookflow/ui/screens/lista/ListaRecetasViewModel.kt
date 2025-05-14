@@ -13,9 +13,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import local.a24miguelod.cookflow.CookFlowApp
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
-import local.a24miguelod.cookflow.model.Receta
 import androidx.lifecycle.createSavedStateHandle
 import kotlinx.coroutines.flow.onStart
+import local.a24miguelod.cookflow.domain.model.Receta
 
 private const val TAG = "ListaRecestasScreen"
 
@@ -39,13 +39,13 @@ class ListaRecetasViewModel(
     init {
         getRecetasConFlow()
     }
-
+/*
     private fun getRecetas() {
         _estado.value = ListaRecetasUIState.Loading
 
         viewModelScope.launch {
             try {
-                val recetas = repository.getRecetas()
+                val recetas = repository.getRecetasConFlow()
                 _estado.value = ListaRecetasUIState.Success(recetas, false)
                 Log.d(TAG, recetas[0].toString())
             } catch (e:Exception) {
@@ -55,8 +55,10 @@ class ListaRecetasViewModel(
         }
 
     }
-
+*/
     private fun getRecetasConFlow() {
+
+        Log.d(TAG, "getRecetasConFlow")
         _estado.value = ListaRecetasUIState.Loading
 
         viewModelScope.launch {

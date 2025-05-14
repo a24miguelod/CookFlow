@@ -1,7 +1,6 @@
 package local.a24miguelod.cookflow.ui.screens.detalle
 
 import android.util.Log
-import androidx.compose.material3.Text
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -16,7 +15,7 @@ import kotlinx.coroutines.launch
 import local.a24miguelod.cookflow.CockFlowDestinationsArgs
 import local.a24miguelod.cookflow.CookFlowApp
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
-import local.a24miguelod.cookflow.model.Receta
+import local.a24miguelod.cookflow.domain.model.Receta
 
 private const val TAG = "ListaRecestasScreen"
 

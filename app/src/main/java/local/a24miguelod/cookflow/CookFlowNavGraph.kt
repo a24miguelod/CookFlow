@@ -59,8 +59,6 @@ fun CookFlowNavGraph(
         CookFlowNavigationActions(navController)
     }
 ) {
-    val currentNavBackStackEntry by navController.currentBackStackEntryAsState()
-
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -69,7 +67,8 @@ fun CookFlowNavGraph(
         composable(CookFlowRoutes.RECETAS_ROUTE) {
             Log.d(TAG, "antes de ListaRecetasScreen")
             ListaRecetasScreen(
-                onRecetaClick = { receta -> navActions.navigateToDetalleReceta(receta.uuidReceta)}
+                onRecetaClick = { receta -> navActions.navigateToDetalleReceta(receta.nombre)}
+
             )
         }
 

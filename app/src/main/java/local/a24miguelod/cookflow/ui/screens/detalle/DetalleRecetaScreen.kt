@@ -37,9 +37,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
-import local.a24miguelod.cookflow.model.IngredienteReceta
-import local.a24miguelod.cookflow.model.Receta
-import local.a24miguelod.cookflow.model.RecetaPaso
+import local.a24miguelod.cookflow.domain.model.IngredienteReceta
+import local.a24miguelod.cookflow.domain.model.Receta
+import local.a24miguelod.cookflow.model.Paso
 
 private const val TAG = "DetalleRecetaScreen"
 
@@ -100,7 +100,7 @@ fun DetalleRecetaScreen(
         }
     }
 }
-
+/*
 @Composable
 fun DetalleRecetaScreenPreview(
 
@@ -153,24 +153,24 @@ fun DetalleRecetaScreenPreview(
             )
         ),
         pasos = listOf(
-            RecetaPaso(
-                paso = "Preparar la masa",
-                comentarios = "Mezclar harina, levadura, sal y agua hasta obtener una masa homogénea. Dejar reposar 1h.",
+            Paso(
+                resumen = "Preparar la masa",
+                detallelargo = "Mezclar harina, levadura, sal y agua hasta obtener una masa homogénea. Dejar reposar 1h.",
                 duracion = 60f
             ),
-            RecetaPaso(
-                paso = "Extender la masa",
-                comentarios = "Formar una base de pizza fina con la masa reposada.",
+            Paso(
+                resumen = "Extender la masa",
+                detallelargo = "Formar una base de pizza fina con la masa reposada.",
                 duracion = 10f
             ),
-            RecetaPaso(
-                paso = "Añadir ingredientes",
-                comentarios = "Cubrir con tomate triturado, mozzarella, albahaca y un chorrito de aceite.",
+            Paso(
+                resumen = "Añadir ingredientes",
+                detallelargo = "Cubrir con tomate triturado, mozzarella, albahaca y un chorrito de aceite.",
                 duracion = 5f
             ),
-            RecetaPaso(
-                paso = "Hornear",
-                comentarios = "Hornear a 220°C durante 15 minutos o hasta que la masa esté crujiente.",
+            Paso(
+                resumen = "Hornear",
+                detallelargo = "Hornear a 220°C durante 15 minutos o hasta que la masa esté crujiente.",
                 duracion = 15f
             )
         ),
@@ -200,7 +200,7 @@ fun DetalleRecetaScreenPreview(
 
     }
 }
-
+*/
 /*
 @Preview
 @Composable
@@ -271,7 +271,7 @@ fun ListaIngredientes(
 
                 ) {
                     Text(
-                        ingrediente.nombre,
+                        ingrediente.ingrediente.nombre,
                         fontSize = 16.sp
                     )
                     Text(
@@ -296,7 +296,7 @@ fun ListaIngredientes(
 
 @Composable
 fun ListaPasos(
-    pasos: List<RecetaPaso>
+    pasos: List<Paso>
 ) {
     LazyColumn(
         modifier = Modifier.padding(5.dp)
@@ -312,7 +312,7 @@ fun ListaPasos(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        paso.paso,
+                        paso.resumen,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -334,7 +334,7 @@ fun ListaPasos(
                 }
 
                 Text(
-                    paso.comentarios,
+                    paso.detallelargo,
                     fontSize = 16.sp,
                 )
             }
@@ -348,24 +348,24 @@ fun ListaPasos(
 ) {
 
     val pasos = listOf(
-        RecetaPaso(
-            paso = "Preparar la masa",
-            comentarios = "Mezclar harina, levadura, sal y agua hasta obtener una masa homogénea. Dejar reposar 1h.",
+        Paso(
+            resumen = "Preparar la masa",
+            detallelargo = "Mezclar harina, levadura, sal y agua hasta obtener una masa homogénea. Dejar reposar 1h.",
             duracion = 60f
         ),
-        RecetaPaso(
-            paso = "Extender la masa",
-            comentarios = "Formar una base de pizza fina con la masa reposada.",
+        Paso(
+            resumen = "Extender la masa",
+            detallelargo = "Formar una base de pizza fina con la masa reposada.",
             duracion = 10f
         ),
-        RecetaPaso(
-            paso = "Añadir ingredientes",
-            comentarios = "Cubrir con tomate triturado, mozzarella, albahaca y un chorrito de aceite.",
+        Paso(
+            resumen = "Añadir ingredientes",
+            detallelargo = "Cubrir con tomate triturado, mozzarella, albahaca y un chorrito de aceite.",
             duracion = 5f
         ),
-        RecetaPaso(
-            paso = "Hornear",
-            comentarios = "Hornear a 220°C durante 15 minutos o hasta que la masa esté crujiente.",
+        Paso(
+            resumen = "Hornear",
+            detallelargo = "Hornear a 220°C durante 15 minutos o hasta que la masa esté crujiente.",
             duracion = 15f
         )
     )
@@ -384,7 +384,7 @@ fun ListaPasos(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        paso.paso,
+                        paso.resumen,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -406,7 +406,7 @@ fun ListaPasos(
                 }
 
                 Text(
-                    paso.comentarios,
+                    paso.detallelargo,
                     fontSize = 16.sp,
                 )
             }
