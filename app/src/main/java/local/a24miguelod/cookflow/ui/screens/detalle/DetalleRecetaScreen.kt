@@ -39,13 +39,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
-import local.a24miguelod.cookflow.model.Paso
+import local.a24miguelod.cookflow.domain.model.RecetaPaso
 
 private const val TAG = "DetalleRecetaScreen"
 
 @Composable
 fun DetalleRecetaScreen(
     viewModel: DetalleRecetaViewModel = viewModel(factory = DetalleRecetaViewModel.Factory),
+    onFlowClick: (Receta) -> Unit,
 ) {
 
     Log.d(TAG, "Antes de cargar viewmodel")
@@ -92,8 +93,8 @@ fun DetalleRecetaScreen(
                 HorizontalDivider()
                 ListaPasos(receta.pasos)
 
-                Button(onClick = {}) {
-                    Text(text = "Ir al lista")
+                Button(onClick = { onFlowClick(receta) }) {
+                    Text(text = "Empezar!")
                 }
 
             }
@@ -296,7 +297,7 @@ fun ListaIngredientes(
 
 @Composable
 fun ListaPasos(
-    pasos: List<Paso>
+    pasos: List<RecetaPaso>
 ) {
     LazyColumn(
         modifier = Modifier.padding(5.dp)
@@ -348,22 +349,22 @@ fun ListaPasos(
 ) {
 
     val pasos = listOf(
-        Paso(
+        RecetaPaso(
             resumen = "Preparar la masa",
             detallelargo = "Mezclar harina, levadura, sal y agua hasta obtener una masa homogénea. Dejar reposar 1h.",
             duracion = 60f
         ),
-        Paso(
+        RecetaPaso(
             resumen = "Extender la masa",
             detallelargo = "Formar una base de pizza fina con la masa reposada.",
             duracion = 10f
         ),
-        Paso(
+        RecetaPaso(
             resumen = "Añadir ingredientes",
             detallelargo = "Cubrir con tomate triturado, mozzarella, albahaca y un chorrito de aceite.",
             duracion = 5f
         ),
-        Paso(
+        RecetaPaso(
             resumen = "Hornear",
             detallelargo = "Hornear a 220°C durante 15 minutos o hasta que la masa esté crujiente.",
             duracion = 15f

@@ -14,6 +14,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.CoroutineScope
 import local.a24miguelod.cookflow.ui.screens.detalle.DetalleRecetaScreen
+import local.a24miguelod.cookflow.ui.screens.flow.FlowScreen
 import local.a24miguelod.cookflow.ui.screens.lista.ListaRecetasScreen
 
 //
@@ -67,14 +68,21 @@ fun CookFlowNavGraph(
         composable(CookFlowRoutes.RECETAS_ROUTE) {
             Log.d(TAG, "antes de ListaRecetasScreen")
             ListaRecetasScreen(
-                onRecetaClick = { receta -> navActions.navigateToDetalleReceta(receta.nombre)}
-
+                onRecetaClick = { receta -> navActions.navigateToDetalleReceta(receta.id)}
             )
         }
 
         composable(CookFlowRoutes.RECETA_ROUTE) {
-            Log.d(TAG, "en receta route")
-            DetalleRecetaScreen()
+            Log.d(TAG, "en receta route. estoy aqui??")
+            DetalleRecetaScreen(
+                onFlowClick = { receta -> navActions.navigateToFlowReceta(receta.id)}
+            )
+        }
+
+        composable(CookFlowRoutes.FLOW_ROUTE) {
+            Log.d(TAG, "en flowreceta route")
+            FlowScreen(
+            )
         }
 
     }

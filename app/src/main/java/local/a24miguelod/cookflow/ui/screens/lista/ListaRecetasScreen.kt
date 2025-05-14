@@ -77,6 +77,7 @@ fun ListaRecetasScreen(
 fun ListaRecetasContent(
     recetas:List<Receta>,
     onRecetaClick: (Receta) -> Unit
+
 ) {
     Log.d(TAG, "ListaRecetasContent")
     Column(

@@ -14,7 +14,7 @@
     -->
     <color name="white">#FF606219</color>
 
-    <color name="splash_background">#FF121212</color>
+    <color name="splash_background">#FFFFFFFF</color>
     <color name="primary">#FFFFFFFF</color>
     <color name="secondary">#FFFFFFFF</color>
     <color name="tertiary">#FFFFFFFF</color>
