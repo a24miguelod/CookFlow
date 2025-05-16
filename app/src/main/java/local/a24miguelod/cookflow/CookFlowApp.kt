@@ -3,16 +3,9 @@ package local.a24miguelod.cookflow
 import android.app.Application
 import local.a24miguelod.cookflow.common.dependencies.AppInyectorContainer
 import local.a24miguelod.cookflow.common.dependencies.AppInyectorContainerImpl
-import local.a24miguelod.cookflow.common.dependencies.AppModule
-import local.a24miguelod.cookflow.common.dependencies.AppModuleImpl
 
 class CookFlowApp: Application() {
-    /**
-     * La instancia de AppInyectorContainer es utilizada por el resto de las clases para
-     * obtener dependencias
-     * */
-    lateinit var contenedor: AppInyectorContainer
-        private set // Solo se puede modificar desde esta clase
+
 
     /**
      * Inicializa el contenedor de inyección de dependencias.
@@ -23,11 +16,14 @@ class CookFlowApp: Application() {
     override fun onCreate() {
         super.onCreate()
         contenedor = AppInyectorContainerImpl()
-        appModule = AppModuleImpl(this)
-
     }
 
     companion object {
-        lateinit var appModule: AppModule
+        /**
+         * La instancia de AppInyectorContainer es utilizada por el resto de las clases para
+         * obtener dependencias
+         * */
+        lateinit var contenedor: AppInyectorContainer
+            private set // Solo se puede modificar desde esta clase
     }
 }

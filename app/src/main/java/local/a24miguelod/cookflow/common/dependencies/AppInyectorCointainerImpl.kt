@@ -24,8 +24,9 @@ class AppInyectorContainerImpl : AppInyectorContainer {
      * ApiFotosRepository es la interfaz que define el contrato para el repositorio de fotos.
      * Implementación de la interfaz FotosRepository.
      */
-    // Instanciación perezosa de ApiFotosRepository. Se crea la instancia cuando se necesita la
-    // primera vez y se reutiliza en toda la aplicación.
+
+    // Ver // https://www.youtube.com/watch?v=eX-y0IEHJjM&t=690s
+
     override val recetasRepository: RecetasRepository by lazy {
         RecetasRepositoryGithub()
     }

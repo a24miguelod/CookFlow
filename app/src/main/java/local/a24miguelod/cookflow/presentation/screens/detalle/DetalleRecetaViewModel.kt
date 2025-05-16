@@ -61,8 +61,7 @@ class DetalleRecetaViewModel(
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val application = (this[APPLICATION_KEY] as CookFlowApp)
-                val repository = application.contenedor.recetasRepository
+                val repository = CookFlowApp.contenedor.recetasRepository
                 val savedStateHandle = createSavedStateHandle()
                 DetalleRecetaViewModel(repository = repository,
                     savedStateHandle = savedStateHandle)
