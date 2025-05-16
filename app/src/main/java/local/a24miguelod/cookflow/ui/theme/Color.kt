@@ -40,41 +40,59 @@ val surfaceContainerHighLight = Color(0xFFE7E8EE)
 val surfaceContainerHighestLight = Color(0xFFE2E2E9)
 
  */
-val primaryLight = Color(0xFF415F91)
+// PRIMARY – Azul Cielo Vibrante
+val primaryLight = Color(0xFF3A86FF)
 val onPrimaryLight = Color(0xFFFFFFFF)
-val primaryContainerLight = Color(0xFFD6E3FF)
-val onPrimaryContainerLight = Color(0xFF284777)
-val secondaryLight = Color(0xFF565F71)
+val primaryContainerLight = Color(0xFFD6E7FF)
+val onPrimaryContainerLight = Color(0xFF002D6E)
+
+// SECONDARY – Coral Alegre
+val secondaryLight = Color(0xFFFF6B6B)
 val onSecondaryLight = Color(0xFFFFFFFF)
-val secondaryContainerLight = Color(0xFFDAE2F9)
-val onSecondaryContainerLight = Color(0xFF3E4759)
-val tertiaryLight = Color(0xFF705575)
-val onTertiaryLight = Color(0xFFFFFFFF)
-val tertiaryContainerLight = Color(0xFFFAD8FD)
-val onTertiaryContainerLight = Color(0xFF573E5C)
-val errorLight = Color(0xFFBA1A1A)
+val secondaryContainerLight = Color(0xFFFFD4D2)
+val onSecondaryContainerLight = Color(0xFF7C1E1E)
+
+// TERTIARY – Amarillo Sol
+val tertiaryLight = Color(0xFFFFD166)
+val onTertiaryLight = Color(0xFF3D3000)
+val tertiaryContainerLight = Color(0xFFFFF0C2)
+val onTertiaryContainerLight = Color(0xFF5C4A00)
+
+// ERROR – Rojo Frambuesa
+val errorLight = Color(0xFFFF4757)
 val onErrorLight = Color(0xFFFFFFFF)
-val errorContainerLight = Color(0xFFFFDAD6)
-val onErrorContainerLight = Color(0xFF93000A)
-val backgroundLight = Color(0xFFF9F9FF)    // fondo de la app
-val onBackgroundLight = Color(0xFF191C20)
-val surfaceLight = Color(0xFFF9F9FF)
-val onSurfaceLight = Color(0xFF191C20)
-val surfaceVariantLight = Color(0xFFE0E2EC)  // fondo de cards
-val onSurfaceVariantLight = Color(0xFF44474E)   // texto en card
-val outlineLight = Color(0xFF74777F)
-val outlineVariantLight = Color(0xFFC4C6D0)
-val scrimLight = Color(0xFF000000)
-val inverseSurfaceLight = Color(0xFF2E3036)
-val inverseOnSurfaceLight = Color(0xFFF0F0F7)
-val inversePrimaryLight = Color(0xFFAAC7FF)
-val surfaceDimLight = Color(0xFFD9D9E0)
-val surfaceBrightLight = Color(0xFFF9F9FF)
+val errorContainerLight = Color(0xFFFFDAD9)
+val onErrorContainerLight = Color(0xFF7A0012)
+
+// BACKGROUND & SURFACES – Blanco cálido con grises suaves
+val backgroundLight = Color(0xFFF8F9FA)
+val onBackgroundLight = Color(0xFF1A1E24)
+
+val surfaceLight = Color(0xFFFFFFFF)
+val onSurfaceLight = Color(0xFF2D3748)
+
+val surfaceVariantLight = Color(0xFFE9ECEF)
+val onSurfaceVariantLight = Color(0xFF4A5568)
+
+// OTROS – outline y variantes
+val outlineLight = Color(0xFFA0AEC0)
+val outlineVariantLight = Color(0xFFCBD5E0)
+
+val scrimLight = Color(0x66000000)
+
+val inverseSurfaceLight = Color(0xFF2D3748)
+val inverseOnSurfaceLight = Color(0xFFF8F9FA)
+val inversePrimaryLight = Color(0xFF80B1FF)
+
+// Containers para efectos de elevación (jerarquía visual)
+val surfaceDimLight = Color(0xFFE2E8F0)
+val surfaceBrightLight = Color(0xFFFFFFFF)
 val surfaceContainerLowestLight = Color(0xFFFFFFFF)
-val surfaceContainerLowLight = Color(0xFFF3F3FA)
-val surfaceContainerLight = Color(0xFFEDEDF4)
-val surfaceContainerHighLight = Color(0xFFE7E8EE)
-val surfaceContainerHighestLight = Color(0xFFE2E2E9)
+val surfaceContainerLowLight = Color(0xFFF1F5F9)
+val surfaceContainerLight = Color(0xFFEBF0F5)
+val surfaceContainerHighLight = Color(0xFFE5EBF1)
+val surfaceContainerHighestLight = Color(0xFFDFE6EC)
+
 
 val primaryLightMediumContrast = Color(0xFF133665)
 val onPrimaryLightMediumContrast = Color(0xFFFFFFFF)

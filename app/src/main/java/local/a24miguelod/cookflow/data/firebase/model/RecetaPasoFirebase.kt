@@ -1,4 +1,4 @@
-package local.a24miguelod.cookflow.data.remote.model
+package local.a24miguelod.cookflow.data.firebase.model
 
 data class RecetaPasoFirebase(
     var uuidRecetaPaso: String,

@@ -7,13 +7,12 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
-import local.a24miguelod.cookflow.data.remote.mappers.RecetaFirebaseToModel
-import local.a24miguelod.cookflow.data.remote.mappers.RecetaPasoFirebaseToModel
-import local.a24miguelod.cookflow.data.remote.model.RecetaFirebase
+import local.a24miguelod.cookflow.data.firebase.mappers.RecetaFirebaseToModel
+import local.a24miguelod.cookflow.data.firebase.mappers.RecetaPasoFirebaseToModel
+import local.a24miguelod.cookflow.data.firebase.model.RecetaFirebase
 import local.a24miguelod.cookflow.domain.model.Ingrediente
 import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
-import local.a24miguelod.cookflow.domain.model.RecetaPaso
 
 private const val TAG = "RecetasRepositoryFirebase"
 
@@ -80,7 +79,10 @@ class RecetasRepositoryFirebase : RecetasRepository {
             .document(id)  //
             .get()
             .await()
-        val recetaFirebase = snapshot.toObject(RecetaFirebase::class.java)
+        val recetaFirebase = snapshot.toObject(RecetaFirebase::class.java)?.apply {
+            uuidReceta = snapshot.id
+        }
+
         val receta = RecetaFirebaseToModel().mapFrom(recetaFirebase)
 
         //TODO:Refactorizar, se repite en getRecetas

@@ -1,6 +1,8 @@
 package local.a24miguelod.cookflow.ui.screens.detalle
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 
 
@@ -34,15 +36,18 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
 import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
+import java.time.format.TextStyle
 
 private const val TAG = "DetalleRecetaScreen"
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DetalleRecetaScreen(
     viewModel: DetalleRecetaViewModel = viewModel(factory = DetalleRecetaViewModel.Factory),
@@ -66,23 +71,30 @@ fun DetalleRecetaScreen(
         is DetalleRecetaUIState.Success -> {
             val sucessState = estado as DetalleRecetaUIState.Success
             val receta = sucessState.receta
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+                item {
+                    Log.d(TAG, "Estoy en el composable ${receta.toString()}")
+                    AsyncImage(
+                        model = "https://www.shutterstock.com/shutterstock/photos/2551690255/display_1500/stock-photo-asian-woman-portrait-and-dancing-with-kimono-in-city-for-performance-tradition-or-kpop-culture-in-2551690255.jpg",
+                        contentDescription = receta.descripcion,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .fillMaxWidth()
+                            .height(300.dp)
+                    )
+                    Text(
+                        receta.nombre,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        modifier = Modifier.padding(8.dp),
 
-                AsyncImage(
-                    model = receta.urlimagen,
-                    contentDescription = receta.descripcion,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(8.dp))
-                        .fillMaxWidth()
-                        .height(300.dp)
-                )
-                Text(
-                    receta.nombre,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
-                    modifier = Modifier.padding(8.dp)
-                )
+                        style = androidx.compose.ui.text.TextStyle(
+                            fontSize = 24.sp,
+                            lineHeight = 1.5.em
+                        )
+                    )
+
                 HorizontalDivider()
                 Text(
                     receta.descripcion,
@@ -96,10 +108,11 @@ fun DetalleRecetaScreen(
                 Button(onClick = { onFlowClick(receta) }) {
                     Text(text = "Empezar!")
                 }
-
             }
+
         }
     }
+}
 }
 /*
 @Composable
@@ -232,16 +245,16 @@ fun ListaIngredientesPreview(
 fun ListaIngredientes(
     ingredientes: List<IngredienteReceta>
 ) {
-    LazyColumn(
+    Column(
         modifier = Modifier.padding(10.dp)
     ) {
-        items(ingredientes) { ingrediente ->
+        ingredientes.forEach { ingrediente ->
 
 
             Row(
                 modifier = Modifier
-                    .padding(0.dp)
-                    .fillParentMaxWidth(),
+
+                    .padding(0.dp),
                 verticalAlignment = Alignment.CenterVertically
             )
             {
@@ -299,14 +312,13 @@ fun ListaIngredientes(
 fun ListaPasos(
     pasos: List<RecetaPaso>
 ) {
-    LazyColumn(
+    Column(
         modifier = Modifier.padding(5.dp)
     ) {
-        items(pasos) { paso ->
+        pasos.forEach { paso ->
             Column(
                 modifier = Modifier
                     .padding(12.dp)
-                    .fillParentMaxWidth()
             )
             {
                 Row(

@@ -3,9 +3,6 @@ package local.a24miguelod.cookflow
 import android.app.Application
 import local.a24miguelod.cookflow.data.dependencies.AppInyectorContainer
 import local.a24miguelod.cookflow.data.dependencies.AppInyectorContainerImpl
-import coil3.ImageLoader
-import coil3.SingletonImageLoader
-
 
 class CookFlowApp: Application() {
     /**

@@ -69,13 +69,17 @@ dependencies {
     // Para Compose LiveData:
     // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-livedata
 
-    // retrofit
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-
     // coil
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+
+    // kthor (lo hago de forma habitual, no como en https://ktor.io/docs/client-create-new-application.html#add-dependencies)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.cio)
+
+    //https://ktor.io/docs/client-serialization.html#serialization_dependency
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
 
 
     implementation(libs.androidx.lifecycle.livedata)

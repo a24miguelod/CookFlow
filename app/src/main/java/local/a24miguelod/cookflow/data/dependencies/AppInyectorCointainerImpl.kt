@@ -5,6 +5,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import local.a24miguelod.cookflow.data.repository.RecetasRepositoryFirebase
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
+import local.a24miguelod.cookflow.data.repository.RecetasRepositoryGithub
 
 
 /**
@@ -28,6 +29,6 @@ class AppInyectorContainerImpl : AppInyectorContainer {
     // Instanciación perezosa de ApiFotosRepository. Se crea la instancia cuando se necesita la
     // primera vez y se reutiliza en toda la aplicación.
     override val recetasRepository: RecetasRepository by lazy {
-        RecetasRepositoryFirebase()
+        RecetasRepositoryGithub()
     }
 }

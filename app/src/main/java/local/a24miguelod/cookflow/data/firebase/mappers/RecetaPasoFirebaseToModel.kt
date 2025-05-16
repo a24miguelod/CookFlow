@@ -1,9 +1,7 @@
-package local.a24miguelod.cookflow.data.remote.mappers
+package local.a24miguelod.cookflow.data.firebase.mappers
 
 import local.a24miguelod.cookflow.common.Mapper
-import local.a24miguelod.cookflow.data.remote.model.RecetaFirebase
-import local.a24miguelod.cookflow.data.remote.model.RecetaPasoFirebase
-import local.a24miguelod.cookflow.domain.model.Receta
+import local.a24miguelod.cookflow.data.firebase.model.RecetaPasoFirebase
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
 
 

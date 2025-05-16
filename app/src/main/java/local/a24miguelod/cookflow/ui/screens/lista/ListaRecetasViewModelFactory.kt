@@ -9,7 +9,7 @@ import local.a24miguelod.cookflow.data.repository.RecetasRepository
 
 
 class ListaRecetasViewModelFactory(
-    private val owner: SavedStateRegistryOwner,
+    owner: SavedStateRegistryOwner,
     private val repository: RecetasRepository
 ) : AbstractSavedStateViewModelFactory(owner, null) {
 

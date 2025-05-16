@@ -17,7 +17,7 @@ import local.a24miguelod.cookflow.CookFlowApp
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.domain.model.Receta
 
-private const val TAG = "ListaRecestasScreen"
+private const val TAG = "DetalleRecetaViewModel"
 
 sealed class DetalleRecetaUIState {
     data object Loading : DetalleRecetaUIState()
@@ -34,12 +34,12 @@ class DetalleRecetaViewModel(
 ) : ViewModel() {
 
     private val recetaUuid:String = savedStateHandle[CockFlowDestinationsArgs.RECETA_ID]!!
-
     private val _estado = MutableStateFlow<DetalleRecetaUIState>(DetalleRecetaUIState.Loading)
     val estado: StateFlow<DetalleRecetaUIState> = _estado
 
     init {
-        val receta = getReceta(recetaUuid)
+        Log.d(TAG, "savedStateHandle $recetaUuid")
+        getReceta(recetaUuid)
     }
     private fun getReceta(uuidReceta: String) {
         _estado.value = DetalleRecetaUIState.Loading
