@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import local.a24miguelod.cookflow.presentation.navigation.CookFlowNavGraph
 import local.a24miguelod.cookflow.R
-import local.a24miguelod.cookflow.ui.theme.CookFlowTheme
+import local.a24miguelod.cookflow.presentation.theme.CookFlowTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

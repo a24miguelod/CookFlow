@@ -30,7 +30,6 @@ sealed class ListaRecetasUIState {
 
 class ListaRecetasViewModel(
     private val repository:RecetasRepository,
-    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _estado = MutableStateFlow<ListaRecetasUIState>(ListaRecetasUIState.Loading)
@@ -78,7 +77,6 @@ class ListaRecetasViewModel(
                 val savedStateHandle = createSavedStateHandle()
                 ListaRecetasViewModel(
                     repository = repository,
-                    savedStateHandle = savedStateHandle
                 )
             }
         }

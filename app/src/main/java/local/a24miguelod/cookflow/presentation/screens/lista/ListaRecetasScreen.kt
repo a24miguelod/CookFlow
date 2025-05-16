@@ -62,8 +62,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-
-
+import local.a24miguelod.cookflow.CookFlowApp
 
 import local.a24miguelod.cookflow.domain.model.Receta
 
@@ -76,6 +75,7 @@ fun ListaRecetasScreen(
     onRecetaClick: (Receta) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+
     val estado by viewModel.estado.collectAsState()
 
     // https://developer.android.com/develop/ui/compose/components/scaffold?hl=es-419

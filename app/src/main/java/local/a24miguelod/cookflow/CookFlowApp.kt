@@ -1,8 +1,10 @@
 package local.a24miguelod.cookflow
 
 import android.app.Application
-import local.a24miguelod.cookflow.data.dependencies.AppInyectorContainer
-import local.a24miguelod.cookflow.data.dependencies.AppInyectorContainerImpl
+import local.a24miguelod.cookflow.common.dependencies.AppInyectorContainer
+import local.a24miguelod.cookflow.common.dependencies.AppInyectorContainerImpl
+import local.a24miguelod.cookflow.common.dependencies.AppModule
+import local.a24miguelod.cookflow.common.dependencies.AppModuleImpl
 
 class CookFlowApp: Application() {
     /**
@@ -21,6 +23,11 @@ class CookFlowApp: Application() {
     override fun onCreate() {
         super.onCreate()
         contenedor = AppInyectorContainerImpl()
+        appModule = AppModuleImpl(this)
 
+    }
+
+    companion object {
+        lateinit var appModule: AppModule
     }
 }

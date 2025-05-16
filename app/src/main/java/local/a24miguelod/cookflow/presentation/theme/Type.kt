@@ -1,4 +1,4 @@
-package local.a24miguelod.cookflow.ui.theme
+package local.a24miguelod.cookflow.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

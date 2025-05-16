@@ -1,9 +1,8 @@
-package local.a24miguelod.cookflow.data.dependencies
+package local.a24miguelod.cookflow.common.dependencies
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import local.a24miguelod.cookflow.data.repository.RecetasRepositoryFirebase
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.data.repository.RecetasRepositoryGithub
 
@@ -14,7 +13,6 @@ import local.a24miguelod.cookflow.data.repository.RecetasRepositoryGithub
  */
 class AppInyectorContainerImpl : AppInyectorContainer {
 
-    // TODO:organizar estos comentarios cuando lo tenga claro
     /**
      * Usamos el constructor de Retrofit para crear un objeto retrofit usando un
      * convertidor de kotlinx.serialization (en otros ejemplos he usado Gson o Moshi)

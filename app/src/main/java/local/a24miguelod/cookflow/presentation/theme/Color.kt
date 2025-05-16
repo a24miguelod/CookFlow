@@ -1,4 +1,4 @@
-package local.a24miguelod.cookflow.ui.theme
+package local.a24miguelod.cookflow.presentation.theme
 import androidx.compose.ui.graphics.Color
 
 /*
