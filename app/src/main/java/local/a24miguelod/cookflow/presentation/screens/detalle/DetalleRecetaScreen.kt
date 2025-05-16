@@ -49,7 +49,7 @@ private const val TAG = "DetalleRecetaScreen"
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DetalleRecetaScreen(
-    viewModel: DetalleRecetaViewModel = viewModel(factory = DetalleRecetaViewModel.Factory),
+    viewModel:DetalleRecetaViewModel,
     onFlowClick: (Receta) -> Unit,
 ) {
 
@@ -74,7 +74,7 @@ fun DetalleRecetaScreen(
                 item {
                     Log.d(TAG, "Estoy en el composable ${receta.toString()}")
                     AsyncImage(
-                        model = "https://www.shutterstock.com/shutterstock/photos/2551690255/display_1500/stock-photo-asian-woman-portrait-and-dancing-with-kimono-in-city-for-performance-tradition-or-kpop-culture-in-2551690255.jpg",
+                        model = receta.urlimagen,
                         contentDescription = receta.descripcion,
                         contentScale = ContentScale.Crop,
                         modifier = Modifier

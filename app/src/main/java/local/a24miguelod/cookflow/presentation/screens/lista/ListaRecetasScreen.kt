@@ -71,7 +71,7 @@ private const val TAG = "ListaRecestasScreen"
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListaRecetasScreen(
-    viewModel: ListaRecetasViewModel = viewModel(factory = ListaRecetasViewModel.Factory),
+    viewModel: ListaRecetasViewModel,
     onRecetaClick: (Receta) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -195,8 +195,6 @@ fun RecetaItem(
         shape = RoundedCornerShape(4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
-        Log.d(TAG, "En onclick va a receta ${receta.nombre}")
-        Log.d(TAG, "En onclick va a receta ${receta.urlimagen}")
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -271,99 +269,6 @@ fun BotonConIconoYTexto(
 }
 
 
-//
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun ListaRecetasScreen(
-//) {
-//    Column(
-//        Modifier
-//            .fillMaxSize()
-//    ) {
-//        var expanded by remember { mutableStateOf(false) }
-//
-//        TopAppBar(
-//            title = { Text(text = stringResource(R.string.app_name)) },
-//
-//
-//            actions = {
-//                IconButton(onClick = { expanded = true }) {
-//                    Icon(Icons.Default.MoreVert, contentDescription = "Menú")
-//                }
-//                DropdownMenu(
-//                    expanded = expanded,
-//                    onDismissRequest = { expanded = false }
-//                ) {
-//                    DropdownMenuItem(
-//                        text = { Text("Configuración") },
-//                        onClick = { /* TODO */ }
-//                    )
-//                    DropdownMenuItem(
-//                        text = { Text("Cerrar sesión") },
-//                        onClick = { /* TODO */ }
-//                    )
-//                }
-//            }
-//        )
-//
-//
-//    }
-//}
-//
-//@Composable
-//fun RecetaItem(receta: Receta) {
-//    Card(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(8.dp),
-//        shape = RoundedCornerShape(12.dp),
-//        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-//    ) {
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(8.dp)
-//        ) {
-//            AsyncImage(
-//                model = receta.urlimagen,
-//                contentDescription = "Imagen de ${receta.nombre}",
-//                contentScale = ContentScale.Crop,
-//                modifier = Modifier
-//                    .clip(RoundedCornerShape(8.dp))
-//                    .height(120.dp)
-//                    .width(90.dp)
-//            )
-//
-//            Spacer(modifier = Modifier.width(12.dp))
-//
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .align(Alignment.CenterVertically)
-//            ) {
-//                Text(
-//                    text = receta.nombre.orEmpty(),
-//                    fontWeight = FontWeight.Bold,
-//                    fontSize = 18.sp,
-//                    maxLines = 1,
-//                    overflow = TextOverflow.Ellipsis
-//                )
-//
-//                Spacer(modifier = Modifier.height(4.dp))
-//
-//                Text(
-//                    text = receta.descripcion.orEmpty(),
-//                    fontSize = 14.sp,
-//                    maxLines = 3,
-//                    overflow = TextOverflow.Ellipsis
-//                )
-//
-//                RecetaBadge(true, {  }, listOf("Prueba","Otra"))
-//            }
-//        }
-//    }
-//}
-//
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RecetaBadge(

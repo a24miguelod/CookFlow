@@ -8,7 +8,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.presentation.screens.lista.ListaRecetasViewModel
 
-class DetalleRecetaViewModelFactory(
+class DetalleRecetaViewModelFactoryNoSeUtiliza(
     private val owner: SavedStateRegistryOwner,
     private val repository: RecetasRepository
 ) : AbstractSavedStateViewModelFactory(owner, null) {

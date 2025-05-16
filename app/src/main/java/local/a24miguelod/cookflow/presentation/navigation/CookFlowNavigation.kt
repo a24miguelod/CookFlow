@@ -66,7 +66,7 @@ class CookFlowNavigationActions(private val navController: NavHostController) {
 
     fun navigateToDetalleReceta(uuidReceta: String) {
         Log.d(TAG, "Navegar a receta '$RECETA_SCREEN/$uuidReceta' $uuidReceta")
-        navController.navigate("$RECETA_SCREEN/$uuidReceta")
+        navController.navigate("$RECETA_SCREEN/${uuidReceta}")
     }
 
     fun navigateToFlowReceta(uuidReceta: String) {

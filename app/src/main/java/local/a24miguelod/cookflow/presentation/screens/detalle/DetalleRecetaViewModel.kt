@@ -39,6 +39,8 @@ class DetalleRecetaViewModel(
 
     init {
         Log.d(TAG, "savedStateHandle $recetaUuid")
+        Log.d(TAG, "Inicializando DetalleRecetaViewModel")
+        Log.d(TAG, "SavedStateHandle keys: ${savedStateHandle.keys().joinToString()}")
         getReceta(recetaUuid)
     }
     private fun getReceta(uuidReceta: String) {

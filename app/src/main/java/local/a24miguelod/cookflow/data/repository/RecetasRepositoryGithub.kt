@@ -93,7 +93,6 @@ class RecetasRepositoryGithub : RecetasRepository {
                     Log.d(TAG, "IMagen!")
                     Log.d(TAG, urlImagen.toString())
                 }
-
                 linea.startsWith("## Ingredientes") -> {
                     seccionActual = "ingredientes"
                 }
@@ -115,7 +114,7 @@ class RecetasRepositoryGithub : RecetasRepository {
                     )
                 }
 
-                linea.startsWith("## Preparacion") && seccionActual == "ingredientes" -> {
+                linea.startsWith("## Prepa") && seccionActual == "ingredientes" -> {
                     seccionActual = "pasos"
                 }
 
@@ -135,9 +134,9 @@ class RecetasRepositoryGithub : RecetasRepository {
                     pasoDescripcion.clear()
 
                 }
-                linea.startsWith("Duracion: ") && (seccionActual == "pasos") -> {
-                    pasoDuracion = linea.removePrefix("Duracion: ")
-                        .split(" ", limit = 2).get(0).toFloat()
+                Regex("^Duraci[oó]n:", RegexOption.IGNORE_CASE).find(linea) != null && (seccionActual == "pasos") -> {
+                    pasoDuracion = linea.split(" ", limit = 3)[1].toFloat()
+                    Log.d(TAG, "Duracion $pasoDuracion")
                 }
 
                 //else
