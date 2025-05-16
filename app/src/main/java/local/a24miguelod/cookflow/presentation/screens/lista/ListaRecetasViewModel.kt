@@ -1,4 +1,4 @@
-package local.a24miguelod.cookflow.ui.screens.lista
+package local.a24miguelod.cookflow.presentation.screens.lista
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle

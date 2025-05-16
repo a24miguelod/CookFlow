@@ -1,14 +1,13 @@
-package local.a24miguelod.cookflow.ui.screens.detalle
+package local.a24miguelod.cookflow.presentation.screens.flow
 
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.savedstate.SavedStateRegistryOwner
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
-import local.a24miguelod.cookflow.ui.screens.lista.ListaRecetasViewModel
 
-class DetalleRecetaViewModelFactory(
+
+class FlowViewModelFactory(
     private val owner: SavedStateRegistryOwner,
     private val repository: RecetasRepository
 ) : AbstractSavedStateViewModelFactory(owner, null) {
@@ -18,6 +17,6 @@ class DetalleRecetaViewModelFactory(
         modelClass: Class<T>,
         handle: SavedStateHandle
     ): T {
-        return DetalleRecetaViewModel(repository, handle) as T
+        return FlowViewModel(repository, handle) as T
     }
 }

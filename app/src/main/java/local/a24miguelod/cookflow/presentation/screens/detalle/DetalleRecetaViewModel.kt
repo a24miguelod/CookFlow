@@ -1,4 +1,4 @@
-package local.a24miguelod.cookflow.ui.screens.detalle
+package local.a24miguelod.cookflow.presentation.screens.detalle
 
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import local.a24miguelod.cookflow.CockFlowDestinationsArgs
+import local.a24miguelod.cookflow.presentation.navigation.CockFlowDestinationsArgs
 import local.a24miguelod.cookflow.CookFlowApp
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.domain.model.Receta

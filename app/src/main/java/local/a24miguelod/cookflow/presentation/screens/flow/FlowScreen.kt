@@ -1,4 +1,4 @@
-package local.a24miguelod.cookflow.ui.screens.flow
+package local.a24miguelod.cookflow.presentation.screens.flow
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement

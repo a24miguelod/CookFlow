@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import local.a24miguelod.cookflow.CookFlowNavGraph
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowNavGraph
 import local.a24miguelod.cookflow.R
 import local.a24miguelod.cookflow.ui.theme.CookFlowTheme
 

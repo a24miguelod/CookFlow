@@ -1,4 +1,4 @@
-package local.a24miguelod.cookflow.ui.screens.detalle
+package local.a24miguelod.cookflow.presentation.screens.detalle
 
 import android.os.Build
 import android.util.Log
@@ -43,7 +43,6 @@ import coil3.compose.AsyncImage
 import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
-import java.time.format.TextStyle
 
 private const val TAG = "DetalleRecetaScreen"
 

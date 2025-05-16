@@ -1,13 +1,17 @@
-package local.a24miguelod.cookflow
+package local.a24miguelod.cookflow.presentation.navigation
 
 import android.util.Log
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import local.a24miguelod.cookflow.CockFlowDestinationsArgs.RECETA_ID
-import local.a24miguelod.cookflow.CookFlowRoutes.RECETAS_ROUTE
-import local.a24miguelod.cookflow.CookFlowScreens.FLOW_SCREEN
-import local.a24miguelod.cookflow.CookFlowScreens.RECETAS_SCREEN
-import local.a24miguelod.cookflow.CookFlowScreens.RECETA_SCREEN
+import local.a24miguelod.cookflow.presentation.navigation.CockFlowDestinationsArgs.RECETA_ID
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowRoutes.DESPENSA_ROUTE
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowRoutes.LISTA_COMPRA_ROUTE
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowRoutes.RECETAS_ROUTE
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowScreens.DESPENSA_SCREEN
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowScreens.FLOW_SCREEN
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowScreens.LISTA_COMPRA_SCREEN
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowScreens.RECETAS_SCREEN
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowScreens.RECETA_SCREEN
 
 private const val TAG="CookFlowNavigation"
 
@@ -18,6 +22,8 @@ private object CookFlowScreens {
     const val RECETAS_SCREEN = "recetas"
     const val RECETA_SCREEN = "receta"
     const val FLOW_SCREEN = "flow"
+    const val DESPENSA_SCREEN = "despensa"
+    const val LISTA_COMPRA_SCREEN = "listacompora"
 }
 
 /**
@@ -34,6 +40,8 @@ object CookFlowRoutes {
     const val RECETAS_ROUTE = RECETAS_SCREEN
     const val RECETA_ROUTE = "$RECETA_SCREEN/{$RECETA_ID}"
     const val FLOW_ROUTE = "$FLOW_SCREEN/{$RECETA_ID}"
+    const val DESPENSA_ROUTE = DESPENSA_SCREEN
+    const val LISTA_COMPRA_ROUTE = LISTA_COMPRA_SCREEN
 }
 
 /**
@@ -64,6 +72,13 @@ class CookFlowNavigationActions(private val navController: NavHostController) {
     fun navigateToFlowReceta(uuidReceta: String) {
         Log.d(TAG, "Comenzar flow a receta '$FLOW_SCREEN/$uuidReceta' $uuidReceta")
         navController.navigate("$FLOW_SCREEN/$uuidReceta")
+    }
+
+    fun navigateToDespensa() {
+        navController.navigate(DESPENSA_ROUTE)
+    }
+    fun navigateToListaCompra() {
+        navController.navigate(LISTA_COMPRA_ROUTE)
     }
 
 
