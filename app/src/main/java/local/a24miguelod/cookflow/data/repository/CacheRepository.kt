@@ -12,5 +12,6 @@ interface CacheRepository {
     fun getAllIngredientes(): Flow<List<Ingrediente>>
     suspend fun setIngredienteDisponible(id: String, disponible: Boolean)
     suspend fun setIngredienteEnListaCompra(id: String, listaCompra: Boolean)
+    fun getListaDeLaCompra(): Flow<List<Ingrediente>>
 
 }

@@ -11,7 +11,7 @@ import local.a24miguelod.cookflow.data.local.entities.IngredienteEntity
 @Dao
 interface IngredienteDao {
 
-    @Query("SELECT * from Ingrediente")
+    @Query("SELECT * from Ingrediente order by nombre")
     fun getAllIngredientes(): Flow<List<IngredienteEntity>>  // room ya hace el emit
 
     @Query("SELECT * FROM Ingrediente WHERE ingredienteId = :id")
@@ -26,11 +26,14 @@ interface IngredienteDao {
     @Query("UPDATE ingrediente SET enListaCompra = :enListaCompra WHERE ingredienteId = :id")
     suspend fun updateEnListaCompra(id: String, enListaCompra: Boolean)
 
-    @Query("SELECT * FROM Ingrediente WHERE ingredienteId IN (:ids)")
+    @Query("SELECT * FROM Ingrediente WHERE ingredienteId IN (:ids) order by nombre")
     fun getIngredientesPorIds(ids: List<String>): Flow<List<IngredienteEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(ingrediente: IngredienteEntity)
+    @Query("SELECT * FROM Ingrediente WHERE enListaCompra = 1 order by nombre")
+    fun getListaDeLaCompra(): Flow<List<IngredienteEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertarIngrediente(ingrediente: IngredienteEntity)
 
     @Delete
     suspend fun delete(ingrediente: IngredienteEntity)

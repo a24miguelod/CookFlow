@@ -58,6 +58,7 @@ import coil3.compose.AsyncImage
 import local.a24miguelod.cookflow.CookFlowApp
 
 import local.a24miguelod.cookflow.domain.model.Receta
+import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
 
 private const val TAG = "ListaRecestasScreen"
 
@@ -67,63 +68,19 @@ fun ListaRecetasScreen(
     viewModel: ListaRecetasViewModel,
     onRecetaClick: (Receta) -> Unit,
     onDespensaClick: () -> Unit,
+    onHomeClick: () -> Unit,
     onListaCompraClick: () -> Unit,
 ) {
 
     val estado by viewModel.estado.collectAsState()
 
     // https://developer.android.com/develop/ui/compose/components/scaffold?hl=es-419
-    Scaffold(
-        topBar = {
-            TopAppBar(
 
-                colors = topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
-                title = {
-                    Text("Top app bar")
-                }
-            )
-        },
-        bottomBar = {
-            BottomAppBar(
-                content = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    )
-                    {
-                        BotonConIconoYTexto(
-                            icon = Icons.Default.Home,
-                            text = "Recetas",
-                            onClick = {  },
-                            modifier = Modifier.weight(1f)
-                        )
-                        BotonConIconoYTexto(
-                            icon = Icons.AutoMirrored.Filled.List,
-                            text = "Despensa",
-                            onClick = { onDespensaClick() },
-                            modifier = Modifier.weight(1f)
-                        )
-                        BotonConIconoYTexto(
-                            icon = Icons.Default.ShoppingCart,
-                            text = "Lista de la compra",
-                            onClick = { onListaCompraClick() },
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                }
-
-
-            )
-
-        },
-    )
-    { paddingValues ->
+    CookFlowScaffold (
+        onDespensaClick = onDespensaClick,
+        onListaCompraClick = onListaCompraClick,
+        onHomeClick = onHomeClick
+    ) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()

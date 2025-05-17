@@ -15,12 +15,14 @@ import local.a24miguelod.cookflow.CookFlowApp
 import local.a24miguelod.cookflow.presentation.navigation.CockFlowDestinationsArgs.RECETA_ID
 import local.a24miguelod.cookflow.presentation.screens.despensa.DespensaScreen
 import local.a24miguelod.cookflow.presentation.screens.despensa.DespensaViewModel
+import local.a24miguelod.cookflow.presentation.screens.despensa.ListaCompraScreen
 import local.a24miguelod.cookflow.presentation.screens.detalle.DetalleRecetaScreen
 import local.a24miguelod.cookflow.presentation.screens.detalle.DetalleRecetaViewModel
 import local.a24miguelod.cookflow.presentation.screens.flow.FlowScreen
 import local.a24miguelod.cookflow.presentation.screens.flow.FlowViewModel
 import local.a24miguelod.cookflow.presentation.screens.lista.ListaRecetasScreen
 import local.a24miguelod.cookflow.presentation.screens.lista.ListaRecetasViewModel
+import local.a24miguelod.cookflow.presentation.screens.lista_compra.ListaCompraViewModel
 
 import local.a24miguelod.cookflow.presentation.viewModelFactory
 
@@ -59,6 +61,7 @@ fun CookFlowNavGraph(
                 },
                 onDespensaClick = { navController.navigate(DestinationDespensa) },
                 onListaCompraClick = { navController.navigate(DestinationDespensa) },
+                onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
             )
         }
 
@@ -85,7 +88,10 @@ fun CookFlowNavGraph(
                 },
                 onToggleDespensa = { ingredienteReceta ->
                     viewModel.toggleDespensa(ingredienteReceta.ingrediente)
-                }
+                },
+                onDespensaClick = { navController.navigate(DestinationDespensa) },
+                onListaCompraClick = { navController.navigate(DestinationDespensa) },
+                onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
             )
         }
 
@@ -101,7 +107,10 @@ fun CookFlowNavGraph(
                 }
             )
             FlowScreen(
-                viewModel
+                viewModel,
+                onDespensaClick = { navController.navigate(DestinationDespensa) },
+                onListaCompraClick = { navController.navigate(DestinationDespensa) },
+                onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
             )
         }
 
@@ -118,24 +127,29 @@ fun CookFlowNavGraph(
                 onToggleDespensa = { ingrediente ->
                     viewModel.toggleDespensa(ingrediente)
                 },
-                onAnadirAlCarrito = { }
+                onAnadirAlCarrito = { },
+                onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
+                onDespensaClick = { navController.navigate(DestinationDespensa) },
+                onListaCompraClick = { navController.navigate(DestinationDespensa) }
             )
         }
 
         composable<DestinationListaCompra> {
-            val viewModel = viewModel<DespensaViewModel>(
+            val viewModel = viewModel<ListaCompraViewModel>(
                 factory = viewModelFactory {
-                    DespensaViewModel(
+                    ListaCompraViewModel(
                         CookFlowApp.contenedor.cacheRepository,
                     )
                 }
             )
-            DespensaScreen(
+            ListaCompraScreen(
                 viewModel,
-                onToggleDespensa = { ingrediente ->
-                    viewModel.toggleDespensa(ingrediente)
+                onEliminarDeListaDeLaCompra = { ingrediente ->
+                    viewModel.eliminarDeListaDeLaCompra(ingrediente)
                 },
-                onAnadirAlCarrito = { }
+                onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
+                onDespensaClick = { navController.navigate(DestinationDespensa) },
+                onListaCompraClick = { navController.navigate(DestinationDespensa) },
             )
         }
     }

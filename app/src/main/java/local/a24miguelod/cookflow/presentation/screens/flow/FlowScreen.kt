@@ -18,6 +18,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.CheckCircle
@@ -50,7 +52,10 @@ private const val TAG = "FlowScreen"
 
 @Composable
 fun FlowScreen(
-    viewModel: FlowViewModel
+    viewModel: FlowViewModel,
+    onDespensaClick: () -> Unit,
+    onListaCompraClick: () -> Unit,
+    onHomeClick: () -> Unit,
 ) {
 
     val estado by viewModel.estado.collectAsState()
@@ -182,7 +187,7 @@ fun FlowScreenContent(
                     onClick = onPreviousClick,
                     enabled = paso > 0
                 ) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = null)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("Anterior")
                 }
@@ -193,7 +198,7 @@ fun FlowScreenContent(
                 ) {
                     Text(if (paso < receta.pasos.size) "Siguiente" else "Recetas")
                     Spacer(modifier = Modifier.width(8.dp))
-                    Icon(Icons.Default.ArrowForward, contentDescription = null)
+                    Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
                 }
             }
         }

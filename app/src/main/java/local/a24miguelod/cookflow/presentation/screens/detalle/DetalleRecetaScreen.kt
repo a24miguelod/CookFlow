@@ -44,6 +44,7 @@ import local.a24miguelod.cookflow.domain.model.Ingrediente
 import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
+import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
 
 private const val TAG = "DetalleRecetaScreen"
 
@@ -54,6 +55,9 @@ fun DetalleRecetaScreen(
     onFlowClick: (Receta) -> Unit,
     onToggleDespensa: (IngredienteReceta) -> Unit,
     onAnadirAListaCompra: (IngredienteReceta) -> Unit,
+    onDespensaClick: () -> Unit,
+    onListaCompraClick: () -> Unit,
+    onHomeClick: () -> Unit,
 ) {
 
     val estado by viewModel.estado.collectAsState()
@@ -72,50 +76,56 @@ fun DetalleRecetaScreen(
         is DetalleRecetaUIState.Success -> {
             val sucessState = estado as DetalleRecetaUIState.Success
             val receta = sucessState.receta
-            LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
-                item {
-                    Log.d(TAG, "Estoy en el composable ${receta.toString()}")
-                    AsyncImage(
-                        model = receta.urlimagen,
-                        contentDescription = receta.descripcion,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(8.dp))
-                            .fillMaxWidth()
-                            .height(300.dp)
-                    )
-                    Text(
-                        receta.nombre,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp,
-                        modifier = Modifier.padding(8.dp),
-
-                        style = androidx.compose.ui.text.TextStyle(
-                            fontSize = 24.sp,
-                            lineHeight = 1.5.em
+            CookFlowScaffold(
+                onDespensaClick = onDespensaClick,
+                onListaCompraClick = onListaCompraClick,
+                onHomeClick = onHomeClick
+            ) { paddingValues ->
+                LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
+                    item {
+                        Log.d(TAG, "Estoy en el composable ${receta.toString()}")
+                        AsyncImage(
+                            model = receta.urlimagen,
+                            contentDescription = receta.descripcion,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(8.dp))
+                                .fillMaxWidth()
+                                .height(300.dp)
                         )
-                    )
+                        Text(
+                            receta.nombre,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 24.sp,
+                            modifier = Modifier.padding(8.dp),
 
-                    HorizontalDivider()
-                    Text(
-                        receta.descripcion,
-                        modifier = Modifier.padding(8.dp)
-                    )
-                    HorizontalDivider()
-                    ListaIngredientes(
-                        ingredientes = receta.ingredientes,
+                            style = androidx.compose.ui.text.TextStyle(
+                                fontSize = 24.sp,
+                                lineHeight = 1.5.em
+                            )
+                        )
 
-                        onToggleDespensa = onToggleDespensa,
-                        onAnadirAListaCompra = onAnadirAListaCompra
-                    )
-                    HorizontalDivider()
-                    ListaPasos(receta.pasos)
+                        HorizontalDivider()
+                        Text(
+                            receta.descripcion,
+                            modifier = Modifier.padding(8.dp)
+                        )
+                        HorizontalDivider()
+                        ListaIngredientes(
+                            ingredientes = receta.ingredientes,
 
-                    Button(onClick = { onFlowClick(receta) }) {
-                        Text(text = "Empezar!")
+                            onToggleDespensa = onToggleDespensa,
+                            onAnadirAListaCompra = onAnadirAListaCompra
+                        )
+                        HorizontalDivider()
+                        ListaPasos(receta.pasos)
+
+                        Button(onClick = { onFlowClick(receta) }) {
+                            Text(text = "Empezar!")
+                        }
                     }
-                }
 
+                }
             }
         }
     }
@@ -251,7 +261,7 @@ fun ListaIngredientesPreview(
 @Composable
 fun ListaIngredientes(
     ingredientes: List<IngredienteReceta>,
-    onToggleDespensa : (IngredienteReceta) -> Unit,
+    onToggleDespensa: (IngredienteReceta) -> Unit,
     onAnadirAListaCompra: (IngredienteReceta) -> Unit
 ) {
     Column(

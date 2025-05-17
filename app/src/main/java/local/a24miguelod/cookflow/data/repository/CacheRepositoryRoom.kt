@@ -10,13 +10,14 @@ import local.a24miguelod.cookflow.data.local.mappers.toEntity
 import local.a24miguelod.cookflow.domain.model.Ingrediente
 import java.util.UUID
 
-private const val TAG="CacheRepositoryRoom"
+private const val TAG = "CacheRepositoryRoom"
 
 class CacheRepositoryRoom(
     private val ingredienteDao: IngredienteDao
 ) : CacheRepository {
+
     override suspend fun insertIngrediente(ingrediente: Ingrediente) {
-        ingredienteDao.insert(ingrediente.toEntity())
+        ingredienteDao.insertarIngrediente(ingrediente.toEntity())
     }
 
     override suspend fun getIngredienteCacheado(ingrediente: Ingrediente): Ingrediente {
@@ -25,14 +26,14 @@ class CacheRepositoryRoom(
         if (cacheIngrediente == null) {
             cacheIngrediente = IngredienteEntity(
                 ingredienteId = if (ingrediente.ingredienteId.isEmpty())
-                                    UUID.randomUUID().toString()
-                                else
-                                    ingrediente.ingredienteId,
+                    UUID.randomUUID().toString()
+                else
+                    ingrediente.ingredienteId,
                 nombre = ingrediente.nombre,
                 enDespensa = false,
                 enListaCompra = false
             )
-            ingredienteDao.insert(cacheIngrediente)
+            ingredienteDao.insertarIngrediente(cacheIngrediente)
         }
         return cacheIngrediente.toDomain()
     }
@@ -54,7 +55,7 @@ class CacheRepositoryRoom(
 
     override fun getAllIngredientes(): Flow<List<Ingrediente>> {
         return ingredienteDao.getAllIngredientes()
-            .map {list -> list.map { it.toDomain() }}
+            .map { list -> list.map { it.toDomain() } }
     }
 
     override suspend fun setIngredienteDisponible(id: String, disponible: Boolean) {
@@ -66,5 +67,9 @@ class CacheRepositoryRoom(
         ingredienteDao.updateEnListaCompra(id, listaCompra)
     }
 
-
+    override fun getListaDeLaCompra(): Flow<List<Ingrediente>> {
+        return ingredienteDao
+            .getListaDeLaCompra()
+            .map { list -> list.map { it.toDomain() } }
+    }
 }

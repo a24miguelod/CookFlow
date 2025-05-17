@@ -11,11 +11,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -29,57 +26,67 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import local.a24miguelod.cookflow.domain.model.Ingrediente
-import local.a24miguelod.cookflow.presentation.screens.lista.BotonConIconoYTexto
+import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
+
 
 @Composable
 fun DespensaScreen(
     viewModel: DespensaViewModel,
     onToggleDespensa: (Ingrediente) -> Unit,
-    onAnadirAlCarrito: (Ingrediente) -> Unit
+    onAnadirAlCarrito: (Ingrediente) -> Unit,
+    onDespensaClick: () -> Unit,
+    onHomeClick: () -> Unit,
+    onListaCompraClick: () -> Unit,
 ) {
 
     val ingredientes by viewModel.ingredientes.collectAsState()
 
-    LazyColumn(
-    ) {
-        items(ingredientes) { ingrediente ->
+    CookFlowScaffold(
+        onDespensaClick = onDespensaClick,
+        onListaCompraClick = onListaCompraClick,
+        onHomeClick = onHomeClick
+    ) { paddingValues ->
+        LazyColumn(
+        ) {
+            items(ingredientes) { ingrediente ->
 
-            Row(
-                modifier = Modifier
-                    .padding(12.dp)
-                    .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Text(
-                        text = ingrediente.nombre,
-                        color = if (ingrediente.enDespensa) Color.Black else Color.Gray,
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                }
-
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    // Switch de disponible
-                    Switch(
-                        checked = ingrediente.enDespensa,
-                        onCheckedChange = { onToggleDespensa(ingrediente) }
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    IconButton(
-                        onClick = { }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ShoppingCart,
-                            contentDescription = "Comprar",
-                            //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
-                            modifier = Modifier
-                                .size(16.dp)
-                                .weight(1f)
-
+                Row(
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text(
+                            text = ingrediente.nombre,
+                            color = if (ingrediente.enDespensa) Color.Black else Color.Gray,
+                            style = MaterialTheme.typography.bodyLarge
                         )
+                    }
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        // Switch de disponible
+                        Switch(
+                            checked = ingrediente.enDespensa,
+                            onCheckedChange = { onToggleDespensa(ingrediente) }
+                        )
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        IconButton(
+                            onClick = { onAnadirAlCarrito(ingrediente) }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ShoppingCart,
+                                contentDescription = "Comprar",
+                                //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
+                                modifier = Modifier
+                                    .size(16.dp)
+                                    .weight(1f)
+
+                            )
+                        }
                     }
                 }
             }
