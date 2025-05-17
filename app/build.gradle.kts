@@ -6,6 +6,9 @@ plugins {
 
     alias(libs.plugins.googleServices)
     alias(libs.plugins.crashlytics)
+
+    id("com.google.devtools.ksp")
+
 }
 
 android {
@@ -81,6 +84,10 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
 
+    //room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 
     implementation(libs.androidx.lifecycle.livedata)
     implementation(libs.androidx.navigation.compose)

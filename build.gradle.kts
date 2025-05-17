@@ -6,4 +6,6 @@ plugins {
 
     alias(libs.plugins.googleServices) apply false
     alias(libs.plugins.crashlytics) apply false
+
+    id("com.google.devtools.ksp") version "2.1.10-1.0.30" apply false
 }

@@ -1,8 +1,13 @@
 package local.a24miguelod.cookflow.common.dependencies
 
+import android.content.Context
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import local.a24miguelod.cookflow.CookFlowApp
+import local.a24miguelod.cookflow.data.local.dao.CookFlowDatabase
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.data.repository.RecetasRepositoryGithub
 
@@ -11,21 +16,20 @@ import local.a24miguelod.cookflow.data.repository.RecetasRepositoryGithub
  * Implementación del contenedor de inyección de dependencias a nivel de la aplicación.
  * Las variables se inicializan de forma perezosa y la misma instancia se comparte en toda la aplicación.
  */
-class AppInyectorContainerImpl : AppInyectorContainer {
+// Ver tambien https://www.youtube.com/watch?v=eX-y0IEHJjM&t=690s
 
-    /**
-     * Usamos el constructor de Retrofit para crear un objeto retrofit usando un
-     * convertidor de kotlinx.serialization (en otros ejemplos he usado Gson o Moshi)
-     */
+private const val TAG ="AppInyectorContainerImpl"
 
-    private var db: FirebaseFirestore = Firebase.firestore
+class AppInyectorContainerImpl(
+    private val context: Context
+) : AppInyectorContainer {
 
-    /**
-     * ApiFotosRepository es la interfaz que define el contrato para el repositorio de fotos.
-     * Implementación de la interfaz FotosRepository.
-     */
+    override val firebaseDatabase by lazy {Firebase.firestore }
 
-    // Ver // https://www.youtube.com/watch?v=eX-y0IEHJjM&t=690s
+    override val roomDatabase = Room.databaseBuilder(
+        context,
+        CookFlowDatabase::class.java, "cookflow-db"
+    ).build()
 
     override val recetasRepository: RecetasRepository by lazy {
         RecetasRepositoryGithub()

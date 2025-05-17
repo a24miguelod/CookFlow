@@ -15,7 +15,7 @@ class CookFlowApp: Application() {
      */
     override fun onCreate() {
         super.onCreate()
-        contenedor = AppInyectorContainerImpl()
+        contenedor = AppInyectorContainerImpl(this)
     }
 
     companion object {

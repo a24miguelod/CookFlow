@@ -20,7 +20,7 @@ import local.a24miguelod.cookflow.domain.model.RecetaPaso
 
 private const val TAG = "RecetasRepositoryGithub"
 
-class RecetasRepositoryGithub : RecetasRepository {
+class RecetasRepositoryGithub() : RecetasRepository {
 
     private var githubReporecetasUrl: String = "http://192.168.1.138:8000"
     private var githubBaseDir: String = "http://192.168.1.138:8000/files/"
