@@ -13,31 +13,24 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Edit
+
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.List
+
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
+
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
+
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -75,7 +68,6 @@ fun ListaRecetasScreen(
     onRecetaClick: (Receta) -> Unit,
     onDespensaClick: () -> Unit,
     onListaCompraClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
 
     val estado by viewModel.estado.collectAsState()
@@ -114,13 +106,13 @@ fun ListaRecetasScreen(
                         BotonConIconoYTexto(
                             icon = Icons.AutoMirrored.Filled.List,
                             text = "Despensa",
-                            onClick = { onDespensaClick },
+                            onClick = { onDespensaClick() },
                             modifier = Modifier.weight(1f)
                         )
                         BotonConIconoYTexto(
                             icon = Icons.Default.ShoppingCart,
                             text = "Lista de la compra",
-                            onClick = { onListaCompraClick },
+                            onClick = { onListaCompraClick() },
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -297,7 +289,6 @@ fun RecetaBadge(
 
         // Tags como chips
         FlowRow(
-
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             tags.forEach { tag ->

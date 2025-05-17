@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
@@ -38,8 +39,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
+import local.a24miguelod.cookflow.domain.model.Ingrediente
 import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
@@ -49,13 +50,14 @@ private const val TAG = "DetalleRecetaScreen"
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DetalleRecetaScreen(
-    viewModel:DetalleRecetaViewModel,
+    viewModel: DetalleRecetaViewModel,
     onFlowClick: (Receta) -> Unit,
+    onToggleDespensa: (IngredienteReceta) -> Unit,
+    onAnadirAListaCompra: (IngredienteReceta) -> Unit,
 ) {
 
-    Log.d(TAG, "Antes de cargar viewmodel")
     val estado by viewModel.estado.collectAsState()
-    Log.d(TAG, "Despues de cargar viewmodel")
+
     when (estado) {
 
         is DetalleRecetaUIState.Error -> {
@@ -94,25 +96,31 @@ fun DetalleRecetaScreen(
                         )
                     )
 
-                HorizontalDivider()
-                Text(
-                    receta.descripcion,
-                    modifier = Modifier.padding(8.dp)
-                )
-                HorizontalDivider()
-                ListaIngredientes(receta.ingredientes)
-                HorizontalDivider()
-                ListaPasos(receta.pasos)
+                    HorizontalDivider()
+                    Text(
+                        receta.descripcion,
+                        modifier = Modifier.padding(8.dp)
+                    )
+                    HorizontalDivider()
+                    ListaIngredientes(
+                        ingredientes = receta.ingredientes,
 
-                Button(onClick = { onFlowClick(receta) }) {
-                    Text(text = "Empezar!")
+                        onToggleDespensa = onToggleDespensa,
+                        onAnadirAListaCompra = onAnadirAListaCompra
+                    )
+                    HorizontalDivider()
+                    ListaPasos(receta.pasos)
+
+                    Button(onClick = { onFlowClick(receta) }) {
+                        Text(text = "Empezar!")
+                    }
                 }
-            }
 
+            }
         }
     }
 }
-}
+
 /*
 @Composable
 fun DetalleRecetaScreenPreview(
@@ -242,26 +250,29 @@ fun ListaIngredientesPreview(
 */
 @Composable
 fun ListaIngredientes(
-    ingredientes: List<IngredienteReceta>
+    ingredientes: List<IngredienteReceta>,
+    onToggleDespensa : (IngredienteReceta) -> Unit,
+    onAnadirAListaCompra: (IngredienteReceta) -> Unit
 ) {
     Column(
         modifier = Modifier.padding(10.dp)
     ) {
         ingredientes.forEach { ingrediente ->
 
-
             Row(
                 modifier = Modifier
-
                     .padding(0.dp),
                 verticalAlignment = Alignment.CenterVertically
             )
             {
-                IconButton(onClick = {}) {
+                IconButton(onClick = { onToggleDespensa(ingrediente) }) {
                     Icon(
-                        imageVector = Icons.Default.Check,
-                        contentDescription = "Lo tengo",
-                        tint = Color.Green, // else Color.Gray
+                        imageVector = if (ingrediente.ingrediente.enDespensa)
+                            Icons.Default.Check
+                        else
+                            Icons.Default.Clear,
+                        contentDescription = "Disponibilidad",
+                        tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Red,
                         modifier = Modifier
                             .size(16.dp)
                             .weight(1f)
@@ -269,16 +280,6 @@ fun ListaIngredientes(
                     )
                 }
 
-                IconButton(onClick = {}) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = "No lo tengo",
-                        tint = Color.Gray,
-                        modifier = Modifier
-                            .size(16.dp)
-                            .weight(1f)
-                    )
-                }
                 Column(
                     modifier = Modifier.weight(1f)
 
@@ -288,7 +289,7 @@ fun ListaIngredientes(
                         fontSize = 16.sp
                     )
                     Text(
-                        ingrediente.cantidad.toString(),
+                        ingrediente.cantidad,
                         fontSize = 12.sp
                     )
                 }

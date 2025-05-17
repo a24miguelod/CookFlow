@@ -17,7 +17,7 @@ class DespensaViewModel(
 
     init {
         viewModelScope.launch {
-            repository.getIngredientes()
+            repository.getAllIngredientes()
                 .collect { lista ->
                     _ingredientes.value = lista
                 }

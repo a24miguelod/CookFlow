@@ -45,32 +45,35 @@ fun CookFlowNavGraph(
     ) {
 
         composable<DestinationListaRecetasScreen>() {
-            val viewModel = viewModel<ListaRecetasViewModel> (
-                    factory = viewModelFactory {
-                        ListaRecetasViewModel(
-                            CookFlowApp.contenedor.recetasRepository
-                        )
-                    }
-                )
+            val viewModel = viewModel<ListaRecetasViewModel>(
+                factory = viewModelFactory {
+                    ListaRecetasViewModel(
+                        CookFlowApp.contenedor.recetasRepository
+                    )
+                }
+            )
             ListaRecetasScreen(
                 viewModel,
                 onRecetaClick = { receta ->
-                    navController.navigate(DestinationDetalleReceta(
-                        recetaId = receta.id
-                    ))
+                    navController.navigate(
+                        DestinationDetalleReceta(
+                            recetaId = receta.id
+                        )
+                    )
                 },
                 onDespensaClick = { navController.navigate(DestinationDespensa) },
-                onListaCompraClick = {navController.navigate(DestinationDespensa) },
+                onListaCompraClick = { navController.navigate(DestinationDespensa) },
             )
         }
 
         composable<DestinationDetalleReceta>() { navBackStackEntry ->
             val args = navBackStackEntry.toRoute<DestinationDetalleReceta>()
             val savedStateHandle = SavedStateHandle(mapOf("recetaId" to args.recetaId))
-            val viewModel = viewModel<DetalleRecetaViewModel> (
+            val viewModel = viewModel<DetalleRecetaViewModel>(
                 factory = viewModelFactory {
                     DetalleRecetaViewModel(
                         CookFlowApp.contenedor.recetasRepository,
+                        CookFlowApp.contenedor.cacheRepository,
                         savedStateHandle = savedStateHandle
                     )
                 }
@@ -80,6 +83,12 @@ fun CookFlowNavGraph(
                 viewModel,
                 onFlowClick = { receta ->
                     navController.navigate(DestinationFlowReceta(receta.id))
+                },
+                onAnadirAListaCompra = { ingredienteReceta ->
+                    viewModel.anadirAListaCompra(ingredienteReceta.ingrediente)
+                },
+                onToggleDespensa = { ingredienteReceta ->
+                    viewModel.toggleDespensa(ingredienteReceta.ingrediente)
                 }
             )
         }
@@ -87,7 +96,7 @@ fun CookFlowNavGraph(
         composable<DestinationFlowReceta>() { navBackStackEntry ->
             val args = navBackStackEntry.toRoute<DestinationFlowReceta>()
             val savedStateHandle = SavedStateHandle(mapOf("recetaId" to args.recetaId))
-            val viewModel = viewModel<FlowViewModel> (
+            val viewModel = viewModel<FlowViewModel>(
                 factory = viewModelFactory {
                     FlowViewModel(
                         CookFlowApp.contenedor.recetasRepository,
@@ -100,8 +109,8 @@ fun CookFlowNavGraph(
             )
         }
 
-        composable(CookFlowRoutes.DESPENSA_ROUTE) {
-            val viewModel = viewModel<DespensaViewModel> (
+        composable<DestinationDespensa>() {
+            val viewModel = viewModel<DespensaViewModel>(
                 factory = viewModelFactory {
                     DespensaViewModel(
                         CookFlowApp.contenedor.cacheRepository,
@@ -111,13 +120,23 @@ fun CookFlowNavGraph(
             DespensaScreen(
                 viewModel,
                 onToggleDisponible = {},
-                onAnadirAlCarrito = {                 }
+                onAnadirAlCarrito = { }
             )
         }
 
-        composable(CookFlowRoutes.LISTA_COMPRA_ROUTE) {
-            Log.d(TAG, "en flowreceta route")
-            ListaCompraScreen()
+        composable<DestinationListaCompra>() {
+            val viewModel = viewModel<DespensaViewModel>(
+                factory = viewModelFactory {
+                    DespensaViewModel(
+                        CookFlowApp.contenedor.cacheRepository,
+                    )
+                }
+            )
+            DespensaScreen(
+                viewModel,
+                onToggleDisponible = {},
+                onAnadirAlCarrito = { }
+            )
         }
     }
 }

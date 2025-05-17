@@ -5,6 +5,6 @@ import java.util.UUID
 data class Ingrediente (
   val ingredienteId: String = UUID.randomUUID().toString(),
   val nombre:String,
-  val enDespensa: Boolean = false,
-  val enListaCompra: Boolean = false
+  var enDespensa: Boolean = false,
+  var enListaCompra: Boolean = false
 )
