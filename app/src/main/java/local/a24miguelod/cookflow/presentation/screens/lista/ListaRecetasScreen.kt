@@ -1,6 +1,7 @@
 package local.a24miguelod.cookflow.presentation.screens.lista
 
 import android.util.Log
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -46,6 +47,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -76,27 +78,27 @@ fun ListaRecetasScreen(
 
     // https://developer.android.com/develop/ui/compose/components/scaffold?hl=es-419
 
-    CookFlowScaffold (
+    CookFlowScaffold(
         onDespensaClick = onDespensaClick,
         onListaCompraClick = onListaCompraClick,
         onHomeClick = onHomeClick
     ) { paddingValues ->
-            when (estado) {
-                is ListaRecetasUIState.Error -> {
-                    Log.d(TAG, "ERROR")
-                }
+        when (estado) {
+            is ListaRecetasUIState.Error -> {
+                Log.d(TAG, "ERROR")
+            }
 
-                is ListaRecetasUIState.Loading -> {
-                    Log.d(TAG, "Cargando")
-                }
+            is ListaRecetasUIState.Loading -> {
+                Log.d(TAG, "Cargando")
+            }
 
-                is ListaRecetasUIState.Success -> {
-                    val successState = estado as ListaRecetasUIState.Success
-                    ListaRecetasContent(
-                        onRecetaClick = onRecetaClick,
-                        recetas = successState.recetas
-                    )
-                }
+            is ListaRecetasUIState.Success -> {
+                val successState = estado as ListaRecetasUIState.Success
+                ListaRecetasContent(
+                    onRecetaClick = onRecetaClick,
+                    recetas = successState.recetas
+                )
+            }
 
         }
     }
@@ -136,8 +138,15 @@ fun RecetaItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onRecetaClick(receta) },
-        shape = RoundedCornerShape(4.dp),
+            .clickable { onRecetaClick(receta) }
+            .border(
+                width = 2.dp,
+                color = Color.Gray,
+                shape = RoundedCornerShape(16.dp)
+            ),
+
+        shape = RoundedCornerShape(16.dp),
+
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
@@ -150,9 +159,10 @@ fun RecetaItem(
                 contentDescription = receta.descripcion,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    //.clip(RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(8.dp))
                     .height(120.dp)
-                    .width(90.dp)
+                    .width(120.dp)
+                    .padding(5.dp)
             )
 
             Spacer(modifier = Modifier.width(12.dp))
@@ -179,7 +189,7 @@ fun RecetaItem(
                     overflow = TextOverflow.Ellipsis
                 )
 
-                RecetaBadge(true, { }, listOf("Prueba", "Otra"))
+                //RecetaBadge(true, { }, listOf("Prueba", "Otra"))
             }
         }
     }
@@ -204,7 +214,7 @@ fun BotonConIconoYTexto(
             imageVector = icon,
             contentDescription = text,
 
-        )
+            )
         Text(
             text = text,
             fontSize = 12.sp,

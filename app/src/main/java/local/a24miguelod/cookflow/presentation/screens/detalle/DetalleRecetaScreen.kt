@@ -18,13 +18,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.PlayArrow
 
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Button
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -79,7 +82,18 @@ fun DetalleRecetaScreen(
             CookFlowScaffold(
                 onDespensaClick = onDespensaClick,
                 onListaCompraClick = onListaCompraClick,
-                onHomeClick = onHomeClick
+                onHomeClick = onHomeClick,
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = { onFlowClick(receta) },
+                        containerColor = MaterialTheme.colorScheme.primary
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.PlayArrow,
+                            contentDescription = "Empezar pasos"
+                        )
+                    }
+                }
             ) { paddingValues ->
                 LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
                     item {
@@ -88,7 +102,6 @@ fun DetalleRecetaScreen(
                             contentDescription = receta.descripcion,
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
-                                .clip(RoundedCornerShape(8.dp))
                                 .fillMaxWidth()
                                 .height(300.dp)
                         )
@@ -96,7 +109,7 @@ fun DetalleRecetaScreen(
                             receta.nombre,
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp,
-                            modifier = Modifier.padding(8.dp),
+                            modifier = Modifier.padding(12.dp),
 
                             style = androidx.compose.ui.text.TextStyle(
                                 fontSize = 24.sp,
@@ -107,7 +120,7 @@ fun DetalleRecetaScreen(
                         HorizontalDivider()
                         Text(
                             receta.descripcion,
-                            modifier = Modifier.padding(8.dp)
+                            modifier = Modifier.padding(12.dp)
                         )
                         HorizontalDivider()
                         ListaIngredientes(
@@ -284,7 +297,7 @@ fun ListaIngredientes(
                         tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Red,
                         modifier = Modifier
                             .size(16.dp)
-                            .weight(1f)
+
 
                     )
                 }
@@ -339,7 +352,7 @@ fun ListaPasos(
                 ) {
                     Text(
                         paso.resumen,
-                        fontSize = 16.sp,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
 
@@ -347,12 +360,13 @@ fun ListaPasos(
 
                     Icon(
                         imageVector = Icons.Default.Refresh,
-                        contentDescription = "Lo tengo",
+                        contentDescription = "Duracion",
                         tint = Color.Green, // else Color.Gray
+                        modifier = Modifier.size(26.dp)
 
                     )
                     Text(
-                        paso.duracion.toString(),
+                        paso.duracion.toInt().toString() + "min",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )

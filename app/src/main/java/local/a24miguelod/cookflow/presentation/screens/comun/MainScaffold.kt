@@ -37,10 +37,14 @@ fun CookFlowScaffold(
     onDespensaClick: () -> Unit,
     onListaCompraClick: () -> Unit,
     onHomeClick: () -> Unit,
-    content: @Composable (PaddingValues) -> Unit
+    floatingActionButton: (@Composable () -> Unit)? = null, //  FAB opcional
+    content: @Composable (PaddingValues) -> Unit,
 ) {
 
     Scaffold(
+        floatingActionButton = {
+            floatingActionButton?.invoke() // 👈 Solo lo pinta si no es null
+        },
         topBar = {
             TopAppBar(
                 colors = topAppBarColors(
