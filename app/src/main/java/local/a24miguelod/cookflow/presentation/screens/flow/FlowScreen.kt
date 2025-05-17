@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -52,9 +53,9 @@ fun FlowScreen(
     viewModel: FlowViewModel
 ) {
 
-    Log.d(TAG, "Antes de cargar viewmodel")
     val estado by viewModel.estado.collectAsState()
-    Log.d(TAG, "Despues de cargar viewmodel")
+    val cronometro by viewModel.cronometro.collectAsState()
+
     when (estado) {
 
         is FlowRecetasUIState.Error -> {
@@ -68,13 +69,13 @@ fun FlowScreen(
 
         is FlowRecetasUIState.Success -> {
             val sucessState = estado as FlowRecetasUIState.Success
-
+            Log.d(TAG, "Success")
             FlowScreenContent(
                 receta = sucessState.receta,
                 paso = sucessState.pasoActual,
-                progreso = sucessState.progreso,
-                onPreviousClick = {},
-                onNextClick = {}
+                progreso = cronometro.progreso,
+                onPreviousClick = { viewModel.mostrarPasoAnterior() },
+                onNextClick = { viewModel.mostrarPasoSiguiente() }
             )
         }
     }
@@ -92,7 +93,6 @@ fun FlowScreenContent(
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        // Contenido principal (ocupará todo el espacio disponible menos el de la barra inferior)
         Column(
             modifier = Modifier
                 .weight(1f)
@@ -110,6 +110,7 @@ fun FlowScreenContent(
             )
 
             if (paso < receta.pasos.size) {
+                Log.d(TAG,"Paso es menor")
                 Column {
                     Text(
                         text = "Paso ${paso + 1}",
@@ -130,22 +131,26 @@ fun FlowScreenContent(
                     )
                 }
             } else {
+                Log.d(TAG, "Paso es mayor")
                 Column(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().padding(60.dp),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
+                    Spacer(modifier = Modifier.size(70.dp))
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(48.dp)
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "¡Qué aproveche!",
+                        text = "¡Que aproveche!",
+                        modifier = Modifier.fillMaxSize(),
+                        textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.headlineSmall
                     )
+
                 }
             }
         }
@@ -158,13 +163,13 @@ fun FlowScreenContent(
                 .background(MaterialTheme.colorScheme.surface)
         ) {
             LinearProgressIndicator(
-                progress = progreso,
+                progress = { progreso },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp)
                     .clip(RoundedCornerShape(4.dp)),
                 color = MaterialTheme.colorScheme.primary,
-                trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
+                trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -186,7 +191,7 @@ fun FlowScreenContent(
                     onClick = onNextClick,
                     enabled = paso < receta.pasos.size
                 ) {
-                    Text(if (paso < receta.pasos.size - 1) "Siguiente" else "Finalizar")
+                    Text(if (paso < receta.pasos.size) "Siguiente" else "Recetas")
                     Spacer(modifier = Modifier.width(8.dp))
                     Icon(Icons.Default.ArrowForward, contentDescription = null)
                 }
