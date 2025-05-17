@@ -50,7 +50,6 @@ object CookFlowRoutes {
 class CookFlowNavigationActions(private val navController: NavHostController) {
 
     fun navigateToRecetas() {
-        //  TODO: por probar, quiza desde el navigation drawer??
         navController.navigate(RECETAS_ROUTE) {
             popUpTo(navController.graph.findStartDestination().id) {
                 saveState = true
@@ -60,7 +59,6 @@ class CookFlowNavigationActions(private val navController: NavHostController) {
             launchSingleTop = true
             // Restore state when reselecting a previously selected item
             restoreState = true
-
         }
     }
 
@@ -80,6 +78,7 @@ class CookFlowNavigationActions(private val navController: NavHostController) {
     fun navigateToListaCompra() {
         navController.navigate(LISTA_COMPRA_ROUTE)
     }
+
 
 
 }

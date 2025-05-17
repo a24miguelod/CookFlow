@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
+/*
 @Entity(
     foreignKeys = [
         ForeignKey(
@@ -18,4 +19,4 @@ data class Despensa(
     @PrimaryKey
     val ingredienteId: String,
     val disponible: Boolean = false
-)
+)*/

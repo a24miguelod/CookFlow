@@ -8,5 +8,7 @@ import androidx.room.PrimaryKey
 data class IngredienteEntity(
     @PrimaryKey
     val ingredienteId: String,
-    val nombre: String
+    val nombre: String,
+    val enDespensa: Boolean = false,
+    val enListaCompra: Boolean = false
 )

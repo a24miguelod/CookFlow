@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import local.a24miguelod.cookflow.CookFlowApp
 import local.a24miguelod.cookflow.presentation.screens.despensa.DespensaScreen
+import local.a24miguelod.cookflow.presentation.screens.despensa.DespensaViewModel
 import local.a24miguelod.cookflow.presentation.screens.detalle.DetalleRecetaScreen
 import local.a24miguelod.cookflow.presentation.screens.detalle.DetalleRecetaViewModel
 import local.a24miguelod.cookflow.presentation.screens.flow.FlowScreen
@@ -57,7 +58,9 @@ fun CookFlowNavGraph(
                     navController.navigate(DestinationDetalleReceta(
                         recetaId = receta.id
                     ))
-                }
+                },
+                onDespensaClick = { navController.navigate(DestinationDespensa) },
+                onListaCompraClick = {navController.navigate(DestinationDespensa) },
             )
         }
 
@@ -98,8 +101,18 @@ fun CookFlowNavGraph(
         }
 
         composable(CookFlowRoutes.DESPENSA_ROUTE) {
-            Log.d(TAG, "en flowreceta route")
-            DespensaScreen()
+            val viewModel = viewModel<DespensaViewModel> (
+                factory = viewModelFactory {
+                    DespensaViewModel(
+                        CookFlowApp.contenedor.cacheRepository,
+                    )
+                }
+            )
+            DespensaScreen(
+                viewModel,
+                onToggleDisponible = {},
+                onAnadirAlCarrito = {                 }
+            )
         }
 
         composable(CookFlowRoutes.LISTA_COMPRA_ROUTE) {

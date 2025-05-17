@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import local.a24miguelod.cookflow.data.local.entities.IngredienteEntity
 
+/*
 @Dao
 interface ListaCompraDao {
 
@@ -21,3 +22,5 @@ interface ListaCompraDao {
     @Delete
     fun delete(ingrediente: IngredienteEntity)
 }
+
+ */

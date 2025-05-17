@@ -14,3 +14,11 @@ data class DestinationDetalleReceta(
 data class DestinationFlowReceta(
     val recetaId: String
 )
+
+@Serializable
+object DestinationDespensa
+
+@Serializable
+object DestinationListaCompra
+
+

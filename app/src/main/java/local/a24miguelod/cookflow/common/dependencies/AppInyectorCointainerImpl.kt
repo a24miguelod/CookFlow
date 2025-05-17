@@ -8,6 +8,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import local.a24miguelod.cookflow.CookFlowApp
 import local.a24miguelod.cookflow.data.local.dao.CookFlowDatabase
+import local.a24miguelod.cookflow.data.repository.CacheRepository
+import local.a24miguelod.cookflow.data.repository.CacheRepositoryRoom
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.data.repository.RecetasRepositoryGithub
 
@@ -26,12 +28,20 @@ class AppInyectorContainerImpl(
 
     override val firebaseDatabase by lazy {Firebase.firestore }
 
-    override val roomDatabase = Room.databaseBuilder(
-        context,
-        CookFlowDatabase::class.java, "cookflow-db"
-    ).build()
 
     override val recetasRepository: RecetasRepository by lazy {
         RecetasRepositoryGithub()
     }
+
+    // no tengo claro si esto es una buena pracita
+
+    override val roomDatabase = Room.databaseBuilder(
+        context,
+        CookFlowDatabase::class.java, "cookflow-db"
+    ).build()
+    private val ingredienteDao by lazy { roomDatabase.ingredienteDao() }
+    override val cacheRepository: CacheRepository by lazy {
+        CacheRepositoryRoom(ingredienteDao)
+    }
+
 }

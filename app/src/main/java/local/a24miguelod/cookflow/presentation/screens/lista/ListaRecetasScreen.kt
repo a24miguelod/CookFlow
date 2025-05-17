@@ -73,6 +73,8 @@ private const val TAG = "ListaRecestasScreen"
 fun ListaRecetasScreen(
     viewModel: ListaRecetasViewModel,
     onRecetaClick: (Receta) -> Unit,
+    onDespensaClick: () -> Unit,
+    onListaCompraClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -112,13 +114,13 @@ fun ListaRecetasScreen(
                         BotonConIconoYTexto(
                             icon = Icons.AutoMirrored.Filled.List,
                             text = "Despensa",
-                            onClick = {  },
+                            onClick = { onDespensaClick },
                             modifier = Modifier.weight(1f)
                         )
                         BotonConIconoYTexto(
                             icon = Icons.Default.ShoppingCart,
                             text = "Lista de la compra",
-                            onClick = {  },
+                            onClick = { onListaCompraClick },
                             modifier = Modifier.weight(1f)
                         )
                     }
