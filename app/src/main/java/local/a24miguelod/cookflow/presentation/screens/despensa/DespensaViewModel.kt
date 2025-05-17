@@ -24,7 +24,7 @@ class DespensaViewModel(
         }
     }
 
-    fun toggleDisponible(ingrediente: Ingrediente) {
+    fun toggleDespensa(ingrediente: Ingrediente) {
         viewModelScope.launch {
             val enDespensa = !ingrediente.enDespensa
             repository.setIngredienteDisponible(ingrediente.ingredienteId, enDespensa)

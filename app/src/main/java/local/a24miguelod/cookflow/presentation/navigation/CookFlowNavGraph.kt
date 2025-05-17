@@ -1,13 +1,10 @@
 package local.a24miguelod.cookflow.presentation.navigation
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import local.a24miguelod.cookflow.CookFlowApp
+import local.a24miguelod.cookflow.presentation.navigation.CockFlowDestinationsArgs.RECETA_ID
 import local.a24miguelod.cookflow.presentation.screens.despensa.DespensaScreen
 import local.a24miguelod.cookflow.presentation.screens.despensa.DespensaViewModel
 import local.a24miguelod.cookflow.presentation.screens.detalle.DetalleRecetaScreen
@@ -23,7 +21,7 @@ import local.a24miguelod.cookflow.presentation.screens.flow.FlowScreen
 import local.a24miguelod.cookflow.presentation.screens.flow.FlowViewModel
 import local.a24miguelod.cookflow.presentation.screens.lista.ListaRecetasScreen
 import local.a24miguelod.cookflow.presentation.screens.lista.ListaRecetasViewModel
-import local.a24miguelod.cookflow.presentation.screens.lista_compra.ListaCompraScreen
+
 import local.a24miguelod.cookflow.presentation.viewModelFactory
 
 private const val TAG = "CookFLowNavGraph"
@@ -34,17 +32,15 @@ fun CookFlowNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: DestinationListaRecetasScreen = DestinationListaRecetasScreen,
-    navActions: CookFlowNavigationActions = remember(navController) {
-        CookFlowNavigationActions(navController)
-    }
 ) {
+
     NavHost(
         navController = navController,
         startDestination = startDestination,
         modifier = modifier
     ) {
 
-        composable<DestinationListaRecetasScreen>() {
+        composable<DestinationListaRecetasScreen> {
             val viewModel = viewModel<ListaRecetasViewModel>(
                 factory = viewModelFactory {
                     ListaRecetasViewModel(
@@ -66,9 +62,9 @@ fun CookFlowNavGraph(
             )
         }
 
-        composable<DestinationDetalleReceta>() { navBackStackEntry ->
+        composable<DestinationDetalleReceta> { navBackStackEntry ->
             val args = navBackStackEntry.toRoute<DestinationDetalleReceta>()
-            val savedStateHandle = SavedStateHandle(mapOf("recetaId" to args.recetaId))
+            val savedStateHandle = SavedStateHandle(mapOf(RECETA_ID to args.recetaId))
             val viewModel = viewModel<DetalleRecetaViewModel>(
                 factory = viewModelFactory {
                     DetalleRecetaViewModel(
@@ -93,7 +89,7 @@ fun CookFlowNavGraph(
             )
         }
 
-        composable<DestinationFlowReceta>() { navBackStackEntry ->
+        composable<DestinationFlowReceta> { navBackStackEntry ->
             val args = navBackStackEntry.toRoute<DestinationFlowReceta>()
             val savedStateHandle = SavedStateHandle(mapOf("recetaId" to args.recetaId))
             val viewModel = viewModel<FlowViewModel>(
@@ -109,7 +105,7 @@ fun CookFlowNavGraph(
             )
         }
 
-        composable<DestinationDespensa>() {
+        composable<DestinationDespensa> {
             val viewModel = viewModel<DespensaViewModel>(
                 factory = viewModelFactory {
                     DespensaViewModel(
@@ -119,12 +115,14 @@ fun CookFlowNavGraph(
             )
             DespensaScreen(
                 viewModel,
-                onToggleDisponible = {},
+                onToggleDespensa = { ingrediente ->
+                    viewModel.toggleDespensa(ingrediente)
+                },
                 onAnadirAlCarrito = { }
             )
         }
 
-        composable<DestinationListaCompra>() {
+        composable<DestinationListaCompra> {
             val viewModel = viewModel<DespensaViewModel>(
                 factory = viewModelFactory {
                     DespensaViewModel(
@@ -134,7 +132,9 @@ fun CookFlowNavGraph(
             )
             DespensaScreen(
                 viewModel,
-                onToggleDisponible = {},
+                onToggleDespensa = { ingrediente ->
+                    viewModel.toggleDespensa(ingrediente)
+                },
                 onAnadirAlCarrito = { }
             )
         }

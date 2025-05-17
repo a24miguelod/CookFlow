@@ -26,15 +26,18 @@ class AppInyectorContainerImpl(
     private val context: Context
 ) : AppInyectorContainer {
 
+
+    // Para inyectar FireBase
+    // TODO:Aun sin inyectar
     override val firebaseDatabase by lazy {Firebase.firestore }
 
-
+    //Para inyectar el reposotorio de Recetas
     override val recetasRepository: RecetasRepository by lazy {
         RecetasRepositoryGithub()
     }
 
-    // no tengo claro si esto es una buena pracita
-
+    //Para inyectar el repositorio de Cache
+    //TODO:Ver esto bien
     override val roomDatabase = Room.databaseBuilder(
         context,
         CookFlowDatabase::class.java, "cookflow-db"

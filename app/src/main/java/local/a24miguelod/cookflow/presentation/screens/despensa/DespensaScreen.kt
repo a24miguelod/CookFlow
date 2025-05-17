@@ -34,7 +34,7 @@ import local.a24miguelod.cookflow.presentation.screens.lista.BotonConIconoYTexto
 @Composable
 fun DespensaScreen(
     viewModel: DespensaViewModel,
-    onToggleDisponible: (Ingrediente) -> Unit,
+    onToggleDespensa: (Ingrediente) -> Unit,
     onAnadirAlCarrito: (Ingrediente) -> Unit
 ) {
 
@@ -43,52 +43,47 @@ fun DespensaScreen(
     LazyColumn(
     ) {
         items(ingredientes) { ingrediente ->
-            Card(
+
+            Row(
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(12.dp)
                     .fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text(
-                            text = ingrediente.nombre,
-                            color = if (ingrediente.enDespensa) Color.Black else Color.Gray,
-                            style = MaterialTheme.typography.bodyLarge
+                Column {
+                    Text(
+                        text = ingrediente.nombre,
+                        color = if (ingrediente.enDespensa) Color.Black else Color.Gray,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    // Switch de disponible
+                    Switch(
+                        checked = ingrediente.enDespensa,
+                        onCheckedChange = { onToggleDespensa(ingrediente) }
+                    )
+
+                    Spacer(modifier = Modifier.width(8.dp))
+
+                    IconButton(
+                        onClick = { }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ShoppingCart,
+                            contentDescription = "Comprar",
+                            //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
+                            modifier = Modifier
+                                .size(16.dp)
+                                .weight(1f)
+
                         )
-                    }
-
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        // Switch de disponible
-                        Switch(
-                            checked = ingrediente.enDespensa,
-                            onCheckedChange = { onToggleDisponible(ingrediente) }
-                        )
-
-                        Spacer(modifier = Modifier.width(8.dp))
-
-                        IconButton(
-                            onClick = { }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.ShoppingCart,
-                                contentDescription = "Comprar",
-                                //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
-                                modifier = Modifier
-                                    .size(16.dp)
-                                    .weight(1f)
-
-                            )
-                        }
                     }
                 }
             }
         }
     }
 }
+
