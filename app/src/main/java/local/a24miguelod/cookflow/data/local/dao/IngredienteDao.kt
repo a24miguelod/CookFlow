@@ -8,12 +8,13 @@ import androidx.room.Query
 import local.a24miguelod.cookflow.data.local.entities.IngredienteEntity
 
 @Dao
-interface DespensaDao {
+interface IngredienteDao {
 
-    @Query("SELECT i.ingredienteId, nombre " +
-            "FROM Despensa l JOIN INGREDIENTE i" +
-            "  ON l.ingredienteId = i.ingredienteId ")
-    fun getDespensa(): List<IngredienteEntity>
+    @Query("SELECT * from Ingrediente")
+    fun getIngredientes(): List<IngredienteEntity>
+
+    @Query("SELECT * FROM Ingrediente WHERE ingredienteId = :id")
+    fun getIngredienteById(id: Int): IngredienteEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(ingrediente: IngredienteEntity)

@@ -108,7 +108,9 @@ class RecetasRepositoryGithub() : RecetasRepository {
                         }
                     ingredientes.add(
                         IngredienteReceta(
-                            ingrediente = Ingrediente(nombre),
+                            ingrediente = Ingrediente(
+                                nombre = nombre
+                            ),
                             cantidad = cantidad
                         )
                     )

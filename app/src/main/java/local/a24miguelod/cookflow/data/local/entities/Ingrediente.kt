@@ -3,9 +3,10 @@ package local.a24miguelod.cookflow.data.local.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity()
-data class Ingrediente(
+// El nombre termina en Entity para facilitar la lectura en los mappers
+@Entity(tableName = "ingrediente")
+data class IngredienteEntity(
     @PrimaryKey
-    val ingredienteId: Int,
+    val ingredienteId: String,
     val nombre: String
 )

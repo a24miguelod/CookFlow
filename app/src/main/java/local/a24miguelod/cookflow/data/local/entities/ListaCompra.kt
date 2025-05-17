@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(
     foreignKeys = [
         ForeignKey(
-            entity = Ingrediente::class,
+            entity = IngredienteEntity::class,
             parentColumns = ["ingredienteId"],
             childColumns = ["ingredienteId"],
             onUpdate = ForeignKey.CASCADE,
@@ -16,5 +16,5 @@ import androidx.room.PrimaryKey
 )
 data class ListaCompra(
     @PrimaryKey
-    val ingredienteId: Long
+    val ingredienteId: String
 )

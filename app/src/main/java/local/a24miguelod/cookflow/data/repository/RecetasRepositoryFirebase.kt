@@ -131,7 +131,7 @@ class RecetasRepositoryFirebase : RecetasRepository {
 
             snapshot.getString("nombre")?.let {
                 Log.d(TAG, "Encuentro $it")
-                ingredientesMapCache[id] = Ingrediente(it)
+                ingredientesMapCache[id] = Ingrediente(nombre = it)
             }
 
         }

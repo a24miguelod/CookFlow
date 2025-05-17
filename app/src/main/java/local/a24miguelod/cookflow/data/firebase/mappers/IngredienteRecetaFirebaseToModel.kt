@@ -11,7 +11,7 @@ class IngredienteRecetaFirebaseToModel : Mapper<IngredienteRecetaFirebase?, Ingr
             IngredienteReceta(
                 // TODO: Este mapper no sabe el nombre del ingrediente... hay que asignar
                 // el nombre despues de la llamada al mapFrom
-                ingrediente = Ingrediente("temporal"),
+                ingrediente = Ingrediente(nombre ="temporal"),
                 cantidad = it.cantidad
             )
         }
