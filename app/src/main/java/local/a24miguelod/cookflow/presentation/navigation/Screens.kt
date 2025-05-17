@@ -9,3 +9,8 @@ object DestinationListaRecetasScreen
 data class DestinationDetalleReceta(
     val recetaId: String
 )
+
+@Serializable
+data class DestinationFlowReceta(
+    val recetaId: String
+)

@@ -15,11 +15,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import local.a24miguelod.cookflow.CookFlowApp
-import local.a24miguelod.cookflow.presentation.savedStateViewModelFactory
 import local.a24miguelod.cookflow.presentation.screens.despensa.DespensaScreen
 import local.a24miguelod.cookflow.presentation.screens.detalle.DetalleRecetaScreen
 import local.a24miguelod.cookflow.presentation.screens.detalle.DetalleRecetaViewModel
 import local.a24miguelod.cookflow.presentation.screens.flow.FlowScreen
+import local.a24miguelod.cookflow.presentation.screens.flow.FlowViewModel
 import local.a24miguelod.cookflow.presentation.screens.lista.ListaRecetasScreen
 import local.a24miguelod.cookflow.presentation.screens.lista.ListaRecetasViewModel
 import local.a24miguelod.cookflow.presentation.screens.lista_compra.ListaCompraScreen
@@ -76,15 +76,24 @@ fun CookFlowNavGraph(
             DetalleRecetaScreen(
                 viewModel,
                 onFlowClick = { receta ->
-                    Log.d("NavDebug", "onFlowClick invoked with receta id = ${receta.id}")
-
-                    navActions.navigateToFlowReceta(receta.id) }
+                    navController.navigate(DestinationFlowReceta(receta.id))
+                }
             )
         }
 
-        composable(CookFlowRoutes.FLOW_ROUTE) {
-            Log.d(TAG, "en flowreceta route")
+        composable<DestinationFlowReceta>() { navBackStackEntry ->
+            val args = navBackStackEntry.toRoute<DestinationFlowReceta>()
+            val savedStateHandle = SavedStateHandle(mapOf("recetaId" to args.recetaId))
+            val viewModel = viewModel<FlowViewModel> (
+                factory = viewModelFactory {
+                    FlowViewModel(
+                        CookFlowApp.contenedor.recetasRepository,
+                        savedStateHandle = savedStateHandle
+                    )
+                }
+            )
             FlowScreen(
+                viewModel
             )
         }
 

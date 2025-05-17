@@ -22,7 +22,7 @@ fun <VM:ViewModel> viewModelFactory(initializer: () -> VM):ViewModelProvider.Fac
 }
 
 // Caso mas generico si necesito el savedStateHandle
-fun <VM : ViewModel> savedStateViewModelFactory(
+fun <VM : ViewModel> savedStateViewModelFactoryNoConsigoQueFuncione(
     owner: SavedStateRegistryOwner,
     defaultArgs: Bundle? = null,
     initializer: (SavedStateHandle) -> VM
@@ -34,8 +34,8 @@ fun <VM : ViewModel> savedStateViewModelFactory(
             handle: SavedStateHandle
         ): T {
 
-            Log.d("ViewModelFactory", "➡️ Creando ViewModel: ${modelClass.simpleName}")
-            Log.d("ViewModelFactory", "➡️ SavedStateHandle creado: $handle")
+            Log.d("ViewModelFactory", "Creando ViewModel: ${modelClass.simpleName}")
+            Log.d("ViewModelFactory", "SavedStateHandle creado: $handle")
 
             // Mostrar claves y valores
             if (handle.keys().isEmpty()) {
@@ -43,7 +43,7 @@ fun <VM : ViewModel> savedStateViewModelFactory(
             } else {
                 handle.keys().forEach { key ->
                     val value = handle.get<Any?>(key)
-                    Log.d("ViewModelFactory", "🗝️ key: '$key' -> value: '$value'")
+                    Log.d("ViewModelFactory", "key: '$key' -> value: '$value'")
                 }
             }
 

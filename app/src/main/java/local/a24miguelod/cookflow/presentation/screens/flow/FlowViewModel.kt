@@ -41,10 +41,12 @@ class FlowViewModel(
     private val _estado = MutableStateFlow<FlowRecetasUIState>(FlowRecetasUIState.Loading)
     val estado: StateFlow<FlowRecetasUIState> = _estado
 
+    private val _tiempo = MutableStateFlow<Int>(0)
+    val tiempo: StateFlow<Int> = _tiempo
+
     private val recetaUuid: String = savedStateHandle[CockFlowDestinationsArgs.RECETA_ID]!!
 
     init {
-        Log.d(TAG, "savedStateHandle $recetaUuid")
         getReceta(recetaUuid)
     }
 
@@ -89,7 +91,7 @@ class FlowViewModel(
     }
 
     companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
+        val Factory2: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val repository = CookFlowApp.contenedor.recetasRepository
                 val savedStateHandle = createSavedStateHandle()
