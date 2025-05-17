@@ -81,12 +81,6 @@ fun ListaRecetasScreen(
         onListaCompraClick = onListaCompraClick,
         onHomeClick = onHomeClick
     ) { paddingValues ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues),
-            contentAlignment = Alignment.Center
-        ) {
             when (estado) {
                 is ListaRecetasUIState.Error -> {
                     Log.d(TAG, "ERROR")
@@ -103,7 +97,7 @@ fun ListaRecetasScreen(
                         recetas = successState.recetas
                     )
                 }
-            }
+
         }
     }
 

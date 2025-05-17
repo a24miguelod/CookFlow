@@ -72,14 +72,6 @@ class RecetasRepositoryGithub() : RecetasRepository {
 
 
         for (linea in lineas.map { it.trim() } ) {
-//            Log.d(TAG, "PARSEO: $linea")
-//            Log.d(TAG, "seccion actual:$seccionActual")
-//            Log.d(TAG, "Titulo $titulo, descripcion $descripcion")
-//            Log.d(TAG, "lista de ingredietnes: ${ingredientes.toString()}")
-//            Log.d(TAG, "lista de pasos: ${pasos.toString()}")
-//            Log.d(TAG, "paso titulo $pasoTitulo")
-//            Log.d(TAG, "paso titulo ${pasoDuracion.toString()}")
-//            Log.d(TAG, "paso titulo $pasoDescripcion")
 
             when {
                 linea.startsWith("# ") && (seccionActual == "titulo") -> {
@@ -90,8 +82,6 @@ class RecetasRepositoryGithub() : RecetasRepository {
                 linea.startsWith("![") -> {
                     val match = Regex("!\\[(.*?)\\]\\((.*?)\\)").find(linea)
                     urlImagen = match?.groups?.get(1)?.value ?: match?.groups?.get(2)?.value
-                    Log.d(TAG, "IMagen!")
-                    Log.d(TAG, urlImagen.toString())
                 }
                 linea.startsWith("## Ingredientes") -> {
                     seccionActual = "ingredientes"
@@ -138,7 +128,6 @@ class RecetasRepositoryGithub() : RecetasRepository {
                 }
                 Regex("^Duraci[oó]n:", RegexOption.IGNORE_CASE).find(linea) != null && (seccionActual == "pasos") -> {
                     pasoDuracion = linea.split(" ", limit = 3)[1].toFloat()
-                    Log.d(TAG, "Duracion $pasoDuracion")
                 }
 
                 //else
@@ -159,7 +148,6 @@ class RecetasRepositoryGithub() : RecetasRepository {
             pasos = pasos,
             urlimagen = urlImagen.toString()
         )
-        Log.d(TAG, receta.toString())
         return receta
     }
 

@@ -1,5 +1,6 @@
 package local.a24miguelod.cookflow.presentation.screens.despensa
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,10 +32,10 @@ class DespensaViewModel(
         }
     }
 
-    fun anadirAlCarrito(ingrediente: Ingrediente) {
+    fun anadirAListaCompra(ingrediente: Ingrediente) {
         viewModelScope.launch {
-            //TODO
-            //repository.anadirAListaCompra(ingrediente.ingrediente.id)
+            val enLista = !ingrediente.enListaCompra
+            repository.setIngredienteEnListaCompra(ingrediente.ingredienteId, enLista)
         }
     }
 }

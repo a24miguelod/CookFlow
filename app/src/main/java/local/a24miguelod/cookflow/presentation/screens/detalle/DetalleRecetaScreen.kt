@@ -83,7 +83,6 @@ fun DetalleRecetaScreen(
             ) { paddingValues ->
                 LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
                     item {
-                        Log.d(TAG, "Estoy en el composable ${receta.toString()}")
                         AsyncImage(
                             model = receta.urlimagen,
                             contentDescription = receta.descripcion,
@@ -303,10 +302,14 @@ fun ListaIngredientes(
                         fontSize = 12.sp
                     )
                 }
-                // Botón para añadir a la compra
-                IconButton(onClick = { }) {
+                IconButton(onClick = { onAnadirAListaCompra(ingrediente) }) {
                     Icon(
-                        imageVector = Icons.Default.ShoppingCart,
+                        imageVector = if (ingrediente.ingrediente.enListaCompra)
+                                        Icons.Default.Clear
+                                    else
+                                        Icons.Default.ShoppingCart,
+
+                        tint = if (ingrediente.ingrediente.enListaCompra) Color.Gray else Color.Black,
                         contentDescription = "Añadir a la compra",
                         modifier = Modifier.size(16.dp)
                     )

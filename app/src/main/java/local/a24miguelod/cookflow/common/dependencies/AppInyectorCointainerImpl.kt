@@ -1,6 +1,7 @@
 package local.a24miguelod.cookflow.common.dependencies
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,6 +13,7 @@ import local.a24miguelod.cookflow.data.repository.CacheRepository
 import local.a24miguelod.cookflow.data.repository.CacheRepositoryRoom
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.data.repository.RecetasRepositoryGithub
+import java.util.concurrent.Executors
 
 
 /**
@@ -41,7 +43,10 @@ class AppInyectorContainerImpl(
     override val roomDatabase = Room.databaseBuilder(
         context,
         CookFlowDatabase::class.java, "cookflow-db"
-    ).build()
+    ).setQueryCallback({ sqlQuery, bindArgs ->
+        Log.d("ROOM-SQL", "SQL: $sqlQuery | args: $bindArgs")
+    }, Executors.newSingleThreadExecutor()).build()
+
     private val ingredienteDao by lazy { roomDatabase.ingredienteDao() }
     override val cacheRepository: CacheRepository by lazy {
         CacheRepositoryRoom(ingredienteDao)

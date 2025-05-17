@@ -39,6 +39,7 @@ fun CookFlowScaffold(
     onHomeClick: () -> Unit,
     content: @Composable (PaddingValues) -> Unit
 ) {
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -51,7 +52,7 @@ fun CookFlowScaffold(
                         color = MaterialTheme.colorScheme.onPrimaryContainer)
                 },
                 navigationIcon = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = onHomeClick ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_chef),
                             contentDescription = stringResource(R.string.app_name),
@@ -104,7 +105,7 @@ fun CookFlowScaffold(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(0.dp),
+                .padding(paddingValues),
             contentAlignment = Alignment.Center
         ) {
             content(paddingValues)

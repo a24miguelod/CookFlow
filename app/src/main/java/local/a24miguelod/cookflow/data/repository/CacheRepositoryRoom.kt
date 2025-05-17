@@ -63,8 +63,9 @@ class CacheRepositoryRoom(
         ingredienteDao.updateDisponibilidad(id, disponible)
     }
 
-    override suspend fun setIngredienteEnListaCompra(id: String, listaCompra: Boolean) {
-        ingredienteDao.updateEnListaCompra(id, listaCompra)
+    override suspend fun setIngredienteEnListaCompra(id: String, enListaCompra: Boolean) {
+        Log.d(TAG, "update ingrediente $id a $enListaCompra")
+        ingredienteDao.updateEnListaCompra(id, enListaCompra)
     }
 
     override fun getListaDeLaCompra(): Flow<List<Ingrediente>> {

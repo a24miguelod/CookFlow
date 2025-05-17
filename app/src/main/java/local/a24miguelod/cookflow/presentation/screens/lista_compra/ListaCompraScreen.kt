@@ -1,9 +1,11 @@
 package local.a24miguelod.cookflow.presentation.screens.despensa
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -24,8 +26,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import local.a24miguelod.cookflow.domain.model.Ingrediente
 import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
+import local.a24miguelod.cookflow.presentation.screens.comun.Titulo
 import local.a24miguelod.cookflow.presentation.screens.lista_compra.ListaCompraViewModel
 
 
@@ -40,51 +44,71 @@ fun ListaCompraScreen(
 
     val ingredientes by viewModel.ingredientes.collectAsState()
 
-    CookFlowScaffold (
+    CookFlowScaffold(
         onDespensaClick = onDespensaClick,
         onListaCompraClick = onListaCompraClick,
         onHomeClick = onHomeClick
     ) { paddingValues ->
 
-        LazyColumn(
+        Column(
+            verticalArrangement = Arrangement.Top
         ) {
-            items(ingredientes) { ingrediente ->
-
-                Row(
-                    modifier = Modifier
-                        .padding(12.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+            Titulo("Lista de la compra")
+            if (ingredientes.isEmpty()) {
+                // Estado vacío
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Column {
-                        Text(
-                            text = ingrediente.nombre,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
+                    Text(
+                        text = "Lista vacía!",
+                        fontSize = 30.sp,
+                    )
+                }
+            } else
+                LazyColumn(
+                    verticalArrangement = Arrangement.Top,
+                            modifier = Modifier.fillMaxSize()
+                ) {
+                    items(ingredientes) { ingrediente ->
 
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-
-                        Spacer(modifier = Modifier.width(8.dp))
-
-                        IconButton(
-                            onClick = { onEliminarDeListaDeLaCompra(ingrediente) }
+                        Row(
+                            modifier = Modifier
+                                .padding(12.dp)
+                                .fillMaxWidth(),
+                            verticalAlignment = Alignment.Top,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.Check,
-                                contentDescription = "Comprar",
-                                //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
-                                modifier = Modifier
-                                    .size(16.dp)
-                                    .weight(1f)
+                            Column {
+                                Text(
+                                    text = ingrediente.nombre,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                            }
 
-                            )
+                            Row(verticalAlignment = Alignment.Top) {
+
+                                Spacer(modifier = Modifier.width(8.dp))
+
+                                IconButton(
+                                    onClick = { onEliminarDeListaDeLaCompra(ingrediente) }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.Check,
+                                        contentDescription = "Comprar",
+                                        //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
+                                        modifier = Modifier
+                                            .size(16.dp)
+                                            .weight(1f)
+
+                                    )
+                                }
+                            }
                         }
                     }
                 }
-            }
         }
-    }}
+    }
+}
 
 

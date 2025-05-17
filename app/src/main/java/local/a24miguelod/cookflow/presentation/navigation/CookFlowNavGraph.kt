@@ -60,7 +60,7 @@ fun CookFlowNavGraph(
                     )
                 },
                 onDespensaClick = { navController.navigate(DestinationDespensa) },
-                onListaCompraClick = { navController.navigate(DestinationDespensa) },
+                onListaCompraClick = { navController.navigate(DestinationListaCompra) },
                 onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
             )
         }
@@ -90,7 +90,7 @@ fun CookFlowNavGraph(
                     viewModel.toggleDespensa(ingredienteReceta.ingrediente)
                 },
                 onDespensaClick = { navController.navigate(DestinationDespensa) },
-                onListaCompraClick = { navController.navigate(DestinationDespensa) },
+                onListaCompraClick = { navController.navigate(DestinationListaCompra) },
                 onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
             )
         }
@@ -109,7 +109,7 @@ fun CookFlowNavGraph(
             FlowScreen(
                 viewModel,
                 onDespensaClick = { navController.navigate(DestinationDespensa) },
-                onListaCompraClick = { navController.navigate(DestinationDespensa) },
+                onListaCompraClick = { navController.navigate(DestinationListaCompra) },
                 onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
             )
         }
@@ -127,10 +127,12 @@ fun CookFlowNavGraph(
                 onToggleDespensa = { ingrediente ->
                     viewModel.toggleDespensa(ingrediente)
                 },
-                onAnadirAlCarrito = { },
+                onAnadirAlCarrito = { ingrediente ->
+                    viewModel.anadirAListaCompra(ingrediente)
+                },
                 onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
                 onDespensaClick = { navController.navigate(DestinationDespensa) },
-                onListaCompraClick = { navController.navigate(DestinationDespensa) }
+                onListaCompraClick = { navController.navigate(DestinationListaCompra) }
             )
         }
 
@@ -149,7 +151,7 @@ fun CookFlowNavGraph(
                 },
                 onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
                 onDespensaClick = { navController.navigate(DestinationDespensa) },
-                onListaCompraClick = { navController.navigate(DestinationDespensa) },
+                onListaCompraClick = { navController.navigate(DestinationListaCompra) }
             )
         }
     }

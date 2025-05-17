@@ -55,24 +55,10 @@ class DetalleRecetaViewModel(
 
         viewModelScope.launch {
             try {
-                updateUI()
-                /*
-                repository.getReceta(uuidReceta)?.let { receta ->
-                    // Obtiene la disponibilidad dede Room
-                    receta.ingredientes.forEach() {
-                        val ingredienteEnCache =
-                            cacheRepository.getIngredienteCacheado(it.ingrediente)
-                        it.ingrediente.enDespensa = ingredienteEnCache.enDespensa
-                    }
-                    _estado.value = DetalleRecetaUIState.Success(receta, false)
-
-
-
-                } ?: run {
-                    _estado.value = DetalleRecetaUIState.Error("La receta ${uuidReceta} no existe")
-                }
-
+                /* Se refatoriza aparte para poder refrescarlo facilmente cuando
+                   cambia un ingrediente (por anadirlo o eliminarlo de la despensa/lista compra
                  */
+                updateUI()
             } catch (e: Exception) {
                 _estado.value = DetalleRecetaUIState.Error("No se pudo cargar la receta")
                 Log.d(TAG, e.stackTraceToString())
@@ -80,29 +66,30 @@ class DetalleRecetaViewModel(
         }
     }
 
-    public fun toggleDespensa(ingrediente: Ingrediente) {
+    fun toggleDespensa(ingrediente: Ingrediente) {
         viewModelScope.launch {
             val ing = cacheRepository.getIngredienteCacheado(ingrediente)
             cacheRepository.setIngredienteDisponible(ing.ingredienteId, !ing.enDespensa)
-            Log.d(TAG, "anadirADespensa $ingrediente")
+            Log.d(TAG, "toggleDespensa $ingrediente")
             updateUI()
         }
     }
 
-    public fun anadirAListaCompra(ingrediente: Ingrediente) {
+    fun anadirAListaCompra(ingrediente: Ingrediente) {
         viewModelScope.launch {
-            cacheRepository.setIngredienteEnListaCompra(ingrediente.ingredienteId, true)
-            Log.d(TAG, "anadirADespensa $ingrediente")
-
+            val ing = cacheRepository.getIngredienteCacheado(ingrediente)
+            cacheRepository.setIngredienteEnListaCompra(ing.ingredienteId, !ing.enListaCompra)
+            Log.d(TAG, "toggleListaCompra $ingrediente")
+            updateUI()
         }
     }
 
 
-    public fun eliminarDeListaCompra(ingrediente: Ingrediente)  {
+    fun eliminarDeListaCompra(ingrediente: Ingrediente)  {
         Log.d(TAG, "eliminarDeDespensa $ingrediente")
     }
 
-    public fun eliminarDeDespensa(ingrediente: Ingrediente)  {
+    fun eliminarDeDespensa(ingrediente: Ingrediente)  {
         Log.d(TAG, "eliminarDeDespensa $ingrediente")
     }
 
@@ -114,6 +101,7 @@ class DetalleRecetaViewModel(
                 val ingredienteEnCache =
                     cacheRepository.getIngredienteCacheado(it.ingrediente)
                 it.ingrediente.enDespensa = ingredienteEnCache.enDespensa
+                it.ingrediente.enListaCompra = ingredienteEnCache.enListaCompra
             }
             _estado.value = DetalleRecetaUIState.Success(receta, false)
 
