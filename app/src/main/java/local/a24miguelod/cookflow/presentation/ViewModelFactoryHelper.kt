@@ -15,7 +15,6 @@ private const val TAG = "ViewModelFactoryHelper"
 fun <VM:ViewModel> viewModelFactory(initializer: () -> VM):ViewModelProvider.Factory {
     return object:ViewModelProvider.Factory {
         override fun <T: ViewModel> create(modelClass:Class<T>): T {
-            Log.d(TAG,"Estoy en la fatory")
             return initializer() as T
         }
     }
@@ -43,8 +42,6 @@ fun <VM : ViewModel> savedStateViewModelFactoryNoConsigoQueFuncione(
                     Log.d("ViewModelFactory", "key: '$key' -> value: '$value'")
                 }
             }
-
-            Log.d(TAG, "Factory de AbastractSavedState")
             return initializer(handle) as T
         }
     }

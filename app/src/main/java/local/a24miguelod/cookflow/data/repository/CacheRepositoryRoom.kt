@@ -63,7 +63,6 @@ class CacheRepositoryRoom(
     }
 
     override suspend fun setIngredienteEnListaCompra(id: String, enListaCompra: Boolean) {
-        Log.d(TAG, "update ingrediente $id a $enListaCompra")
         ingredienteDao.updateEnListaCompra(id, enListaCompra)
     }
 

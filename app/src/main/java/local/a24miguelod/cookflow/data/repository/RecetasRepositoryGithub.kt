@@ -43,7 +43,6 @@ class RecetasRepositoryGithub() : RecetasRepository {
         // Leo los ficheros del directorio en particular y creo una receta para cada una
         // de las entradas
         val lsDirectory: List<DirectoryGithub> = client.get(githubReporecetasUrl).body()
-        Log.d(TAG, lsDirectory.toString())
 
         lsDirectory.forEach {
             val recetaFile:String = client.get(it.downloadUrl!!).body()
@@ -182,7 +181,6 @@ class RecetasRepositoryGithub() : RecetasRepository {
         val recetaFile:String = client.get("$githubBaseDir$id").body()
         val receta = parseMarkdownReceta(recetaFile,id )
 
-        Log.d(TAG, "getReceta $githubBaseDir$id")
         return receta
     }
 

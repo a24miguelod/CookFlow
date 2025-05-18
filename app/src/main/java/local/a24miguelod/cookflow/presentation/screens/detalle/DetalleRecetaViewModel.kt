@@ -44,9 +44,6 @@ class DetalleRecetaViewModel(
     val estado: StateFlow<DetalleRecetaUIState> = _estado
 
     init {
-        Log.d(TAG, "savedStateHandle $recetaUuid")
-        Log.d(TAG, "Inicializando DetalleRecetaViewModel")
-        Log.d(TAG, "SavedStateHandle keys: ${savedStateHandle.keys().joinToString()}")
         getReceta(recetaUuid)
     }
 
@@ -70,7 +67,6 @@ class DetalleRecetaViewModel(
         viewModelScope.launch {
             val ing = cacheRepository.getIngredienteCacheado(ingrediente)
             cacheRepository.setIngredienteDisponible(ing.ingredienteId, !ing.enDespensa)
-            Log.d(TAG, "toggleDespensa $ingrediente")
             updateUI()
         }
     }
@@ -79,20 +75,9 @@ class DetalleRecetaViewModel(
         viewModelScope.launch {
             val ing = cacheRepository.getIngredienteCacheado(ingrediente)
             cacheRepository.setIngredienteEnListaCompra(ing.ingredienteId, !ing.enListaCompra)
-            Log.d(TAG, "toggleListaCompra $ingrediente")
             updateUI()
         }
     }
-
-
-    fun eliminarDeListaCompra(ingrediente: Ingrediente)  {
-        Log.d(TAG, "eliminarDeDespensa $ingrediente")
-    }
-
-    fun eliminarDeDespensa(ingrediente: Ingrediente)  {
-        Log.d(TAG, "eliminarDeDespensa $ingrediente")
-    }
-
 
     private suspend fun updateUI() {
         repository.getReceta(recetaUuid)?.let { receta ->

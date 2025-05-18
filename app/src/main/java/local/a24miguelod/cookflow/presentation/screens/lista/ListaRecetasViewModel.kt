@@ -42,7 +42,6 @@ class ListaRecetasViewModel(
 
     private fun getRecetasConFlow() {
 
-        Log.d(TAG, "getRecetasConFlow")
         _estado.value = ListaRecetasUIState.Loading
 
         viewModelScope.launch {

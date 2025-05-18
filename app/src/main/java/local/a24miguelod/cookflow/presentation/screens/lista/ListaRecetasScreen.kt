@@ -114,7 +114,6 @@ fun ListaRecetasContent(
     onRecetaClick: (Receta) -> Unit
 
 ) {
-    Log.d(TAG, "ListaRecetasContent")
     Column(
         modifier = Modifier.fillMaxSize()
     ) {

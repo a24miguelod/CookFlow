@@ -86,7 +86,6 @@ class FlowViewModel(
                             progreso = progreso
                         )
                         if (progreso >= 1f) mostrarPasoSiguiente()
-                        Log.d(TAG,"tick $progreso - $elapsed")
                         delay(1000)
                     }
 
@@ -144,7 +143,6 @@ class FlowViewModel(
                     progreso = 0f,
                     running = true,
                 )
-                Log.d(TAG, "Vamos al paso $nuevoPaso")
             } else {
                 _cronometro.value = _cronometro.value.copy (
                     duracion = 0f,
@@ -152,7 +150,6 @@ class FlowViewModel(
                     elapsed = 0,
                     running = false,
                 )
-                Log.d(TAG, "Termino paso $nuevoPaso")
             }
         }
     }

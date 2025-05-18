@@ -68,7 +68,6 @@ fun FlowScreen(
 
         is FlowRecetasUIState.Success -> {
             val sucessState = estado as FlowRecetasUIState.Success
-            Log.d(TAG, "Success")
             FlowScreenContent(
                 receta = sucessState.receta,
                 paso = sucessState.pasoActual,
@@ -111,7 +110,6 @@ fun FlowScreenContent(
             )
 
             if (paso < receta.pasos.size) {
-                Log.d(TAG,"Paso es menor")
                 Column {
                     Text(
                         text = "Paso ${paso + 1}",
@@ -132,7 +130,6 @@ fun FlowScreenContent(
                     )
                 }
             } else {
-                Log.d(TAG, "Paso es mayor")
                 Column(
                     modifier = Modifier.fillMaxSize().padding(60.dp),
                     verticalArrangement = Arrangement.Center,
