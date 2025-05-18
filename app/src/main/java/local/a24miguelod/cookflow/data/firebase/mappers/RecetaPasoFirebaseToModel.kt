@@ -16,6 +16,4 @@ class RecetaPasoFirebaseToModel : Mapper<RecetaPasoFirebase?, RecetaPaso?> {
             )
         }
     }
-
-
 }

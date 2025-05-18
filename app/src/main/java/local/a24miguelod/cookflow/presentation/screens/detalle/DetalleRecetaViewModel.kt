@@ -44,10 +44,10 @@ class DetalleRecetaViewModel(
     val estado: StateFlow<DetalleRecetaUIState> = _estado
 
     init {
-        getReceta(recetaUuid)
+        getReceta()
     }
 
-    private fun getReceta(uuidReceta: String) {
+    private fun getReceta() {
         _estado.value = DetalleRecetaUIState.Loading
 
         viewModelScope.launch {
@@ -79,7 +79,7 @@ class DetalleRecetaViewModel(
         }
     }
 
-    private suspend fun updateUI() {
+    suspend fun updateUI() {
         Log.d(TAG, "Update UI")
         repository.getReceta(recetaUuid)?.let { receta ->
             // Obtiene la disponibilidad dede Room

@@ -30,6 +30,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -43,7 +44,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import local.a24miguelod.cookflow.domain.model.Ingrediente
 import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
@@ -63,6 +63,12 @@ fun DetalleRecetaScreen(
     onListaCompraClick: () -> Unit,
     onHomeClick: () -> Unit,
 ) {
+
+    // Sin poner esto, las modificaciones en la despensa o lista compra
+    // no se reflejan al volver para atras
+    LaunchedEffect(true) {
+        viewModel.updateUI()
+    }
 
     val estado by viewModel.estado.collectAsState()
 

@@ -1,7 +1,5 @@
 package local.a24miguelod.cookflow.data.github.model
 
-import local.a24miguelod.cookflow.data.firebase.model.IngredienteRecetaFirebase
-import local.a24miguelod.cookflow.data.firebase.model.RecetaPasoFirebase
 import local.a24miguelod.cookflow.domain.model.Ingrediente
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
 
