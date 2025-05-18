@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 import local.a24miguelod.cookflow.domain.model.Receta
+import local.a24miguelod.cookflow.presentation.screens.comun.formatDuracion
 
 private const val TAG = "FlowScreen"
 
@@ -106,23 +107,30 @@ fun FlowScreenContent(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
                 ),
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
             )
 
             if (paso < receta.pasos.size) {
                 Column {
                     Text(
                         text = "Paso ${paso + 1}",
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.secondary,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
 
                     Text(
                         text = receta.pasos[paso].resumen,
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.padding(bottom = 16.dp)
+                    )
+
+                    Text(
+                        text = formatDuracion(receta.pasos[paso].duracion),
                         style = MaterialTheme.typography.titleSmall,
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
+
 
                     Text(
                         text = receta.pasos[paso].detallelargo,
