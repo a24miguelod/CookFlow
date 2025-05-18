@@ -41,11 +41,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+
 import local.a24miguelod.cookflow.domain.model.Receta
 
 private const val TAG = "FlowScreen"
@@ -53,8 +49,6 @@ private const val TAG = "FlowScreen"
 @Composable
 fun FlowScreen(
     viewModel: FlowViewModel,
-    onDespensaClick: () -> Unit,
-    onListaCompraClick: () -> Unit,
     onHomeClick: () -> Unit,
 ) {
 
@@ -80,7 +74,8 @@ fun FlowScreen(
                 paso = sucessState.pasoActual,
                 progreso = cronometro.progreso,
                 onPreviousClick = { viewModel.mostrarPasoAnterior() },
-                onNextClick = { viewModel.mostrarPasoSiguiente() }
+                onNextClick = { viewModel.mostrarPasoSiguiente() },
+                onHomeClick = onHomeClick
             )
         }
     }
@@ -93,6 +88,7 @@ fun FlowScreenContent(
     progreso: Float,
     onPreviousClick: () -> Unit,
     onNextClick: () -> Unit,
+    onHomeClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -151,54 +147,63 @@ fun FlowScreenContent(
                     )
                     Text(
                         text = "¡Que aproveche!",
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize().padding(20.dp),
                         textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.headlineSmall,
                     )
-
+                    OutlinedButton(
+                        onClick = { onHomeClick() },
+                        enabled = paso > 0
+                    ) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Volver a Recetas")
+                    }
                 }
             }
         }
 
         // Barra de progreso y controles FIJOS en la parte inferior
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .background(MaterialTheme.colorScheme.surface)
-        ) {
-            LinearProgressIndicator(
-                progress = { progreso },
+        if (paso < receta.pasos.size) {
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(8.dp)
-                    .clip(RoundedCornerShape(4.dp)),
-                color = MaterialTheme.colorScheme.primary,
-                trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .padding(16.dp)
+                    .background(MaterialTheme.colorScheme.surface)
             ) {
-                OutlinedButton(
-                    onClick = onPreviousClick,
-                    enabled = paso > 0
-                ) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Anterior")
-                }
+                LinearProgressIndicator(
+                    progress = { progreso },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(8.dp)
+                        .clip(RoundedCornerShape(4.dp)),
+                    color = MaterialTheme.colorScheme.primary,
+                    trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f),
+                )
 
-                Button(
-                    onClick = onNextClick,
-                    enabled = paso < receta.pasos.size
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(if (paso < receta.pasos.size) "Siguiente" else "Recetas")
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
+                    OutlinedButton(
+                        onClick = onPreviousClick,
+                        enabled = paso > 0
+                    ) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Anterior")
+                    }
+
+                    Button(
+                        onClick = onNextClick,
+                        enabled = paso < receta.pasos.size
+                    ) {
+                        Text(if (paso < receta.pasos.size) "Siguiente" else "Recetas")
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null)
+                    }
                 }
             }
         }

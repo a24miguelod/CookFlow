@@ -48,6 +48,7 @@ import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
 import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
+import local.a24miguelod.cookflow.presentation.screens.comun.formatDuracion
 
 private const val TAG = "DetalleRecetaScreen"
 
@@ -132,9 +133,6 @@ fun DetalleRecetaScreen(
                         HorizontalDivider()
                         ListaPasos(receta.pasos)
 
-                        Button(onClick = { onFlowClick(receta) }) {
-                            Text(text = "Empezar!")
-                        }
                     }
 
                 }
@@ -361,12 +359,12 @@ fun ListaPasos(
                     Icon(
                         imageVector = Icons.Default.Refresh,
                         contentDescription = "Duracion",
-                        tint = Color.Green, // else Color.Gray
+                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(26.dp)
 
                     )
                     Text(
-                        paso.duracion.toInt().toString() + "min",
+                        formatDuracion(paso.duracion),
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold
                     )

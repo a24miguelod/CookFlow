@@ -141,6 +141,7 @@ class FlowViewModel(
                     duracion = estadoActual.receta.pasos[nuevoPaso].duracion,
                     startTime = System.currentTimeMillis(),
                     elapsed = 0,
+                    progreso = 0f,
                     running = true,
                 )
                 Log.d(TAG, "Vamos al paso $nuevoPaso")

@@ -108,9 +108,11 @@ fun CookFlowNavGraph(
             )
             FlowScreen(
                 viewModel,
-                onDespensaClick = { navController.navigate(DestinationDespensa) },
-                onListaCompraClick = { navController.navigate(DestinationListaCompra) },
-                onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
+                onHomeClick = {
+                    //navController.navigate(DestinationListaRecetasScreen)
+                    navController.popBackStack(DestinationListaRecetasScreen, inclusive = true)
+
+                }
             )
         }
 

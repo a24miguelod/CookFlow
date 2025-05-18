@@ -12,6 +12,7 @@ import local.a24miguelod.cookflow.data.local.dao.CookFlowDatabase
 import local.a24miguelod.cookflow.data.repository.CacheRepository
 import local.a24miguelod.cookflow.data.repository.CacheRepositoryRoom
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
+import local.a24miguelod.cookflow.data.repository.RecetasRepositoryFirebase
 import local.a24miguelod.cookflow.data.repository.RecetasRepositoryGithub
 import java.util.concurrent.Executors
 
@@ -35,6 +36,7 @@ class AppInyectorContainerImpl(
 
     //Para inyectar el reposotorio de Recetas
     override val recetasRepository: RecetasRepository by lazy {
+        // RecetasRepositoryFirebase()
         RecetasRepositoryGithub()
     }
 

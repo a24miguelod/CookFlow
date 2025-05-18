@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import local.a24miguelod.cookflow.CookFlowApp
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import androidx.lifecycle.createSavedStateHandle
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import local.a24miguelod.cookflow.domain.model.Receta
 
@@ -38,23 +39,7 @@ class ListaRecetasViewModel(
     init {
         getRecetasConFlow()
     }
-/*
-    private fun getRecetas() {
-        _estado.value = ListaRecetasUIState.Loading
 
-        viewModelScope.launch {
-            try {
-                val recetas = repository.getRecetasConFlow()
-                _estado.value = ListaRecetasUIState.Success(recetas, false)
-                Log.d(TAG, recetas[0].toString())
-            } catch (e:Exception) {
-                _estado.value = ListaRecetasUIState.Error("No se pudieron cargar las recetas")
-                Log.d(TAG,e.stackTraceToString())
-            }
-        }
-
-    }
-*/
     private fun getRecetasConFlow() {
 
         Log.d(TAG, "getRecetasConFlow")
@@ -63,9 +48,13 @@ class ListaRecetasViewModel(
         viewModelScope.launch {
             repository.getRecetasConFlow()
                 .onStart { _estado.value = ListaRecetasUIState.Loading }
+                .catch { error ->
+                    _estado.value = ListaRecetasUIState.Error(error.message.toString())
+                }
                 .collect { listaParcial ->
                     _estado.value = ListaRecetasUIState.Success(listaParcial, false)
                 }
+
         }
     }
 

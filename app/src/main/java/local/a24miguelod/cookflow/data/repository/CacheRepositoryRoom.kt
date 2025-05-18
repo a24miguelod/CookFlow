@@ -59,7 +59,6 @@ class CacheRepositoryRoom(
     }
 
     override suspend fun setIngredienteDisponible(id: String, disponible: Boolean) {
-        Log.d(TAG, "setIngredienteDisponible($id: String, $disponible: Boolean) {")
         ingredienteDao.updateDisponibilidad(id, disponible)
     }
 

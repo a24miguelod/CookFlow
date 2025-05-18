@@ -23,10 +23,8 @@ class RecetasRepositoryFirebase : RecetasRepository {
 
     override suspend fun getRecetasConFlow(): Flow<List<Receta>> = flow {
         val resultadoParcial = mutableListOf<Receta>()
-        Log.d(TAG, "Empiezo a leer el flow")
         val documentos = db.collection("recetas").get().await().documents
         for (doc in documentos) {
-            Log.d(TAG, "Leo documento")
             val recetaFirebase = doc.toObject(RecetaFirebase::class.java)?.apply {
                 uuidReceta = doc.id
             }
@@ -74,7 +72,6 @@ class RecetasRepositoryFirebase : RecetasRepository {
     }
 
     override suspend fun getReceta(id: String): Receta? {
-        Log.d(TAG, "getReceta $id")
         val snapshot = db.collection("recetas")
             .document(id)  //
             .get()
@@ -102,8 +99,6 @@ class RecetasRepositoryFirebase : RecetasRepository {
         recetaFirebase?.pasos?.forEach {
             if (receta != null) {
                 val paso = RecetaPasoFirebaseToModel().mapFrom(it)
-                Log.d(TAG, "Deberia anadir el paso ${it.toString()}")
-                Log.d(TAG, "Deberia anadir el paso ${paso.toString()}")
                 if (paso != null) {
                     receta.pasos.add(paso)
                 }
@@ -118,19 +113,14 @@ class RecetasRepositoryFirebase : RecetasRepository {
         val idsAConsultar = ids?.filterNot { ingredientesMapCache.containsKey(it) }
         if (idsAConsultar.isNullOrEmpty()) return
 
-        Log.d(TAG, "Consulto la lista de ids:$ids")
-        Log.d(TAG, "Despues de filtarar: :$idsAConsultar")
-
         // TODO: Hacer en batch
         for (id in idsAConsultar) {
-            Log.d(TAG, "Consulto el ingrediente con id '$id'")
             val snapshot = db.collection("ingredientes")
                 .document(id)  //
                 .get()
                 .await()
 
             snapshot.getString("nombre")?.let {
-                Log.d(TAG, "Encuentro $it")
                 ingredientesMapCache[id] = Ingrediente(nombre = it)
             }
 

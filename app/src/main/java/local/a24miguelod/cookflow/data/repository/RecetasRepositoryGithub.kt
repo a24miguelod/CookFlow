@@ -23,7 +23,7 @@ private const val TAG = "RecetasRepositoryGithub"
 class RecetasRepositoryGithub() : RecetasRepository {
 
     private var githubReporecetasUrl: String = "http://192.168.1.138:8000"
-    private var githubBaseDir: String = "http://192.168.1.138:8000/files/"
+    private var githubBaseDir: String = "http://192.168.1.138:8000/recetas/"
     private val client:HttpClient = HttpClient(CIO) {
         expectSuccess = true        // https://ktor.io/docs/client-create-and-configure.html#configure-client
         install(ContentNegotiation) {

@@ -34,12 +34,9 @@ fun <VM : ViewModel> savedStateViewModelFactoryNoConsigoQueFuncione(
             handle: SavedStateHandle
         ): T {
 
-            Log.d("ViewModelFactory", "Creando ViewModel: ${modelClass.simpleName}")
-            Log.d("ViewModelFactory", "SavedStateHandle creado: $handle")
-
             // Mostrar claves y valores
             if (handle.keys().isEmpty()) {
-                Log.w("ViewModelFactory", "⚠️ SavedStateHandle sin argumentos")
+                Log.w("ViewModelFactory", "SavedStateHandle sin argumentos")
             } else {
                 handle.keys().forEach { key ->
                     val value = handle.get<Any?>(key)

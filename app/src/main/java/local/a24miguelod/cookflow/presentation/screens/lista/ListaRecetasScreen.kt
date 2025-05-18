@@ -60,7 +60,9 @@ import coil3.compose.AsyncImage
 import local.a24miguelod.cookflow.CookFlowApp
 
 import local.a24miguelod.cookflow.domain.model.Receta
+import local.a24miguelod.cookflow.presentation.screens.comun.CargandoGenerico
 import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
+import local.a24miguelod.cookflow.presentation.screens.comun.ErrorGenerico
 
 private const val TAG = "ListaRecestasScreen"
 
@@ -85,11 +87,11 @@ fun ListaRecetasScreen(
     ) { paddingValues ->
         when (estado) {
             is ListaRecetasUIState.Error -> {
-                Log.d(TAG, "ERROR")
+                ErrorGenerico((estado as ListaRecetasUIState.Error).message)
             }
 
             is ListaRecetasUIState.Loading -> {
-                Log.d(TAG, "Cargando")
+                CargandoGenerico("Obteniendo recetas")
             }
 
             is ListaRecetasUIState.Success -> {

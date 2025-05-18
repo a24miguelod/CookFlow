@@ -15,19 +15,16 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val splashScreen = installSplashScreen()
+        installSplashScreen()
 
         setTheme(R.style.Theme_CookFlow) // si no, se mantiene el icon del splash
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
         setContent {
-            CookFlowTheme(
-                dynamicColor = true
-            ) {
+            CookFlowTheme {
                 CookFlowNavGraph()
             }
         }
-
     }
 }
