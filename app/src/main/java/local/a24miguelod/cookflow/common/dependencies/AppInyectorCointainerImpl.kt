@@ -46,7 +46,8 @@ class AppInyectorContainerImpl(
         // El repo de firebase necesita el cache porque  las recetas tienen unicamente
         // un uuid al ingrediente.
         // Cacheo los ingrediente para no hacer tantas consultas en cada receta
-        RecetasRepositoryFirebase(cacheRepository)
+
+        // RecetasRepositoryFirebase(cacheRepository)
 
 //        RecetasRepositoryGithub(
 //            githubReporecetasUrl = "http://192.168.1.138:8000",
@@ -54,11 +55,11 @@ class AppInyectorContainerImpl(
 //            httpCliente = httpCliente  // se pasa el cliente inyectado lazy
 //        )
 //
-//        RecetasRepositoryGithub(
-//            githubReporecetasUrl = "https://api.github.com/repos/a24miguelod/recetas/contents/recetas?ref=main",
-//            githubBaseDir = "https://raw.githubusercontent.com/a24miguelod/recetas/refs/heads/main/recetas/",
-//            httpCliente = httpCliente  // se pasa el cliente inyectado lazy
-//        )
+        RecetasRepositoryGithub(
+            githubReporecetasUrl = "https://api.github.com/repos/a24miguelod/recetas/contents/recetas?ref=main",
+            githubBaseDir = "https://raw.githubusercontent.com/a24miguelod/recetas/refs/heads/main/recetas/",
+            httpCliente = httpCliente  // se pasa el cliente inyectado lazy
+        )
 
     }
 
