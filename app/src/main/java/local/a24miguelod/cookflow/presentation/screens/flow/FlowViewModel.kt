@@ -3,18 +3,12 @@ package local.a24miguelod.cookflow.presentation.screens.flow
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import local.a24miguelod.cookflow.presentation.navigation.CockFlowDestinationsArgs
-import local.a24miguelod.cookflow.CookFlowApp
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowDestinationsArgs
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.domain.model.Receta
 
@@ -51,7 +45,7 @@ class FlowViewModel(
     private val _cronometro = MutableStateFlow<Cronometro>(Cronometro())
     val cronometro:StateFlow<Cronometro> = _cronometro
 
-    private val recetaUuid: String = savedStateHandle[CockFlowDestinationsArgs.RECETA_ID]!!
+    private val recetaUuid: String = savedStateHandle[CookFlowDestinationsArgs.RECETA_ID]!!
 
     init {
         getReceta(recetaUuid)
@@ -88,31 +82,6 @@ class FlowViewModel(
                         if (progreso >= 1f) mostrarPasoSiguiente()
                         delay(1000)
                     }
-
-                    /*
-                    val startTime = System.currentTimeMillis()
-                    var pasoActual = 0;
-
-                    //savedStateHandle["startTime"] = startTime
-                    //savedStateHandle["pasoActual"] = pasoActual
-
-                    while (pasoActual < receta.pasos.size) {
-                        val transcurrido = System.currentTimeMillis() - startTime
-                        val pasoObjectActual = receta.pasos[pasoActual]
-                        val progreso =
-                            (transcurrido.toFloat() / (pasoObjectActual.duracion*60000f)).coerceIn(0f, 1f)
-                        if (progreso > 1f) {
-                            pasoActual += 1
-                        }
-                        _estado.value = FlowRecetasUIState.Success(
-                            isLoading = false,
-                            receta = receta,
-                            progreso = progreso,
-                            pasoActual = pasoActual,
-                        )
-                        delay(1000)
-                    }
-                    */
 
                 } ?: run {
                     _estado.value = FlowRecetasUIState.Error("La receta ${uuidReceta} no existe")
@@ -168,10 +137,6 @@ class FlowViewModel(
                 )
             }
         }
-    }
-
-    fun iniciaCrono() {
-
     }
 
 }

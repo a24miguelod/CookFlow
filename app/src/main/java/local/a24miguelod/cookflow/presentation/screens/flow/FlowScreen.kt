@@ -168,7 +168,7 @@ fun FlowScreenContent(
             }
         }
 
-        // Barra de progreso y controles FIJOS en la parte inferior
+        // Barra de progreso y controles en la parte inferior
         if (paso < receta.pasos.size) {
             Column(
                 modifier = Modifier
@@ -212,76 +212,5 @@ fun FlowScreenContent(
                 }
             }
         }
-    }
-}
-
-/*
-@Composable
-fun BarraDeProgreso(
-    duracionEnMinutos: Float
-) {
-    val duracionTotalMillis = duracionEnMinutos * 60_000L
-
-    // Flow que emite cada segundo el tiempo transcurrido
-    val progresoFlow: Flow<Float> = remember(duracionEnMinutos) {
-        flow {
-            val startTime = System.currentTimeMillis()
-            while (true) {
-                val elapsed = System.currentTimeMillis() - startTime
-                val progress = (elapsed.toFloat() / duracionTotalMillis).coerceIn(0f, 1f)
-                emit(progress)
-
-                if (progress >= 1f) break
-                delay(1000L)
-                Log.d(TAG, "tick tick")
-            }
-        }
-    }
-
-    //val progreso by progresoFlow.collectAsState(initial = 0f)
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        LinearProgressIndicator(
-            progress = progreso,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(12.dp)
-                .clip(RoundedCornerShape(6.dp))
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        val tiempoRestanteSegundos =
-            ((duracionTotalMillis * (1 - progreso)) / 1000).toInt().coerceAtLeast(0)
-
-        Text(
-            text = "$tiempoRestanteSegundos segundos restantes",
-        )
-    }
-}
-*/
-
-@Composable
-fun BarraDeProgreso(
-    progreso: Float
-) {
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        LinearProgressIndicator(
-            progress = progreso,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(12.dp)
-                .clip(RoundedCornerShape(6.dp))
-        )
-
     }
 }

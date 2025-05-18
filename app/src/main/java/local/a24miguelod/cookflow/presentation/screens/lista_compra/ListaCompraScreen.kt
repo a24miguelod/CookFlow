@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.ShoppingCart
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,8 +24,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import local.a24miguelod.cookflow.R
 import local.a24miguelod.cookflow.domain.model.Ingrediente
 import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
 import local.a24miguelod.cookflow.presentation.screens.comun.Titulo
@@ -53,7 +54,7 @@ fun ListaCompraScreen(
         Column(
             verticalArrangement = Arrangement.Top
         ) {
-            Titulo("Lista de la compra")
+            Titulo(stringResource(R.string.lista_de_la_compra))
             if (ingredientes.isEmpty()) {
                 // Estado vacío
                 Box(
@@ -95,7 +96,7 @@ fun ListaCompraScreen(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Check,
-                                        contentDescription = "Comprar",
+                                        contentDescription = stringResource(R.string.comprar),
                                         //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
                                         modifier = Modifier
                                             .size(16.dp)

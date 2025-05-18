@@ -12,7 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import local.a24miguelod.cookflow.CookFlowApp
-import local.a24miguelod.cookflow.presentation.navigation.CockFlowDestinationsArgs.RECETA_ID
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowDestinationsArgs.RECETA_ID
 import local.a24miguelod.cookflow.presentation.screens.despensa.DespensaScreen
 import local.a24miguelod.cookflow.presentation.screens.despensa.DespensaViewModel
 import local.a24miguelod.cookflow.presentation.screens.despensa.ListaCompraScreen

@@ -90,8 +90,8 @@ fun DespensaScreen(
                             ) {
                                 Icon(
                                     imageVector = if (ingrediente.enListaCompra)
-                                        Icons.Default.ShoppingCart
-                                    else Icons.Default.Clear,
+                                        Icons.Default.Clear
+                                    else Icons.Default.ShoppingCart,
                                     contentDescription = "Comprar",
                                     //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
                                     modifier = Modifier

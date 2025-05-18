@@ -3,18 +3,11 @@ package local.a24miguelod.cookflow.presentation.screens.detalle
 import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.launch
-import local.a24miguelod.cookflow.presentation.navigation.CockFlowDestinationsArgs
-import local.a24miguelod.cookflow.CookFlowApp
+import local.a24miguelod.cookflow.presentation.navigation.CookFlowDestinationsArgs
 import local.a24miguelod.cookflow.data.repository.CacheRepository
 import local.a24miguelod.cookflow.data.repository.RecetasRepository
 import local.a24miguelod.cookflow.domain.model.Ingrediente
@@ -38,7 +31,7 @@ class DetalleRecetaViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val recetaUuid: String = savedStateHandle[CockFlowDestinationsArgs.RECETA_ID]!!
+    private val recetaUuid: String = savedStateHandle[CookFlowDestinationsArgs.RECETA_ID]!!
 
     private val _estado = MutableStateFlow<DetalleRecetaUIState>(DetalleRecetaUIState.Loading)
     val estado: StateFlow<DetalleRecetaUIState> = _estado

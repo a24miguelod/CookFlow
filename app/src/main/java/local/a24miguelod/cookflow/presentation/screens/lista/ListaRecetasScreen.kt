@@ -271,14 +271,3 @@ fun RecetaBadge(
         }
     }
 }
-
-
-//fun creaReceta() {
-//    val db = Firebase.firestore
-//    val random = (1..1000).random()
-//    val receta = Receta(nombre = "Receta $random", descripcion = "Descripcion $random")
-//    db.collection("recetas").add(receta)
-//        .addOnSuccessListener {  Log.i(TAG, "Todo bien")}
-//        .addOnFailureListener { Log.i(TAG, "Fallo al insertar")}
-//        .addOnCompleteListener() { Log.i(TAG, "Insercionh completa") }
-//}

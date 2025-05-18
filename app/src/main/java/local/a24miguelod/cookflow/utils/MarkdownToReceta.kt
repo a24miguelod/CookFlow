@@ -14,8 +14,15 @@ import local.a24miguelod.cookflow.domain.model.RecetaPaso
 
   El parse no es (ni pretende) ser robusto.
  */
+enum class recetaSecciones {
+    TITULO,
+    DESCRIPCION,
+    INGREDIENTES,
+    PASOS
+}
 
-fun parseMarkdownReceta(texto:String, id:String):Receta {
+fun parseMarkdownReceta(texto: String, id: String): Receta {
+
 
     val lineas = texto.lines() + "### Paso"
 
@@ -25,30 +32,31 @@ fun parseMarkdownReceta(texto:String, id:String):Receta {
     val ingredientes = mutableListOf<IngredienteReceta>()
     val pasos = mutableListOf<RecetaPaso>()
 
-    var seccionActual = "titulo"
+    var seccionActual = recetaSecciones.TITULO
 
     var pasoTitulo = ""
     var pasoDescripcion = StringBuilder()
     var pasoDuracion = 0f
 
 
-    for (linea in lineas.map { it.trim() } ) {
+    for (linea in lineas.map { it.trim() }) {
 
         when {
-            linea.startsWith("# ") && (seccionActual == "titulo") -> {
+            linea.startsWith("# ") && (seccionActual == recetaSecciones.TITULO) -> {
                 titulo = linea.removePrefix("# ").trim()
-                seccionActual = "descripcion"
+                seccionActual = recetaSecciones.DESCRIPCION
             }
 
             linea.startsWith("![") -> {
                 val match = Regex("!\\[(.*?)\\]\\((.*?)\\)").find(linea)
                 urlImagen = match?.groups?.get(2)?.value ?: match?.groups?.get(2)?.value
             }
+
             linea.startsWith("## Ingredientes") -> {
-                seccionActual = "ingredientes"
+                seccionActual = recetaSecciones.INGREDIENTES
             }
 
-            linea.startsWith("* ") && (seccionActual == "ingredientes") -> {
+            linea.startsWith("* ") && (seccionActual == recetaSecciones.INGREDIENTES) -> {
                 val (nombre, cantidad) = linea.removePrefix("* ")
                     .split(":", limit = 2)
                     .map { it.trim() }
@@ -67,11 +75,11 @@ fun parseMarkdownReceta(texto:String, id:String):Receta {
                 )
             }
 
-            linea.startsWith("## Prepa") && seccionActual == "ingredientes" -> {
-                seccionActual = "pasos"
+            linea.startsWith("## Prepa") && seccionActual == recetaSecciones.INGREDIENTES -> {
+                seccionActual = recetaSecciones.PASOS
             }
 
-            linea.startsWith("### ") && seccionActual == "pasos" -> {
+            linea.startsWith("### ") && seccionActual == recetaSecciones.PASOS -> {
 
                 if (pasoDuracion != 0f) { // No es el primer paso
                     pasos.add(
@@ -87,15 +95,21 @@ fun parseMarkdownReceta(texto:String, id:String):Receta {
                 pasoDescripcion.clear()
 
             }
-            Regex("^Duraci[oó]n:", RegexOption.IGNORE_CASE).find(linea) != null && (seccionActual == "pasos") -> {
+
+            Regex(
+                "^Duraci[oó]n:",
+                RegexOption.IGNORE_CASE
+            ).find(linea) != null
+                    && (seccionActual == recetaSecciones.PASOS) -> {
                 pasoDuracion = linea.split(" ", limit = 3)[1].toFloat()
             }
 
             //else
-            seccionActual =="descripcion" -> {
+            seccionActual == recetaSecciones.DESCRIPCION -> {
                 descripcion.appendLine(linea)
             }
-            seccionActual =="pasos" -> {
+
+            seccionActual == recetaSecciones.PASOS -> {
                 pasoDescripcion.appendLine(linea)
             }
         }
@@ -113,7 +127,7 @@ fun parseMarkdownReceta(texto:String, id:String):Receta {
     return receta
 }
 
-private fun aplanaParrafos(texto:StringBuilder):String {
+private fun aplanaParrafos(texto: StringBuilder): String {
     val parrafos = mutableListOf<String>()
     val actual = StringBuilder()
     val lineas = texto.toString().lines()
