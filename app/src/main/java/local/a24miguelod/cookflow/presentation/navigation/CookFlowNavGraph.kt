@@ -54,8 +54,6 @@ private const val TAG = "CookFLowNavGraph"
 @Composable
 fun CookFlowNavGraph(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
-    startDestination: DestinationListaRecetasScreen = DestinationListaRecetasScreen,
 ) {
 
     val currentRoute = currentRoute(navController)
