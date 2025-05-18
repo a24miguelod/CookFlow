@@ -51,6 +51,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -58,6 +59,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import local.a24miguelod.cookflow.CookFlowApp
+import local.a24miguelod.cookflow.R
 
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.presentation.screens.comun.CargandoGenerico
@@ -74,27 +76,24 @@ fun ListaRecetasScreen(
 
     val estado by viewModel.estado.collectAsState()
 
-    // https://developer.android.com/develop/ui/compose/components/scaffold?hl=es-419
-
-
-        when (estado) {
-            is ListaRecetasUIState.Error -> {
-                ErrorGenerico((estado as ListaRecetasUIState.Error).message)
-            }
-
-            is ListaRecetasUIState.Loading -> {
-                CargandoGenerico("Obteniendo recetas")
-            }
-
-            is ListaRecetasUIState.Success -> {
-                val successState = estado as ListaRecetasUIState.Success
-                ListaRecetasContent(
-                    onRecetaClick = onRecetaClick,
-                    recetas = successState.recetas
-                )
-            }
-
+    when (estado) {
+        is ListaRecetasUIState.Error -> {
+            ErrorGenerico((estado as ListaRecetasUIState.Error).message)
         }
+
+        is ListaRecetasUIState.Loading -> {
+            CargandoGenerico(stringResource(R.string.recuperando_datos))
+        }
+
+        is ListaRecetasUIState.Success -> {
+            val successState = estado as ListaRecetasUIState.Success
+            ListaRecetasContent(
+                onRecetaClick = onRecetaClick,
+                recetas = successState.recetas
+            )
+        }
+
+    }
 
 }
 

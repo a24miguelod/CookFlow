@@ -38,16 +38,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import local.a24miguelod.cookflow.R
 import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
+import local.a24miguelod.cookflow.presentation.screens.comun.CargandoGenerico
+import local.a24miguelod.cookflow.presentation.screens.comun.ErrorGenerico
 import local.a24miguelod.cookflow.presentation.screens.comun.formatDuracion
+import local.a24miguelod.cookflow.presentation.screens.lista.ListaRecetasUIState
 
 private const val TAG = "DetalleRecetaScreen"
 
@@ -73,10 +78,12 @@ fun DetalleRecetaScreen(
         is DetalleRecetaUIState.Error -> {
             val errorState = estado as DetalleRecetaUIState.Error
             Log.d(TAG, errorState.message)
+            ErrorGenerico((estado as DetalleRecetaUIState.Error).message)
         }
 
         is DetalleRecetaUIState.Loading -> {
-            Log.d(TAG, "Loading")
+            Log.d(TAG, stringResource(R.string.recuperando_datos))
+            CargandoGenerico(stringResource(R.string.recuperando_datos))
         }
 
         is DetalleRecetaUIState.Success -> {

@@ -225,9 +225,6 @@ fun CookFlowNavGraph(
                     onEliminarDeListaDeLaCompra = { ingrediente ->
                         viewModel.eliminarDeListaDeLaCompra(ingrediente)
                     },
-                    onHomeClick = { navController.navigate(DestinationListaRecetasScreen) },
-                    onDespensaClick = { navController.navigate(DestinationDespensa) },
-                    onListaCompraClick = { navController.navigate(DestinationListaCompra) }
                 )
             }
         }

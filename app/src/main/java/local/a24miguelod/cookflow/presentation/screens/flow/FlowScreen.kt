@@ -37,13 +37,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import local.a24miguelod.cookflow.R
 
 import local.a24miguelod.cookflow.domain.model.Receta
+import local.a24miguelod.cookflow.presentation.screens.comun.CargandoGenerico
+import local.a24miguelod.cookflow.presentation.screens.comun.ErrorGenerico
 import local.a24miguelod.cookflow.presentation.screens.comun.formatDuracion
+import local.a24miguelod.cookflow.presentation.screens.lista.ListaRecetasUIState
 
 private const val TAG = "FlowScreen"
 
@@ -60,11 +65,12 @@ fun FlowScreen(
 
         is FlowRecetasUIState.Error -> {
             val errorState = estado as FlowRecetasUIState.Error
+            ErrorGenerico((estado as FlowRecetasUIState.Error).message)
             Log.d(TAG, errorState.message)
         }
 
         is FlowRecetasUIState.Loading -> {
-            Log.d(TAG, "Loading")
+            CargandoGenerico(stringResource(R.string.recuperando_datos))
         }
 
         is FlowRecetasUIState.Success -> {

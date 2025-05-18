@@ -5,4 +5,8 @@
     <string name="recetas">Recetas</string>
     <string name="despensa">Despensa</string>
     <string name="compra">Compra</string>
+    <string name="recuperando_datos">Recuperando datos...</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
 </resources>

@@ -1,5 +1,6 @@
 package local.a24miguelod.cookflow.presentation.screens.despensa
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,14 +15,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AlertDialog
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,9 +43,6 @@ import local.a24miguelod.cookflow.presentation.screens.lista_compra.ListaCompraV
 fun ListaCompraScreen(
     viewModel: ListaCompraViewModel,
     onEliminarDeListaDeLaCompra: (Ingrediente) -> Unit,
-    onDespensaClick: () -> Unit,
-    onHomeClick: () -> Unit,
-    onListaCompraClick: () -> Unit
 ) {
 
     val ingredientes by viewModel.ingredientes.collectAsState()
@@ -48,6 +51,9 @@ fun ListaCompraScreen(
         verticalArrangement = Arrangement.Top
     ) {
         Titulo(stringResource(R.string.lista_de_la_compra))
+
+
+
         if (ingredientes.isEmpty()) {
             // Estado vacío
             Box(
@@ -85,7 +91,9 @@ fun ListaCompraScreen(
                             Spacer(modifier = Modifier.width(8.dp))
 
                             IconButton(
-                                onClick = { onEliminarDeListaDeLaCompra(ingrediente) }
+                                onClick = {
+                                    viewModel.eliminarDeListaDeLaCompra(ingrediente)
+                                }
                             ) {
                                 Icon(
                                     imageVector = Icons.Default.Check,
