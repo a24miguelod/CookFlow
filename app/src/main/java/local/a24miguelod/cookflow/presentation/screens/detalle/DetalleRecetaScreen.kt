@@ -3,11 +3,13 @@ package local.a24miguelod.cookflow.presentation.screens.detalle
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -45,7 +47,6 @@ import coil3.compose.AsyncImage
 import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.domain.model.RecetaPaso
-import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
 import local.a24miguelod.cookflow.presentation.screens.comun.formatDuracion
 
 private const val TAG = "DetalleRecetaScreen"
@@ -57,9 +58,6 @@ fun DetalleRecetaScreen(
     onFlowClick: (Receta) -> Unit,
     onToggleDespensa: (IngredienteReceta) -> Unit,
     onAnadirAListaCompra: (IngredienteReceta) -> Unit,
-    onDespensaClick: () -> Unit,
-    onListaCompraClick: () -> Unit,
-    onHomeClick: () -> Unit,
 ) {
 
     // Sin poner esto, las modificaciones en la despensa o lista compra
@@ -84,24 +82,12 @@ fun DetalleRecetaScreen(
         is DetalleRecetaUIState.Success -> {
             val sucessState = estado as DetalleRecetaUIState.Success
             val receta = sucessState.receta
-            CookFlowScaffold(
-                onDespensaClick = onDespensaClick,
-                onListaCompraClick = onListaCompraClick,
-                onHomeClick = onHomeClick,
-                floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = { onFlowClick(receta) },
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.PlayArrow,
-                            contentDescription = "Empezar pasos"
-                        )
-                    }
-                }
-            ) { paddingValues ->
+
+            Box(modifier = Modifier.fillMaxSize()) {
+
                 LazyColumn(horizontalAlignment = Alignment.CenterHorizontally) {
                     item {
+
                         AsyncImage(
                             model = receta.urlimagen,
                             contentDescription = receta.descripcion,
@@ -137,12 +123,27 @@ fun DetalleRecetaScreen(
                         HorizontalDivider()
                         ListaPasos(receta.pasos)
 
+
                     }
 
                 }
+                FloatingActionButton(
+                    onClick = { onFlowClick(receta) },
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp) // separa del borde
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.PlayArrow,
+                        contentDescription = "Empezar pasos"
+                    )
+                }
+
             }
         }
     }
+
 }
 
 @Composable

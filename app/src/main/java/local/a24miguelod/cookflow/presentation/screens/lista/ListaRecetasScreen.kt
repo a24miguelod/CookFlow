@@ -61,7 +61,6 @@ import local.a24miguelod.cookflow.CookFlowApp
 
 import local.a24miguelod.cookflow.domain.model.Receta
 import local.a24miguelod.cookflow.presentation.screens.comun.CargandoGenerico
-import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
 import local.a24miguelod.cookflow.presentation.screens.comun.ErrorGenerico
 
 private const val TAG = "ListaRecestasScreen"
@@ -71,20 +70,13 @@ private const val TAG = "ListaRecestasScreen"
 fun ListaRecetasScreen(
     viewModel: ListaRecetasViewModel,
     onRecetaClick: (Receta) -> Unit,
-    onDespensaClick: () -> Unit,
-    onHomeClick: () -> Unit,
-    onListaCompraClick: () -> Unit,
 ) {
 
     val estado by viewModel.estado.collectAsState()
 
     // https://developer.android.com/develop/ui/compose/components/scaffold?hl=es-419
 
-    CookFlowScaffold(
-        onDespensaClick = onDespensaClick,
-        onListaCompraClick = onListaCompraClick,
-        onHomeClick = onHomeClick
-    ) { paddingValues ->
+
         when (estado) {
             is ListaRecetasUIState.Error -> {
                 ErrorGenerico((estado as ListaRecetasUIState.Error).message)
@@ -103,8 +95,6 @@ fun ListaRecetasScreen(
             }
 
         }
-    }
-
 
 }
 

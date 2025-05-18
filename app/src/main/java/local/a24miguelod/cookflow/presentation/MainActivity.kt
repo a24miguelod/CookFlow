@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.compose.rememberNavController
 import local.a24miguelod.cookflow.presentation.navigation.CookFlowNavGraph
 import local.a24miguelod.cookflow.R
 import local.a24miguelod.cookflow.presentation.theme.CookFlowTheme
@@ -23,7 +24,8 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             CookFlowTheme {
-                CookFlowNavGraph()
+                val navController = rememberNavController()
+                CookFlowNavGraph(navController)
             }
         }
     }

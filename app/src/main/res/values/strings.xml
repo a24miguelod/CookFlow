@@ -2,4 +2,7 @@
     <string name="app_name">CookFlow</string>
     <string name="lista_de_la_compra">Lista de la compra</string>
     <string name="comprar">Comprar</string>
+    <string name="recetas">Recetas</string>
+    <string name="despensa">Despensa</string>
+    <string name="compra">Compra</string>
 </resources>

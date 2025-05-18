@@ -32,7 +32,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import local.a24miguelod.cookflow.domain.model.Ingrediente
-import local.a24miguelod.cookflow.presentation.screens.comun.CookFlowScaffold
 import local.a24miguelod.cookflow.presentation.screens.comun.Titulo
 
 
@@ -41,65 +40,55 @@ fun DespensaScreen(
     viewModel: DespensaViewModel,
     onToggleDespensa: (Ingrediente) -> Unit,
     onAnadirAlCarrito: (Ingrediente) -> Unit,
-    onDespensaClick: () -> Unit,
-    onHomeClick: () -> Unit,
-    onListaCompraClick: () -> Unit,
 ) {
 
     val ingredientes by viewModel.ingredientes.collectAsState()
 
-    CookFlowScaffold(
-        onDespensaClick = onDespensaClick,
-        onListaCompraClick = onListaCompraClick,
-        onHomeClick = onHomeClick
-    ) { paddingValues ->
+    Column() {
+        Titulo("Despensa")
+        LazyColumn(
 
-        Column() {
-            Titulo("Despensa")
-            LazyColumn(
+        ) {
+            items(ingredientes) { ingrediente ->
 
-            ) {
-                items(ingredientes) { ingrediente ->
+                Row(
+                    modifier = Modifier
+                        .padding(6.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column {
+                        Text(
+                            text = ingrediente.nombre,
+                            color = if (ingrediente.enDespensa) Color.Black else Color.Gray,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
 
-                    Row(
-                        modifier = Modifier
-                            .padding(6.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column {
-                            Text(
-                                text = ingrediente.nombre,
-                                color = if (ingrediente.enDespensa) Color.Black else Color.Gray,
-                                style = MaterialTheme.typography.bodyLarge
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        // Switch de disponible
+                        Switch(
+                            checked = ingrediente.enDespensa,
+                            onCheckedChange = { onToggleDespensa(ingrediente) }
+                        )
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        IconButton(
+                            onClick = { onAnadirAlCarrito(ingrediente) }
+                        ) {
+                            Icon(
+                                imageVector = if (ingrediente.enListaCompra)
+                                    Icons.Default.Clear
+                                else Icons.Default.ShoppingCart,
+                                contentDescription = "Comprar",
+                                //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
+                                modifier = Modifier
+                                    .size(16.dp)
+                                    .weight(1f)
+
                             )
-                        }
-
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            // Switch de disponible
-                            Switch(
-                                checked = ingrediente.enDespensa,
-                                onCheckedChange = { onToggleDespensa(ingrediente) }
-                            )
-
-                            Spacer(modifier = Modifier.width(8.dp))
-
-                            IconButton(
-                                onClick = { onAnadirAlCarrito(ingrediente) }
-                            ) {
-                                Icon(
-                                    imageVector = if (ingrediente.enListaCompra)
-                                        Icons.Default.Clear
-                                    else Icons.Default.ShoppingCart,
-                                    contentDescription = "Comprar",
-                                    //tint = if (ingrediente.ingrediente.enDespensa) Color.Green else Color.Gray,
-                                    modifier = Modifier
-                                        .size(16.dp)
-                                        .weight(1f)
-
-                                )
-                            }
                         }
                     }
                 }
@@ -107,4 +96,5 @@ fun DespensaScreen(
         }
     }
 }
+
 

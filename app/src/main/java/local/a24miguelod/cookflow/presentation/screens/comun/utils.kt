@@ -1,6 +1,9 @@
 package local.a24miguelod.cookflow.presentation.screens.comun
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun formatDuracion(minutos: Float): String {
@@ -20,4 +23,12 @@ fun formatDuracion(minutos: Float): String {
             "$seconds segundos"
         }
     }
+}
+
+@Composable
+fun currentRoute(navController: NavController): String? {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val fullRoute = navBackStackEntry?.destination?.route ?: return null
+    // me quedo solo con el final
+    return fullRoute.substringAfterLast(".")
 }
