@@ -80,6 +80,7 @@ class DetalleRecetaViewModel(
     }
 
     private suspend fun updateUI() {
+        Log.d(TAG, "Update UI")
         repository.getReceta(recetaUuid)?.let { receta ->
             // Obtiene la disponibilidad dede Room
             receta.ingredientes.forEach() {
@@ -89,9 +90,6 @@ class DetalleRecetaViewModel(
                 it.ingrediente.enListaCompra = ingredienteEnCache.enListaCompra
             }
             _estado.value = DetalleRecetaUIState.Success(receta, false)
-
-
-
         } ?: run {
             _estado.value = DetalleRecetaUIState.Error("La receta ${recetaUuid} no existe")
         }

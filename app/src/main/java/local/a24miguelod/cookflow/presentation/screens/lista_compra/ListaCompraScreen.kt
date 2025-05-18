@@ -68,13 +68,13 @@ fun ListaCompraScreen(
             } else
                 LazyColumn(
                     verticalArrangement = Arrangement.Top,
-                            modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize()
                 ) {
                     items(ingredientes) { ingrediente ->
 
                         Row(
                             modifier = Modifier
-                                .padding(12.dp)
+                                .padding(1.dp)
                                 .fillMaxWidth(),
                             verticalAlignment = Alignment.Top,
                             horizontalArrangement = Arrangement.SpaceBetween

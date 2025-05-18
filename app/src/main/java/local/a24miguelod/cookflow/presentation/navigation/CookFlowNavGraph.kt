@@ -109,8 +109,16 @@ fun CookFlowNavGraph(
             FlowScreen(
                 viewModel,
                 onHomeClick = {
-                    //navController.navigate(DestinationListaRecetasScreen)
-                    navController.popBackStack(DestinationListaRecetasScreen, inclusive = true)
+                    // Quiero que en el ultimo paso (boton de volver a la lista de recetas)
+                    // la app elimine esta pantalla del stack, pero que desde la lista
+                    // de recetas, si pulso "back", vuelva a la receta que habia seleccionado
+                    // antes
+                    navController.navigate(DestinationListaRecetasScreen) {
+                        popUpTo(DestinationFlowReceta(args.recetaId)) {
+                            inclusive = true // elimina FlowScreen del stack
+                        }
+                        launchSingleTop = true // evita duplicados si ya estás en lista
+                    }
 
                 }
             )

@@ -16,10 +16,10 @@ import local.a24miguelod.cookflow.domain.model.Receta
 
 private const val TAG = "RecetasRepositoryFirebase"
 
-class RecetasRepositoryFirebase : RecetasRepository {
+class RecetasRepositoryFirebase(val cacheRepository: CacheRepository) : RecetasRepository {
 
     private var db: FirebaseFirestore = Firebase.firestore
-    private var ingredientesMapCache: MutableMap<String, Ingrediente> = mutableMapOf()
+    //private var ingredientesMapCache: MutableMap<String, Ingrediente> = mutableMapOf()
 
     override suspend fun getRecetasConFlow(): Flow<List<Receta>> = flow {
         val resultadoParcial = mutableListOf<Receta>()
@@ -38,13 +38,12 @@ class RecetasRepositoryFirebase : RecetasRepository {
                 it.ingredienteId
             }
 
-            cacheaIngredientesPorIds(stringsIdIngredientes)
-
             // Mapeo la recetaFirebase al objeto del dominio y añado IngredienteReceta
             val receta = RecetaFirebaseToModel().mapFrom(recetaFirebase)
 
             recetaFirebase?.ingredientes?.forEach {
-                val ingrediente = ingredientesMapCache[it.ingredienteId]
+
+                val ingrediente = getOrCacheIngredientesPorId(it.ingredienteId)
                 if (receta != null) {
                     if (ingrediente != null) {
                         receta.ingredientes.add(
@@ -84,7 +83,7 @@ class RecetasRepositoryFirebase : RecetasRepository {
 
         //TODO:Refactorizar, se repite en getRecetas
         recetaFirebase?.ingredientes?.forEach {
-            val ingrediente = ingredientesMapCache[it.ingredienteId]
+            val ingrediente = getOrCacheIngredientesPorId(it.ingredienteId)
             if (receta != null) {
                 if (ingrediente != null) {
                     receta.ingredientes.add(
@@ -107,23 +106,30 @@ class RecetasRepositoryFirebase : RecetasRepository {
         return receta;
     }
 
+    private suspend fun getOrCacheIngredientesPorId(id: String): Ingrediente? {
 
-    private suspend fun cacheaIngredientesPorIds(ids: List<String>?): Unit {
+        val ingrediente = cacheRepository.getIngredienteById(id)
+        if (ingrediente != null) return ingrediente
 
-        val idsAConsultar = ids?.filterNot { ingredientesMapCache.containsKey(it) }
-        if (idsAConsultar.isNullOrEmpty()) return
-
-        // TODO: Hacer en batch
-        for (id in idsAConsultar) {
-            val snapshot = db.collection("ingredientes")
-                .document(id)  //
-                .get()
-                .await()
-
-            snapshot.getString("nombre")?.let {
-                ingredientesMapCache[id] = Ingrediente(nombre = it)
-            }
-
+        // Ingrediente no existe. Lo busco en firebase (se supone que solo una vez)
+        val snapshot = db.collection("ingredientes")
+            .document(id)  //
+            .get()
+            .await()
+        val nombre = snapshot.getString("nombre")
+        if (nombre != null) {
+            // Existe. Lo inserto en room
+            val nuevoIngrediente = Ingrediente(
+                ingredienteId = id,
+                nombre = nombre,
+                enDespensa = false,
+                enListaCompra = false
+            )
+            cacheRepository.insertIngrediente(nuevoIngrediente)
+            return nuevoIngrediente
+        } else {
+            Log.e(TAG, "Se intento cachear el ingrediente $id, pero no existe en Room")
+            return null
         }
     }
 

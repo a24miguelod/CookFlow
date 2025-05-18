@@ -1,39 +1,23 @@
 package local.a24miguelod.cookflow.data.repository
 
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import local.a24miguelod.cookflow.domain.model.Ingrediente
-import local.a24miguelod.cookflow.domain.model.IngredienteReceta
 import local.a24miguelod.cookflow.domain.model.Receta
-
 import io.ktor.client.*
 import io.ktor.client.call.body
-import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
 import local.a24miguelod.cookflow.data.github.model.DirectoryGithub
-import local.a24miguelod.cookflow.domain.model.RecetaPaso
+import local.a24miguelod.cookflow.utils.parseMarkdownReceta
 
 private const val TAG = "RecetasRepositoryGithub"
 
-class RecetasRepositoryGithub() : RecetasRepository {
+class RecetasRepositoryGithub(
+    private val githubReporecetasUrl:String,
+    private val githubBaseDir: String,
+    private val httpCliente: HttpClient
 
-    private var githubReporecetasUrl: String = "http://192.168.1.138:8000"
-    private var githubBaseDir: String = "http://192.168.1.138:8000/recetas/"
-    private val client:HttpClient = HttpClient(CIO) {
-        expectSuccess = true        // https://ktor.io/docs/client-create-and-configure.html#configure-client
-        install(ContentNegotiation) {
-            json(Json{
-                // https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-json/kotlinx.serialization.json/-json-builder/
-                isLenient = true
-                ignoreUnknownKeys = true
-            })
-        }
-    }
+) : RecetasRepository {
 
     // Obtener la lista de recetas
     override suspend fun getRecetasConFlow(): Flow<List<Receta>> = flow {
@@ -42,10 +26,10 @@ class RecetasRepositoryGithub() : RecetasRepository {
 
         // Leo los ficheros del directorio en particular y creo una receta para cada una
         // de las entradas
-        val lsDirectory: List<DirectoryGithub> = client.get(githubReporecetasUrl).body()
+        val lsDirectory: List<DirectoryGithub> = httpCliente.get(githubReporecetasUrl).body()
 
         lsDirectory.forEach {
-            val recetaFile:String = client.get(it.downloadUrl!!).body()
+            val recetaFile:String = httpCliente.get(it.downloadUrl!!).body()
             val receta = parseMarkdownReceta(recetaFile, it.name.toString(), )
             resultadoParcial.add(receta)
             emit(resultadoParcial.toList()) // Emitimos una copia
@@ -53,136 +37,10 @@ class RecetasRepositoryGithub() : RecetasRepository {
 
     }
 
-    private fun parseMarkdownReceta(texto:String, id:String):Receta {
-
-        val lineas = texto.lines() + "### Paso"
-
-        var titulo = ""
-        var urlImagen: String? = null
-        val descripcion = StringBuilder()
-        val ingredientes = mutableListOf<IngredienteReceta>()
-        val pasos = mutableListOf<RecetaPaso>()
-
-        var seccionActual = "titulo"
-
-        var pasoTitulo = ""
-        var pasoDescripcion = StringBuilder()
-        var pasoDuracion = 0f
-
-
-        for (linea in lineas.map { it.trim() } ) {
-
-            when {
-                linea.startsWith("# ") && (seccionActual == "titulo") -> {
-                    titulo = linea.removePrefix("# ").trim()
-                    seccionActual = "descripcion"
-                }
-
-                linea.startsWith("![") -> {
-                    val match = Regex("!\\[(.*?)\\]\\((.*?)\\)").find(linea)
-                    urlImagen = match?.groups?.get(1)?.value ?: match?.groups?.get(2)?.value
-                }
-                linea.startsWith("## Ingredientes") -> {
-                    seccionActual = "ingredientes"
-                }
-
-                linea.startsWith("* ") && (seccionActual == "ingredientes") -> {
-                    val (nombre, cantidad) = linea.removePrefix("* ")
-                        .split(":", limit = 2)
-                        .map { it.trim() }
-                        .let {
-                            val nombre = it.getOrNull(0) ?: ""
-                            val cantidad = it.getOrNull(1) ?: ""
-                            nombre to cantidad
-                        }
-                    ingredientes.add(
-                        IngredienteReceta(
-                            ingrediente = Ingrediente(
-                                nombre = nombre
-                            ),
-                            cantidad = cantidad
-                        )
-                    )
-                }
-
-                linea.startsWith("## Prepa") && seccionActual == "ingredientes" -> {
-                    seccionActual = "pasos"
-                }
-
-                linea.startsWith("### ") && seccionActual == "pasos" -> {
-
-                    if (pasoDuracion != 0f) { // No es el primer paso
-                        pasos.add(
-                            RecetaPaso(
-                                resumen = pasoTitulo,
-                                duracion = pasoDuracion,
-                                detallelargo = aplanaParrafos(pasoDescripcion),
-                            )
-                        )
-                    }
-                    pasoTitulo = linea.removePrefix("### ").trim()
-                    pasoDuracion = 0f
-                    pasoDescripcion.clear()
-
-                }
-                Regex("^Duraci[oó]n:", RegexOption.IGNORE_CASE).find(linea) != null && (seccionActual == "pasos") -> {
-                    pasoDuracion = linea.split(" ", limit = 3)[1].toFloat()
-                }
-
-                //else
-                seccionActual =="descripcion" -> {
-                    descripcion.appendLine(linea)
-                }
-                seccionActual =="pasos" -> {
-                    pasoDescripcion.appendLine(linea)
-                }
-            }
-        }
-
-        val receta = Receta(
-            nombre = titulo,
-            id = id,
-            descripcion = aplanaParrafos(descripcion),
-            ingredientes = ingredientes,
-            pasos = pasos,
-            urlimagen = urlImagen.toString()
-        )
-        return receta
-    }
-
-    private fun aplanaParrafos(texto:StringBuilder):String {
-        val parrafos = mutableListOf<String>()
-        val actual = StringBuilder()
-        val lineas = texto.toString().lines()
-
-
-        for (linea in lineas.map { it.trim() }) {
-            if (linea.isEmpty()) {
-                if (actual.isNotEmpty()) {
-                    parrafos.add(actual.toString().trim())
-                    actual.clear()
-                }
-            } else {
-                if (actual.isNotEmpty()) actual.append(" ")
-                actual.append(linea)
-            }
-        }
-
-        // Agrega el último párrafo si quedó algo pendiente
-        if (actual.isNotEmpty()) {
-            parrafos.add(actual.toString().trim())
-        }
-
-        return parrafos.joinToString("\n\n")
-    }
-
     override suspend fun getReceta(id: String): Receta {
-
-        val recetaFile:String = client.get("$githubBaseDir$id").body()
+        val recetaFile:String = httpCliente.get("$githubBaseDir$id").body()
         val receta = parseMarkdownReceta(recetaFile,id )
 
         return receta
     }
-
-
 }
